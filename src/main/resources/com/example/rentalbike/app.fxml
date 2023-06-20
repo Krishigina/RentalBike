@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #1D354F;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.rentalbike.HelloController">
+    <children>
+        <Label layoutX="296.0" layoutY="28.0" text="Прокат велосипедов" textFill="WHITE">
+            <font>
+                <Font name="Segoe UI Historic" size="23.0" />
+            </font>
+        </Label>
+      <ImageView fitHeight="66.0" fitWidth="100.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@logo.png" />
+         </image>
+      </ImageView>
+      <AnchorPane layoutY="82.0" prefHeight="522.0" prefWidth="800.0" style="-fx-background-color: #fafafa;">
+         <children>
+            <TabPane prefHeight="522.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab text="Горные велосипеды">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #F5F5F5;">
+                           <children>
+                              <ImageView fitHeight="170.0" fitWidth="223.0" layoutX="120.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Norco_Charger_6_3.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="171.0" fitWidth="245.0" layoutX="506.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Kona_Fire_Mountain.png" />
+                                 </image>
+                              </ImageView>
+                              <Label layoutX="295.0" layoutY="41.0" text="Горные велосипеды" textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="23.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="130.0" layoutY="195.0" text="Norco Charger 6.3" textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="510.0" layoutY="195.0" text="Kona Fire Mountain" textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="47.0" layoutY="238.0" text="Материал рамы алюминиевый сплав " textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="47.0" layoutY="257.0" text="Наименование мягкой вилки SR Suntour SF13-XCM-LO-26" textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="47.0" layoutY="276.0" text="Конструкция вилки: пружинно-масляная" textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="47.0" layoutY="295.0" text="Ход вилки 100 мм" textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="47.0" layoutY="314.0" text="Регулировки вилки жесткости пружины, блокировка хода" textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="47.0" layoutY="333.0" text="Диаметр колес 26 дюймов" textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="47.0" layoutY="352.0" text="Количество скоростей 27" textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="47.0" layoutY="371.0" text="Количество звезд в касете 9" textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="47.0" layoutY="390.0" text="Количество звезд системы 3, число зубьев 44-32-22" textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="471.0" layoutY="238.0" text="Рама: Kona 7005 алюминиевая, баттинг труб" textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="471.0" layoutY="257.0" text="Вилка: RockShox Dart 1 100 мм" textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="471.0" layoutY="276.0" text="SGS Шатунь: FSA 42/32/22" textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="471.0" layoutY="295.0" text="Цепь: Shimano HG40" textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="471.0" layoutY="314.0" text="Педали: Wellgo LU-A9" textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="471.0" layoutY="333.0" text="Седло: Kona XC" textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="471.0" layoutY="352.0" text="Тормоза: Shimano M445 дисковые гидравлические " textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="471.0" layoutY="371.0" text="Тормозные ручки: Shimano M445" textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="471.0" layoutY="390.0" text="Количество скоростей: 24" textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="13.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+                  <Tab text="Городские велосипеды">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #F5F5F5;">
+                           <children>
+                              <ImageView fitHeight="172.0" fitWidth="177.0" layoutX="131.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Nirve_Cannibal.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="166.0" fitWidth="217.0" layoutX="506.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Nirve.png" />
+                                 </image>
+                              </ImageView>
+                              <Label layoutX="295.0" layoutY="41.0" text="Городские велосипеды" textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="23.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="155.0" layoutY="201.0" text="Nirve Cannibal" textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="566.0" layoutY="201.0" text="Nirve" textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="TOP_LEFT" layoutX="46.0" layoutY="263.0" prefHeight="15.0" prefWidth="326.0" text="Рама патенованная рама chopper от Nirve с эксклюзивным" textAlignment="JUSTIFY" textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="TOP_LEFT" layoutX="46.0" layoutY="282.0" prefHeight="15.0" prefWidth="366.0" text="дизайном Кори Миллера изготавливается из алюминиевого" textAlignment="JUSTIFY" textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="TOP_LEFT" layoutX="46.0" layoutY="301.0" prefHeight="15.0" prefWidth="335.0" text="сплава. За безопасное и своевременное переключение " textAlignment="JUSTIFY" textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="TOP_LEFT" layoutX="46.0" layoutY="320.0" prefHeight="15.0" prefWidth="362.0" text="скоростей отвечает задний переключатель планетарного типа. " textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="TOP_LEFT" layoutX="46.0" layoutY="339.0" prefHeight="15.0" prefWidth="374.0" text="Педалекручение на модели очень удобное и не расходует лишних" textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="TOP_LEFT" layoutX="46.0" layoutY="358.0" prefHeight="15.0" prefWidth="385.0" text="сил благодаря чётко работающей системе. Модель оснащена седлом " textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="TOP_LEFT" layoutX="46.0" layoutY="377.0" prefHeight="15.0" prefWidth="385.0" text="комфортной геометрии." textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="TOP_LEFT" layoutX="470.0" layoutY="263.0" prefHeight="15.0" prefWidth="279.0" text="Круизер с агрессивным дизайном Nirve Pyro 3sp." textAlignment="JUSTIFY" textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="TOP_LEFT" layoutX="470.0" layoutY="282.0" prefHeight="15.0" prefWidth="280.0" text="Модель оборудована алюминиевой рамой. Nirve" textAlignment="JUSTIFY" textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="TOP_LEFT" layoutX="470.0" layoutY="301.0" prefHeight="15.0" prefWidth="267.0" text="Pyro 3sp предназначен для спокойного катания" textAlignment="JUSTIFY" textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="TOP_LEFT" layoutX="470.0" layoutY="320.0" prefHeight="15.0" prefWidth="282.0" text="по ровным дорогам и отличается высоким рулём" textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="TOP_LEFT" layoutX="470.0" layoutY="339.0" prefHeight="15.0" prefWidth="106.0" text="и мягким седлом." textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="13.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab text="Дорожные велосипеды">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #F5F5F5;">
+                           <children>
+                              <ImageView fitHeight="107.0" fitWidth="182.0" layoutX="131.0" layoutY="98.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Altair_City_28_high_FR.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="96.0" fitWidth="148.0" layoutX="506.0" layoutY="101.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Stels_Navigator_200_C_Z010.png" />
+                                 </image>
+                              </ImageView>
+                              <Label layoutX="295.0" layoutY="41.0" text="Дорожные велосипеды" textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="23.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="131.0" layoutY="200.0" text="Altair City 28 high FR" textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="467.0" layoutY="200.0" text="Stels Navigator 200 C Z010" textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="88.0" layoutY="247.0" prefHeight="15.0" prefWidth="118.0" text="Тип рамы: сталь" textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="88.0" layoutY="266.0" prefHeight="15.0" prefWidth="118.0" text="Тип вилки: жесткая" textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="88.0" layoutY="285.0" prefHeight="15.0" prefWidth="149.0" text="Тип ободов: Двойные" textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="88.0" layoutY="304.0" prefHeight="15.0" prefWidth="173.0" text="Тип тормозов: Ножные педали" textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="88.0" layoutY="323.0" prefHeight="15.0" prefWidth="173.0" text="Скорость: одна скорость" textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="88.0" layoutY="342.0" prefHeight="15.0" prefWidth="173.0" text="Вес: 18 кг." textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="88.0" layoutY="361.0" prefHeight="15.0" prefWidth="173.0" text="Диаметр колес: 28 дюймов" textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="467.0" layoutY="247.0" prefHeight="15.0" prefWidth="118.0" text="Тип рамы: сталь" textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="467.0" layoutY="266.0" prefHeight="15.0" prefWidth="118.0" text="Тип вилки: жесткая" textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="467.0" layoutY="285.0" prefHeight="15.0" prefWidth="149.0" text="Тип ободов: Двойные" textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="467.0" layoutY="304.0" prefHeight="15.0" prefWidth="173.0" text="Тип тормозов: Ножные педали" textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="467.0" layoutY="323.0" prefHeight="15.0" prefWidth="173.0" text="Скорость: одна скорость" textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="467.0" layoutY="342.0" prefHeight="15.0" prefWidth="173.0" text="Вес: 16.9 кг." textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="467.0" layoutY="361.0" prefHeight="15.0" prefWidth="173.0" text="Диаметр колес: 26 дюймов" textFill="#383a3b">
+                                 <font>
+                                    <Font name="Times New Roman" size="13.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                <Tab text="Магазины">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="171.0" prefWidth="398.0" style="-fx-background-color: #F5F5F5;">
+                           <children>
+                              <Label layoutX="64.0" layoutY="63.0" text="1. &quot;ВелоЛосинка&quot;, Курганская улица 3" textFill="#1f2021">
+                                 <font>
+                                    <Font name="Times New Roman" size="19.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="64.0" layoutY="102.0" text="2. &quot;Veloles&quot;, Уральская улица, 19 к1" textFill="#1f2021">
+                                 <font>
+                                    <Font name="Times New Roman" size="19.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="64.0" layoutY="142.0" text="3. &quot;Крути педали&quot;, Университетский проспект 6 к1" textFill="#1f2021">
+                                 <font>
+                                    <Font name="Times New Roman" size="19.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="108.0" layoutY="123.0" textFill="#1f2021">
+                                 <font>
+                                    <Font name="Times New Roman" size="19.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="64.0" layoutY="182.0" text="4. &quot;Go-Ride&quot;, Новогиреевская улица 29 к1" textFill="#1f2021">
+                                 <font>
+                                    <Font name="Times New Roman" size="19.0" />
+                                 </font>
+                              </Label>
+                           </children></AnchorPane>
+                  </content>
+                </Tab>
+              </tabs>
+            </TabPane>
+         </children>
+      </AnchorPane>
+    </children>
+</AnchorPane>
