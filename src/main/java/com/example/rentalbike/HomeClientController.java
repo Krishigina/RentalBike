@@ -3,6 +3,9 @@ package com.example.rentalbike;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -27,22 +30,13 @@ public class HomeClientController {
 
     @FXML
     void initialize() {
-        exit.setOnAction(event -> {
-            exit.getScene().getWindow().hide();
-
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/com/example/rentalbike/hello-view.fxml"));
-
-            try{
-                loader.load();
-            } catch (IOException e){
-                e.printStackTrace();
+        exit.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Threads.changeWindow(event, "/com/example/rentalbike/hello-view.fxml", "Вход");
             }
-            Parent root = loader.getRoot();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
         });
+
     }
 
 }
