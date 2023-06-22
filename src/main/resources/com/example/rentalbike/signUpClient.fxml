@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #1D354F;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.rentalbike.SignUpClientController">
+    <children>
+        <AnchorPane layoutY="82.0" prefHeight="518.0" prefWidth="800.0" style="-fx-background-color: #F5F5F5;">
+            <children>
+                <TextField fx:id="SignUpClient_FirstName" layoutX="94.0" layoutY="159.0" prefHeight="34.0" prefWidth="244.0" promptText="Имя" />
+                <Button fx:id="RegSignUpClient" layoutX="313.0" layoutY="402.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="174.0" text="Зарегестрироваться" textFill="#1d354f">
+                    <font>
+                        <Font name="Segoe UI" size="16.0" />
+                    </font>
+                </Button>
+                <PasswordField fx:id="SignUpClient_password" layoutX="278.0" layoutY="327.0" prefHeight="34.0" prefWidth="244.0" promptText="Пароль">
+                    <font>
+                        <Font name="Segoe UI Light" size="12.0" />
+                    </font>
+                </PasswordField>
+                <Label layoutX="338.0" layoutY="46.0" text="Регистрация" textFill="#2e2c2c">
+                    <font>
+                        <Font name="Times New Roman" size="23.0" />
+                    </font>
+                </Label>
+            <TextField fx:id="signUpClient_LastName" layoutX="94.0" layoutY="112.0" prefHeight="34.0" prefWidth="244.0" promptText="Фамилия" />
+            <TextField fx:id="SignUpClient_SecondName" layoutX="94.0" layoutY="206.0" prefHeight="34.0" prefWidth="244.0" promptText="Отчество" />
+            <TextField fx:id="SignUpClient_npassport" layoutX="442.0" layoutY="124.0" prefHeight="34.0" prefWidth="244.0" promptText="Номер паспорта" />
+            <TextField fx:id="SignUpClient_address" layoutX="442.0" layoutY="189.0" prefHeight="34.0" prefWidth="244.0" promptText="Адрес" />
+            <TextField fx:id="SignUpClient_login" layoutX="278.0" layoutY="280.0" prefHeight="34.0" prefWidth="244.0" promptText="Логин" />
+            </children>
+        </AnchorPane>
+        <Label layoutX="296.0" layoutY="28.0" text="Прокат велосипедов" textFill="WHITE">
+            <font>
+                <Font name="Segoe UI Historic" size="23.0" />
+            </font>
+        </Label>
+        <ImageView fitHeight="66.0" fitWidth="100.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@assets/logo.png" />
+            </image>
+        </ImageView>
+    </children>
+</AnchorPane>

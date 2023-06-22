@@ -44,7 +44,7 @@
       </Label>
       <ImageView fitHeight="66.0" fitWidth="100.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@logo.png" />
+            <Image url="@assets/logo.png" />
          </image>
       </ImageView>
    </children>
