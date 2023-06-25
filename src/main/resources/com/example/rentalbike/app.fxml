@@ -11,8 +11,11 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #1D354F;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.rentalbike.HomeClientController">
     <children>
-      <Button fx:id="exit" layoutX="733.0" layoutY="12.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="47.0" style="-fx-background-color: #1D354F; -fx-border-color: #1D354F;" />
-      <Button fx:id="exit" layoutX="743.0" layoutY="32.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="40.0" style="-fx-background-color: #1D354F;" />
+      <Button fx:id="exit" layoutX="726.0" layoutY="32.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="57.0" style="-fx-background-color: #7AA299;" text="Выход">
+         <font>
+            <Font name="Segoe UI" size="12.0" />
+         </font>
+      </Button>
         <Label layoutX="296.0" layoutY="28.0" text="Прокат велосипедов" textFill="WHITE">
             <font>
                 <Font name="Segoe UI Historic" size="23.0" />
@@ -383,10 +386,5 @@
             </TabPane>
          </children>
       </AnchorPane>
-      <ImageView fx:id="Button_HomeClientexit" fitHeight="24.0" fitWidth="20.0" layoutX="757.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@assets/exit.png" />
-         </image>
-      </ImageView>
     </children>
 </AnchorPane>

@@ -2,6 +2,9 @@ package com.example.rentalbike;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -38,6 +41,8 @@ public class SignUpClientController {
 
     @FXML
     private TextField signUpClient_LastName;
+    @FXML
+    private Button exitSignUp;
 
     @FXML
     void initialize() {
@@ -45,6 +50,13 @@ public class SignUpClientController {
 
             signUpNewClient();
 
+        });
+
+        exitSignUp.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Threads.changeWindow(event, "/com/example/rentalbike/hello-view.fxml", "Вход");
+            }
         });
     }
 

@@ -34,6 +34,11 @@
             <TextField fx:id="SignUpClient_npassport" layoutX="442.0" layoutY="124.0" prefHeight="34.0" prefWidth="244.0" promptText="Номер паспорта" />
             <TextField fx:id="SignUpClient_address" layoutX="442.0" layoutY="189.0" prefHeight="34.0" prefWidth="244.0" promptText="Адрес" />
             <TextField fx:id="SignUpClient_login" layoutX="278.0" layoutY="280.0" prefHeight="34.0" prefWidth="244.0" promptText="Логин" />
+            <Button fx:id="exitSignUp" layoutX="370.0" layoutY="448.0" mnemonicParsing="false" text="Выход" textFill="#1d354f">
+               <font>
+                  <Font name="Segoe UI" size="14.0" />
+               </font>
+            </Button>
             </children>
         </AnchorPane>
         <Label layoutX="296.0" layoutY="28.0" text="Прокат велосипедов" textFill="WHITE">

@@ -42,7 +42,7 @@ public class DataBaseHandler extends Configs{
         }
     }
 
-        public ResultSet getClient(Client client){
+        public ResultSet getUser(Client client){
             ResultSet resSet = null;
 
             String select = "SELECT * FROM " + Const.USER_TABLE + " WHERE " + Const.USER_LOGIN + "=? AND " + Const.USER_PASSWORD + "=?";
