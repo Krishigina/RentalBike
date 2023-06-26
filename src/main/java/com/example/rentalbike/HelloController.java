@@ -52,7 +52,7 @@ public class HelloController {
             if (!loginText.isEmpty() && !loginPassword.isEmpty()) {
                 Client client = new Client();
                 client.setLogin(loginText);
-                client.setPassword(loginPassword);
+                client.setPassword(finalDbHandler.hashPassword(loginPassword));
                 ResultSet result = finalDbHandler.getUser(client);
 
                 int count = 0;
@@ -66,13 +66,22 @@ public class HelloController {
                 if (count >= 1) {
                     Threads.changeWindow(event, "app.fxml", "rentalbike");
                 }
-            } else {
+                else{
+                    Shake userLoginAnim = new Shake(login_field);
+                    Shake userPassAnim = new Shake(password_field);
+                    userLoginAnim.playAnim();
+                    userPassAnim.playAnim();
+                    login_field.clear();
+                    password_field.clear();
+                }
+            }
+            else {
                 Shake userLoginAnim = new Shake(login_field);
                 Shake userPassAnim = new Shake(password_field);
                 userLoginAnim.playAnim();
                 userPassAnim.playAnim();
-            }
-        });
+        }
+            });
 
         loginSignUpButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override

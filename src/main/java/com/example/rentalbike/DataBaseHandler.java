@@ -1,7 +1,7 @@
 package com.example.rentalbike;
 import java.sql.*;
 
-public class DataBaseHandler extends Configs{
+public class DataBaseHandler extends Configs {
     private static DataBaseHandler instance; // Статическое поле для хранения единственного экземпляра класса
     private Connection dbConnection;
 
@@ -40,7 +40,7 @@ public class DataBaseHandler extends Configs{
 
             PreparedStatement prStUser = getDbConnection().prepareStatement(insertUser);
             prStUser.setString(1, client.getLogin());
-            prStUser.setString(2, client.getPassword());
+            prStUser.setString(2, hashPassword(client.getPassword())); // Сохранение хэша пароля
 
             prStUser.executeUpdate();
         } catch (SQLException e) {
@@ -48,20 +48,21 @@ public class DataBaseHandler extends Configs{
         }
     }
 
-        public ResultSet getUser(Client client){
-            ResultSet resSet = null;
+    public ResultSet getUser(Client client) {
+        ResultSet resSet = null;
+        String select = "SELECT * FROM " + Const.USER_TABLE + " WHERE " + Const.USER_LOGIN + "=?";
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(select);
+            prSt.setString(1, client.getLogin());
 
-            String select = "SELECT * FROM " + Const.USER_TABLE + " WHERE " + Const.USER_LOGIN + "=? AND " + Const.USER_PASSWORD + "=?";
-
-            try {
-                PreparedStatement prSt = getDbConnection().prepareStatement(select);
-                prSt.setString(1, client.getLogin());
-                prSt.setString(2, client.getPassword());
-
-                resSet = prSt.executeQuery();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            return resSet;
+            resSet = prSt.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return resSet;
     }
+
+    protected String hashPassword(String password) {
+        return BCrypt.hashpw(password, BCrypt.gensalt());
+    }
+}
