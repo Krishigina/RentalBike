@@ -16,5 +16,6 @@ public class Const {
     public static final String CLIENT_FIRSTNAME = "first_name";
     public static final String CLIENT_SECONDNAME = "second_name";
     public static final String CLIENT_PASSPORT = "passport";
+    public static final String CLIENT_USERID = "user_id";
 
 }

@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
@@ -33,6 +34,8 @@ public class HelloController {
 
     @FXML
     private PasswordField password_field;
+
+
 
     @FXML
     void initialize() {
@@ -64,7 +67,10 @@ public class HelloController {
                     e.printStackTrace();
                 }
                 if (count >= 1) {
-                    Threads.changeWindow(event, "app.fxml", "rentalbike");
+                    int roleId = finalDbHandler.getUserRole(loginText);
+                    if (roleId == 1) {
+                        Threads.changeWindow(event, "app.fxml", "rentalbike");
+                    }
                 }
                 else{
                     Shake userLoginAnim = new Shake(login_field);
@@ -80,6 +86,8 @@ public class HelloController {
                 Shake userPassAnim = new Shake(password_field);
                 userLoginAnim.playAnim();
                 userPassAnim.playAnim();
+                login_field.clear();
+                password_field.clear();
         }
             });
 
@@ -90,5 +98,4 @@ public class HelloController {
             }
         });
     }
-
 }

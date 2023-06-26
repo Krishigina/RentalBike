@@ -2,12 +2,14 @@ package com.example.rentalbike;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
@@ -42,15 +44,45 @@ public class SignUpClientController {
 
     @FXML
     private TextField signUpClient_LastName;
+
     @FXML
     private Button exitSignUp;
 
     @FXML
+    private Label successLabel;
+
+    @FXML
+    private Label errorLogin;
+
+    @FXML
+    private Label errorLabel;
+
+    private boolean loginExists;
+
+    @FXML
     void initialize() {
         RegSignUpClient.setOnAction(event -> {
-
-            signUpNewClient();
-
+            if (signUpNewClient()) {
+                successLabel.setText("Вы успешно зарегистрировались!");
+                SignUpClient_FirstName.clear();
+                SignUpClient_SecondName.clear();
+                SignUpClient_address.clear();
+                SignUpClient_login.clear();
+                SignUpClient_npassport.clear();
+                SignUpClient_password.clear();
+                signUpClient_LastName.clear();
+                errorLogin.setText("");
+                errorLabel.setText("");
+                loginExists = false;
+            } else {
+                if (loginExists) {
+                    errorLogin.setText("Логин уже занят!");
+                    errorLabel.setText("");
+                } else {
+                    errorLabel.setText("Ошибка!");
+                    errorLogin.setText("");
+                }
+            }
         });
 
         exitSignUp.setOnAction(new EventHandler<ActionEvent>() {
@@ -61,7 +93,21 @@ public class SignUpClientController {
         });
     }
 
-    private void signUpNewClient() {
+    private boolean signUpNewClient() {
+        String firstname = SignUpClient_FirstName.getText();
+        String lastname = signUpClient_LastName.getText();
+        String secondname = SignUpClient_SecondName.getText();
+        String npassport = SignUpClient_npassport.getText();
+        String address =  SignUpClient_address.getText();
+        String login = SignUpClient_login.getText();
+        String password = SignUpClient_password.getText();
+
+        if (firstname.isEmpty() || lastname.isEmpty() || secondname.isEmpty() ||
+                npassport.isEmpty() || address.isEmpty() || login.isEmpty() || password.isEmpty()) {
+            errorLabel.setText("Ошибка!");
+            return false;
+        }
+
         DataBaseHandler dbHandler = null;
         try {
             dbHandler = DataBaseHandler.getInstance();
@@ -71,18 +117,12 @@ public class SignUpClientController {
             throw new RuntimeException(e);
         }
 
-        String firstname = SignUpClient_FirstName.getText();
-        String lastname = signUpClient_LastName.getText();
-        String secondname = SignUpClient_SecondName.getText();
-        String npassport = SignUpClient_npassport.getText();
-        String address =  SignUpClient_address.getText();
-        String login = SignUpClient_login.getText();
-        String password = SignUpClient_password.getText();
-
         Client client = new Client(firstname, lastname, secondname, npassport, address, login, password);
-
-        dbHandler.signUpClient(client);
+        if (dbHandler.signUpClient(client)) {
+            return true;
+        } else {
+            loginExists = true;
+            return false;
+        }
     }
-
 }
-
