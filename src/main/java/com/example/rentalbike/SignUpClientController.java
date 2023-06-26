@@ -1,6 +1,7 @@
 package com.example.rentalbike;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -61,7 +62,14 @@ public class SignUpClientController {
     }
 
     private void signUpNewClient() {
-        DataBaseHandler dbHandler = new DataBaseHandler();
+        DataBaseHandler dbHandler = null;
+        try {
+            dbHandler = DataBaseHandler.getInstance();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
         String firstname = SignUpClient_FirstName.getText();
         String lastname = signUpClient_LastName.getText();

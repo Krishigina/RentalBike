@@ -2,16 +2,24 @@ package com.example.rentalbike;
 import java.sql.*;
 
 public class DataBaseHandler extends Configs{
-    Connection dbConnection;
+    private static DataBaseHandler instance; // Статическое поле для хранения единственного экземпляра класса
+    private Connection dbConnection;
 
-    public Connection getDbConnection() throws ClassNotFoundException, SQLException {
+    private DataBaseHandler() throws ClassNotFoundException, SQLException {
         String connectionString = "jdbc:mysql://" + dbHost + ":" + dbPort + "/" + dbName;
-
         Class.forName("com.mysql.cj.jdbc.Driver");
-
         dbConnection = DriverManager.getConnection(connectionString, dbUser, dbPass);
+    }
 
-        return dbConnection;
+    public static DataBaseHandler getInstance() throws ClassNotFoundException, SQLException {
+        if (instance == null) {
+            instance = new DataBaseHandler(); // Создание экземпляра класса, если он еще не был создан
+        }
+        return instance;
+    }
+
+    public Connection getDbConnection() {
+        return dbConnection; // Возвращение уже установленного соединения
     }
 
     public void signUpClient(Client client) {
@@ -37,8 +45,6 @@ public class DataBaseHandler extends Configs{
             prStUser.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
         }
     }
 
@@ -54,8 +60,6 @@ public class DataBaseHandler extends Configs{
 
                 resSet = prSt.executeQuery();
             } catch (SQLException e) {
-                throw new RuntimeException(e);
-            } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
             return resSet;

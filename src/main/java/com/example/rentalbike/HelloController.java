@@ -37,29 +37,36 @@ public class HelloController {
     @FXML
     void initialize() {
 
-        DataBaseHandler dbHandler = new DataBaseHandler();
+        DataBaseHandler dbHandler = null;
+        try {
+            dbHandler = DataBaseHandler.getInstance();
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        DataBaseHandler finalDbHandler = dbHandler;
         authSignInButton.setOnAction(event -> {
             String loginText = login_field.getText().trim();
             String loginPassword = password_field.getText().trim();
 
-            if (!loginText.equals("") && !loginPassword.equals("")){
+            if (!loginText.isEmpty() && !loginPassword.isEmpty()) {
                 Client client = new Client();
                 client.setLogin(loginText);
                 client.setPassword(loginPassword);
-                ResultSet result = dbHandler.getUser(client);
+                ResultSet result = finalDbHandler.getUser(client);
 
                 int count = 0;
-                try{
-                    while(result.next()){
+                try {
+                    while (result.next()) {
                         count++;
                     }
-                } catch (SQLException e){
+                } catch (SQLException e) {
                     e.printStackTrace();
                 }
-                if (count >= 1)
+                if (count >= 1) {
                     Threads.changeWindow(event, "app.fxml", "rentalbike");
-            }
-            else {
+                }
+            } else {
                 Shake userLoginAnim = new Shake(login_field);
                 Shake userPassAnim = new Shake(password_field);
                 userLoginAnim.playAnim();
