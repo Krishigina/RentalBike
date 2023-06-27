@@ -4,6 +4,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -353,31 +355,18 @@
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="171.0" prefWidth="398.0" style="-fx-background-color: #F5F5F5;">
                            <children>
-                              <Label layoutX="64.0" layoutY="63.0" text="1. &quot;ВелоЛосинка&quot;, Курганская улица 3" textFill="#1f2021">
-                                 <font>
-                                    <Font name="Times New Roman" size="19.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="64.0" layoutY="102.0" text="2. &quot;Veloles&quot;, Уральская улица, 19 к1" textFill="#1f2021">
-                                 <font>
-                                    <Font name="Times New Roman" size="19.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="64.0" layoutY="142.0" text="3. &quot;Крути педали&quot;, Университетский проспект 6 к1" textFill="#1f2021">
-                                 <font>
-                                    <Font name="Times New Roman" size="19.0" />
-                                 </font>
-                              </Label>
                               <Label layoutX="108.0" layoutY="123.0" textFill="#1f2021">
                                  <font>
                                     <Font name="Times New Roman" size="19.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="64.0" layoutY="182.0" text="4. &quot;Go-Ride&quot;, Новогиреевская улица 29 к1" textFill="#1f2021">
-                                 <font>
-                                    <Font name="Times New Roman" size="19.0" />
-                                 </font>
-                              </Label>
+                              <TableView fx:id="StoreTable" layoutY="7.0" prefHeight="488.0" prefWidth="800.0">
+                                <columns>
+                                  <TableColumn fx:id="idStore" prefWidth="60.800018310546875" />
+                                  <TableColumn fx:id="nameStore" prefWidth="275.1999816894531" text="Название магазина" />
+                                    <TableColumn fx:id="addressStore" minWidth="0.0" prefWidth="463.2000732421875" text="Адрес" />
+                                </columns>
+                              </TableView>
                            </children>
                         </AnchorPane>
                   </content>

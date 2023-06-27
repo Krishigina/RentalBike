@@ -18,4 +18,9 @@ public class Const {
     public static final String CLIENT_PASSPORT = "passport";
     public static final String CLIENT_USERID = "user_id";
 
+    public static final String STORE_TABLE = "stores";
+    public static final String STORE_ID = "id";
+    public static final String STORE_NAME = "name";
+    public static final String STORE_ADDRESS = "address";
+
 }

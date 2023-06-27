@@ -109,4 +109,17 @@ public class DataBaseHandler extends Configs {
 
         return roleId;
     }
+
+    public ResultSet getStore(){
+        ResultSet resSet = null;
+        String select = "SELECT * FROM " + Const.STORE_TABLE + ";";
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(select);
+            resSet = prSt.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return resSet;
+    }
 }
