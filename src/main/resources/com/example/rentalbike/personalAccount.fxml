@@ -29,7 +29,7 @@
                                     <Image url="@assets/profile.png" />
                                  </image>
                               </ImageView>
-                              <Button fx:id="ButtonProfile" mnemonicParsing="false" onAction="#buttonProfile" prefHeight="42.0" prefWidth="139.0" style="-fx-background-color: #1D354F;" text="Profile" textFill="WHITE">
+                              <Button fx:id="ButtonProfile" mnemonicParsing="false" onAction="#buttonProfile" prefHeight="42.0" prefWidth="139.0" style="-fx-background-color: #1D354F;" text="Профиль" textFill="WHITE">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
@@ -43,7 +43,7 @@
                                     <Image url="@assets/password.png" />
                                  </image>
                               </ImageView>
-                              <Button fx:id="ButtonChangePass" mnemonicParsing="false" onAction="#buttonChangePassClicked" prefHeight="42.0" prefWidth="139.0" style="-fx-background-color: #1D354F;" text="ChangePass" textFill="WHITE">
+                              <Button fx:id="ButtonChangePass" mnemonicParsing="false" onAction="#buttonChangePassClicked" prefHeight="42.0" prefWidth="139.0" style="-fx-background-color: #1D354F;" text="Изменить пароль" textFill="WHITE">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
@@ -57,7 +57,7 @@
                                     <Image url="@assets/rentals.png" />
                                  </image>
                               </ImageView>
-                              <Button fx:id="ButtonRentals" mnemonicParsing="false" onAction="#buttonHistory" prefHeight="42.0" prefWidth="139.0" style="-fx-background-color: #1D354F;" text="Rentals" textFill="WHITE">
+                              <Button fx:id="ButtonRentals" mnemonicParsing="false" onAction="#buttonHistory" prefHeight="42.0" prefWidth="139.0" style="-fx-background-color: #1D354F;" text="История аренды" textFill="WHITE">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
@@ -121,6 +121,12 @@
                         <Font name="Segoe UI" size="14.0" />
                      </font>
                   </Button>
+                  <Label fx:id="successChange" layoutX="208.0" layoutY="51.0" textFill="#0db26f">
+                     <font>
+                        <Font name="Segoe UI" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="errorLabel" layoutX="279.0" layoutY="57.0" textFill="#db2525" />
                </children>
             </AnchorPane>
             <AnchorPane fx:id="AnchorPaneChangePass" layoutX="202.0" layoutY="-2.0" prefHeight="526.0" prefWidth="594.0" visible="false">
@@ -162,12 +168,12 @@
                         <Font name="Segoe UI" size="18.0" />
                      </font>
                   </Label>
-                  <TableView fx:id="RentalcTableHistory" layoutY="70.0" prefHeight="453.0" prefWidth="594.0">
+                  <TableView fx:id="RentalcTableHistory" layoutX="5.0" layoutY="70.0" prefHeight="454.0" prefWidth="586.0">
                     <columns>
                       <TableColumn fx:id="RentalcColumnNameBike" prefWidth="210.39996337890625" text="Название модели велосипеда" />
                       <TableColumn fx:id="RentalcColumnNameStore" minWidth="0.0" prefWidth="141.60003662109375" text="Название магазина" />
                         <TableColumn fx:id="RentalcColumnDateStart" minWidth="0.0" prefWidth="125.5999755859375" text="Дата начала" />
-                        <TableColumn fx:id="RentalsColumnDateEnd" minWidth="0.0" prefWidth="111.2000732421875" text="Дата окончания" />
+                        <TableColumn fx:id="RentalsColumnDateEnd" minWidth="0.0" prefWidth="103.199951171875" text="Дата окончания" />
                     </columns>
                   </TableView>
                </children>

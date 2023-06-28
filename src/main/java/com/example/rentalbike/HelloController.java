@@ -31,8 +31,7 @@ public class HelloController {
 
     @FXML
     private PasswordField password_field;
-
-
+    private static String userLogin; // переменная для хранения логина пользователя
 
 
     @FXML
@@ -66,6 +65,7 @@ public class HelloController {
                 if (count >= 1) {
                     int roleId = finalDbHandler.getUserRole(loginText);
                     if (roleId == 1) {
+                        userLogin = loginText;
                         Threads.changeWindow(event, "app.fxml", "rentalbike");
                     }
                 }
@@ -95,5 +95,10 @@ public class HelloController {
             }
         });
     }
+    // метод для получения логина пользователя
+    public static String getUserLogin() {
+        return userLogin;
+    }
+
 
 }

@@ -1,18 +1,20 @@
 package com.example.rentalbike;
 
 import java.net.URL;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import javafx.animation.FadeTransition;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Duration;
 
 public class PersonalAccountController {
 
@@ -74,28 +76,73 @@ public class PersonalAccountController {
     private TextField ProfileSecondNmae_field;
 
     @FXML
-    private TableColumn<?, ?> RentalcColumnDateStart;
+    private TableColumn<History, String> RentalcColumnDateStart;
 
     @FXML
-    private TableColumn<?, ?> RentalcColumnNameBike;
+    private TableColumn<History, String> RentalcColumnNameBike;
 
     @FXML
-    private TableColumn<?, ?> RentalcColumnNameStore;
+    private TableColumn<History, String> RentalcColumnNameStore;
 
     @FXML
-    private TableView<?> RentalcTableHistory;
+    private TableView<History> RentalcTableHistory;
 
     @FXML
-    private TableColumn<?, ?> RentalsColumnDateEnd;
+    private TableColumn<History, String> RentalsColumnDateEnd;
+    @FXML
+    private Label successChange;
+    @FXML
+    private Label errorLabel;
+    private final ObservableList<History> data = FXCollections.observableArrayList();
+    DataBaseHandler dbHandler = null;
 
     @FXML
     void initialize() {
-        DataBaseHandler dbHandler = null;
         try {
             dbHandler = DataBaseHandler.getInstance();
         } catch (ClassNotFoundException | SQLException e) {
             throw new RuntimeException(e);
         }
+
+        ProfileLastName_field.setText(dbHandler.geLastName(HelloController.getUserLogin()));
+        ProfileFirstName_field.setText(dbHandler.getFirstName(HelloController.getUserLogin()));
+        ProfileSecondNmae_field.setText(dbHandler.getSecondName(HelloController.getUserLogin()));
+        ProfilePassport_field.setText(dbHandler.getPassport(HelloController.getUserLogin()));
+        ProfileAddress_field.setText(dbHandler.getAddress(HelloController.getUserLogin()));
+        ProfileLoginField.setText(dbHandler.getLoginField(HelloController.getUserLogin()));
+
+        ProfileButtonUpdateUser.setOnAction(event -> {
+            if (updateClientData() && updateUserData()) {
+                successChange.setText("Данные были успешно обновлены!");
+                FadeTransition fadeOut = new FadeTransition(Duration.millis(2000), successChange);
+                fadeOut.setFromValue(1.0);
+                fadeOut.setToValue(0.0);
+                fadeOut.setDelay(Duration.seconds(2));
+                fadeOut.play();
+            } else {
+                errorLabel.setText("Ошибка!");
+                ProfileLastName_field.setText(dbHandler.geLastName(HelloController.getUserLogin()));
+                ProfileFirstName_field.setText(dbHandler.getFirstName(HelloController.getUserLogin()));
+                ProfileSecondNmae_field.setText(dbHandler.getSecondName(HelloController.getUserLogin()));
+                ProfilePassport_field.setText(dbHandler.getPassport(HelloController.getUserLogin()));
+                ProfileAddress_field.setText(dbHandler.getAddress(HelloController.getUserLogin()));
+                ProfileLoginField.setText(dbHandler.getLoginField(HelloController.getUserLogin()));
+                FadeTransition fadeOut = new FadeTransition(Duration.millis(2000), errorLabel);
+                fadeOut.setFromValue(1.0);
+                fadeOut.setToValue(0.0);
+                fadeOut.setDelay(Duration.seconds(2));
+                fadeOut.play();
+            }
+        });
+
+        addInfAboutHistory();
+        RentalcColumnNameBike.setCellValueFactory(new PropertyValueFactory<>("bikename"));
+        RentalcColumnNameStore.setCellValueFactory(new PropertyValueFactory<>("storename"));
+        RentalcColumnDateStart.setCellValueFactory(new PropertyValueFactory<>("pickupdate"));
+        RentalsColumnDateEnd.setCellValueFactory(new PropertyValueFactory<>("returndate"));
+        RentalcTableHistory.setItems(data);
+
+
         ButtonPersonalAccountExit.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -119,6 +166,68 @@ public class PersonalAccountController {
         AnchorPaneChangePass.setVisible(false);
         AnchorPaneProfile.setVisible(false);
         AnchorPaneRentals.setVisible(true);
+    }
+    private void addInfAboutHistory(){
+        try {
+            dbHandler = DataBaseHandler.getInstance();
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        ResultSet historys = dbHandler.getHistory(dbHandler.getUserId(HelloController.getUserLogin()));
+        try{
+            while(historys.next()){
+                History history = new History(
+                        historys.getString(1),
+                        historys.getString(2),
+                        historys.getString(3),
+                        historys.getString(4));
+
+                data.add(history);
+            }
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
+    private boolean updateClientData() {
+        String newFirstName = ProfileLastName_field.getText();
+        String newLastName = ProfileFirstName_field.getText();
+        String newSecondName = ProfileSecondNmae_field.getText();
+        String newPassport = ProfilePassport_field.getText();
+        String newAddress = ProfileAddress_field.getText();
+
+
+        if (newFirstName.isEmpty() || newLastName.isEmpty() || newSecondName.isEmpty()
+                || newPassport.isEmpty() || newAddress.isEmpty() ) {
+            return false;
+        }
+
+        DataBaseHandler dbHandler = null;
+        try {
+            dbHandler = DataBaseHandler.getInstance();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return dbHandler.updateClientData(newLastName, newFirstName, newSecondName, newPassport, newAddress, String.valueOf(dbHandler.getUserId(HelloController.getUserLogin())));
+    }
+    private boolean updateUserData(){
+        String newlogin = ProfileLoginField.getText();
+        if (newlogin.isEmpty()) {
+            return false;
+        }
+
+        DataBaseHandler dbHandler = null;
+        try {
+            dbHandler = DataBaseHandler.getInstance();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return dbHandler.updateClientLogin(newlogin, String.valueOf(dbHandler.getUserId(HelloController.getUserLogin())));
     }
 
 }
