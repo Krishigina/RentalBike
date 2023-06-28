@@ -2,7 +2,6 @@ package com.example.rentalbike;
 
 import java.net.URL;
 import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;

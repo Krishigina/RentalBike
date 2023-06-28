@@ -25,9 +25,6 @@ public class HomeClientController {
     private URL location;
 
     @FXML
-    private ImageView Button_HomeClientexit;
-
-    @FXML
     private Button exit;
     @FXML
     private TableView<Store> StoreTable;
@@ -39,6 +36,8 @@ public class HomeClientController {
     private TableColumn<Store, String> addressStore;
     private final ObservableList<Store> data = FXCollections.observableArrayList();
     DataBaseHandler dbHandler = null;
+    @FXML
+    private Button personalAccount;
 
     @FXML
     void initialize() {
@@ -53,6 +52,12 @@ public class HomeClientController {
             @Override
             public void handle(ActionEvent event) {
                 Threads.changeWindow(event, "/com/example/rentalbike/hello-view.fxml", "Вход");
+            }
+        });
+        personalAccount.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Threads.changeWindow(event, "/com/example/rentalbike/personalAccount.fxml", "Вход");
             }
         });
 
