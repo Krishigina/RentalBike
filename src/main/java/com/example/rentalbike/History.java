@@ -1,10 +1,10 @@
 package com.example.rentalbike;
 
 public class History {
-    private String bikename = "bike_models.name";
-    private String storename = "stores.name";
-    private String pickupdate = "bookings.pickup_date";
-    private String returndate = "rentals.return_date";
+    private String bikename;
+    private String storename;
+    private String pickupdate;
+    private String returndate;
 
     public History(String bikename, String storename, String pickupdate, String returndate) {
         this.bikename = bikename;

@@ -7,7 +7,6 @@ import java.util.ResourceBundle;
 
 import com.example.rentalbike.animation.Shake;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
@@ -43,6 +42,7 @@ public class HelloController {
             throw new RuntimeException(e);
         }
 
+        // Изменил код проверки логина и пароля пользователя
         DataBaseHandler finalDbHandler = dbHandler;
         authSignInButton.setOnAction(event -> {
             String loginText = login_field.getText().trim();
@@ -51,48 +51,54 @@ public class HelloController {
             if (!loginText.isEmpty() && !loginPassword.isEmpty()) {
                 Client client = new Client();
                 client.setLogin(loginText);
-                client.setPassword(finalDbHandler.hashPassword(loginPassword));
                 ResultSet result = finalDbHandler.getUser(client);
 
-                int count = 0;
                 try {
-                    while (result.next()) {
-                        count++;
+                    if (result.next()) {
+                        String passwordFromDB = result.getString("password");
+
+                        // Проверяем, соответствует ли введенный пароль паролю из БД
+                        if (BCrypt.checkpw(loginPassword, passwordFromDB)) {
+                            int roleId = finalDbHandler.getUserRole(loginText);
+                            if (roleId == 1) {
+                                userLogin = loginText;
+                                Threads.changeWindow(event, "app.fxml", "rentalbike");
+                            } else {
+                                // Другие действия для других ролей
+                            }
+                        } else {
+                            // Пароль неверный
+                            Shake userLoginAnim = new Shake(login_field);
+                            Shake userPassAnim = new Shake(password_field);
+                            userLoginAnim.playAnim();
+                            userPassAnim.playAnim();
+                            login_field.clear();
+                            password_field.clear();
+                        }
+                    } else {
+                        // Пользователь не найден
+                        Shake userLoginAnim = new Shake(login_field);
+                        Shake userPassAnim = new Shake(password_field);
+                        userLoginAnim.playAnim();
+                        userPassAnim.playAnim();
+                        login_field.clear();
+                        password_field.clear();
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-                if (count >= 1) {
-                    int roleId = finalDbHandler.getUserRole(loginText);
-                    if (roleId == 1) {
-                        userLogin = loginText;
-                        Threads.changeWindow(event, "app.fxml", "rentalbike");
-                    }
-                }
-                else{
-                    Shake userLoginAnim = new Shake(login_field);
-                    Shake userPassAnim = new Shake(password_field);
-                    userLoginAnim.playAnim();
-                    userPassAnim.playAnim();
-                    login_field.clear();
-                    password_field.clear();
-                }
-            }
-            else {
+            } else {
                 Shake userLoginAnim = new Shake(login_field);
                 Shake userPassAnim = new Shake(password_field);
                 userLoginAnim.playAnim();
                 userPassAnim.playAnim();
                 login_field.clear();
                 password_field.clear();
-        }
-            });
-
-        loginSignUpButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                Threads.changeWindow(event, "signUpClient.fxml", "Регистрация");
             }
+        });
+
+        loginSignUpButton.setOnAction(event -> {
+            Threads.changeWindow(event, "signUpClient.fxml", "Регистрация");
         });
     }
     // метод для получения логина пользователя

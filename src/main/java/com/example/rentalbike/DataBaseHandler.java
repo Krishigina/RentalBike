@@ -73,6 +73,39 @@ public class DataBaseHandler extends Configs {
             throw new RuntimeException(e);
         }
     }
+    public boolean updateClientPassword(String login, String oldPassword, String newPassword) {
+        String passwordCheckQuery = "SELECT * FROM " + Const.USER_TABLE + " WHERE " + Const.USER_LOGIN + "=?";
+
+        try {
+            PreparedStatement passwordCheckSt = getDbConnection().prepareStatement(passwordCheckQuery);
+            passwordCheckSt.setString(1, login);
+
+            ResultSet passwordCheckRes = passwordCheckSt.executeQuery();
+            if (passwordCheckRes.next()) {
+                String hashedOldPassword = passwordCheckRes.getString(Const.USER_PASSWORD);
+
+                if (BCrypt.checkpw(oldPassword, hashedOldPassword)) {
+                    String updatePasswordQuery = "UPDATE " + Const.USER_TABLE + " SET " + Const.USER_PASSWORD + "=? WHERE " + Const.USER_LOGIN + "=?";
+                    PreparedStatement updatePasswordSt = getDbConnection().prepareStatement(updatePasswordQuery);
+                    updatePasswordSt.setString(1, BCrypt.hashpw(newPassword, BCrypt.gensalt()));
+                    updatePasswordSt.setString(2, login);
+
+                    int rowsAffected = updatePasswordSt.executeUpdate();
+                    updatePasswordSt.close();
+
+                    return rowsAffected > 0;
+                } else {
+                    //System.out.println("Старый пароль введен неверно");
+                    return false;
+                }
+            } else {
+                //System.out.println("Пользователь с таким логином не найден");
+                return false;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
     public boolean updateClientData(String newLastName, String newFirstName, String newSecondName, String newPassport, String newAddress, String userId) {
         String updateQuery = "UPDATE " + Const.CLIENT_TABLE + " SET " +
                 Const.CLIENT_FIRSTNAME + " = ?, " +
@@ -142,9 +175,20 @@ public class DataBaseHandler extends Configs {
         }
         return resSet;
     }
-
     protected String hashPassword(String password) {
         return BCrypt.hashpw(password, BCrypt.gensalt());
+    }
+    public ResultSet getUserByLoginAndPassword(String login, String password) {
+        String query = "SELECT * FROM " + Const.USER_TABLE + " WHERE " + Const.USER_LOGIN + "=? AND " + Const.USER_PASSWORD + "=?";
+        try {
+            PreparedStatement statement = getDbConnection().prepareStatement(query);
+            statement.setString(1, login);
+            statement.setString(2, hashPassword(password));
+            ResultSet resultSet = statement.executeQuery();
+            return resultSet;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
     public int getUserRole(String login) {
         int roleId = -1; // Значение по умолчанию, если роль не найдена

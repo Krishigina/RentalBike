@@ -93,6 +93,10 @@ public class PersonalAccountController {
     private Label successChange;
     @FXML
     private Label errorLabel;
+    @FXML
+    private Label errorLabelPass;
+    @FXML
+    private Label successChangePass;
     private final ObservableList<History> data = FXCollections.observableArrayList();
     DataBaseHandler dbHandler = null;
 
@@ -128,6 +132,27 @@ public class PersonalAccountController {
                 ProfileAddress_field.setText(dbHandler.getAddress(HelloController.getUserLogin()));
                 ProfileLoginField.setText(dbHandler.getLoginField(HelloController.getUserLogin()));
                 FadeTransition fadeOut = new FadeTransition(Duration.millis(2000), errorLabel);
+                fadeOut.setFromValue(1.0);
+                fadeOut.setToValue(0.0);
+                fadeOut.setDelay(Duration.seconds(2));
+                fadeOut.play();
+            }
+        });
+
+        ChangePassButtonUpdate.setOnAction(event -> {
+            if (updateClientPassword()) {
+                successChangePass.setText("Данные были успешно обновлены!");
+                FadeTransition fadeOut = new FadeTransition(Duration.millis(2000), successChangePass);
+                fadeOut.setFromValue(1.0);
+                fadeOut.setToValue(0.0);
+                fadeOut.setDelay(Duration.seconds(2));
+                fadeOut.play();
+                ChangePassOldPass_field.clear();
+                ChangePassNewPass_field.clear();
+                ChangePassLogin_field.clear();
+            } else {
+                errorLabelPass.setText("Ошибка!");
+                FadeTransition fadeOut = new FadeTransition(Duration.millis(2000), errorLabelPass);
                 fadeOut.setFromValue(1.0);
                 fadeOut.setToValue(0.0);
                 fadeOut.setDelay(Duration.seconds(2));
@@ -228,6 +253,30 @@ public class PersonalAccountController {
             throw new RuntimeException(e);
         }
         return dbHandler.updateClientLogin(newlogin, String.valueOf(dbHandler.getUserId(HelloController.getUserLogin())));
+    }
+    private boolean updateClientPassword() {
+        String login = ChangePassLogin_field.getText().trim();
+        String oldPassword = ChangePassOldPass_field.getText().trim();
+        String newPassword = ChangePassNewPass_field.getText().trim();
+
+        if (login.isEmpty() || oldPassword.isEmpty() || newPassword.isEmpty()) {
+            return false;
+        }
+
+        DataBaseHandler dbHandler = null;
+        try {
+            dbHandler = DataBaseHandler.getInstance();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        boolean passwordUpdated = dbHandler.updateClientPassword(login, oldPassword, newPassword);
+
+
+
+        return passwordUpdated;
     }
 
 }
