@@ -1,5 +1,7 @@
 package com.example.rentalbike;
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class DataBaseHandler extends Configs {
     private static DataBaseHandler instance; // Статическое поле для хранения единственного экземпляра класса
@@ -221,6 +223,41 @@ public class DataBaseHandler extends Configs {
 
         return resSet;
     }
+    public ResultSet getStoreName(){
+        ResultSet resSet = null;
+        String select = "SELECT name FROM " + Const.STORE_TABLE + ";";
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(select);
+            resSet = prSt.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return resSet;
+    }
+
+    public ResultSet getBookings() {
+        ResultSet resultSet = null;
+        String select = "SELECT bookings.id, CONCAT(clients.last_name, ' ', clients.first_name, ' ', clients.second_name) AS name, " +
+                "clients.passport, " +
+                "bookings.bike_id, " +
+                "stores.name, " +
+                "DATE_FORMAT(bookings.pickup_date, '%d.%m.%Y') AS pickup_date " +
+                "FROM bookings " +
+                "INNER JOIN clients ON bookings.client_id = clients.id " +
+                "INNER JOIN bikes ON bookings.bike_id = bikes.id " +
+                "INNER JOIN stores ON bookings.store_id = stores.id;";
+
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(select);
+            resultSet = prSt.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return resultSet;
+    }
+
     public ResultSet getHistory(Integer user_id) {
         ResultSet resSet = null;
         String select = "SELECT " + Const.MODELS_TABLE + "." + Const.MODELS_NAME + ", " + Const.STORE_TABLE + "." + Const.STORE_NAME +
@@ -358,6 +395,99 @@ public class DataBaseHandler extends Configs {
             e.printStackTrace();
         }
         return loginfield;
+    }
+
+    public boolean newBooking(Booking booking) {
+        String clientIdQuery = "SELECT " + Const.CLIENT_ID + " FROM " + Const.CLIENT_TABLE + " WHERE " + Const.CLIENT_PASSPORT + "=? AND " +
+                Const.CLIENT_FIRSTNAME + "=? AND " + Const.CLIENT_LASTNAME + "=? AND " + Const.CLIENT_SECONDNAME + "=?";
+        try {
+            PreparedStatement clientIdStatement = getDbConnection().prepareStatement(clientIdQuery);
+            clientIdStatement.setString(1, booking.getPassport());
+            clientIdStatement.setString(2, booking.getClientFirstName());
+            clientIdStatement.setString(3, booking.getClientLastName());
+            clientIdStatement.setString(4, booking.getClientSecondName());
+            ResultSet clientIdResult = clientIdStatement.executeQuery();
+            if (!clientIdResult.next()) {
+                //System.out.println("Клиент с указанными данными не существует");
+                return false; // Клиент с указанными данными не существует
+            }
+            int clientId = clientIdResult.getInt(Const.CLIENT_ID);
+
+            String storeIdQuery = "SELECT " + Const.STORE_ID + " FROM " + Const.STORE_TABLE + " WHERE " + Const.STORE_NAME + "=?";
+            PreparedStatement storeIdStatement = getDbConnection().prepareStatement(storeIdQuery);
+            storeIdStatement.setString(1, booking.getStoreName());
+            ResultSet storeIdResult = storeIdStatement.executeQuery();
+            if (!storeIdResult.next()) {
+                //System.out.println("Магазин с указанным названием не существует");
+                return false; // Магазин с указанным названием не существует
+            }
+            int storeId = storeIdResult.getInt(Const.STORE_ID);
+
+            String pickupDate = "";
+            if (booking.getPickupDate() != null) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                LocalDate datepickup = LocalDate.parse(booking.getPickupDate(), formatter);
+                pickupDate = datepickup.format(DateTimeFormatter.ISO_DATE);
+            }
+
+            int bikeId = booking.getBike_id();
+
+            // Проверяем, свободен ли велосипед
+            String checkBookingsQuery = "SELECT * FROM " + Const.BOOKINGS_TABLE + " WHERE " + Const.BOOKINGS_BIKEID + "=? " +
+                    "AND " + Const.BOOKINGS_PICKUPDATE + " >= CURDATE()";
+            PreparedStatement checkBookingsStatement = getDbConnection().prepareStatement(checkBookingsQuery);
+            checkBookingsStatement.setInt(1, bikeId);
+            ResultSet checkBookingsResult = checkBookingsStatement.executeQuery();
+
+            if (checkBookingsResult.next()) {
+                //System.out.println("Велосипед с id " + bikeId + " недоступен");
+                return false; // Велосипед занят
+            }
+
+            String addBookingQuery = "INSERT INTO " + Const.BOOKINGS_TABLE + " (" + Const.BOOKINGS_CLIENTID + ", " +
+                    Const.BOOKINGS_STOREID + ", " + Const.BOOKINGS_PICKUPDATE + ", " + Const.BOOKINGS_BIKEID + ") VALUES (?, ?, ?, ?)";
+            PreparedStatement addBookingStatement = getDbConnection().prepareStatement(addBookingQuery);
+            addBookingStatement.setInt(1, clientId);
+            addBookingStatement.setInt(2, storeId);
+            addBookingStatement.setString(3, pickupDate);
+            addBookingStatement.setInt(4, bikeId);
+
+            int rowsAffected = addBookingStatement.executeUpdate();
+            if (rowsAffected == 1) {
+                //System.out.println("Бронирование добавлено успешно");
+                return true;
+            } else {
+                //System.out.println("Ошибка при добавлении бронирования");
+                return false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public boolean deleteBooking(int bookingId) {
+        String deleteBookingQuery = "DELETE FROM " + Const.BOOKINGS_TABLE + " WHERE " + Const.BOOKINGS_ID + " = ?";
+        String deleteRentalQuery = "DELETE FROM " + Const.RENTALS_TABLE + " WHERE " + Const.RENTALS_BOOKINGID + " = ?";
+
+        try (Connection connection = getDbConnection();
+             PreparedStatement deleteBookingStatement = connection.prepareStatement(deleteBookingQuery);
+             PreparedStatement deleteRentalStatement = connection.prepareStatement(deleteRentalQuery)) {
+
+            deleteBookingStatement.setInt(1, bookingId);
+            int rowsAffected1 = deleteBookingStatement.executeUpdate();
+
+            deleteRentalStatement.setInt(1, bookingId);
+            int rowsAffected2 = deleteRentalStatement.executeUpdate();
+
+            if (rowsAffected1 > 0 || rowsAffected2 > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
 }

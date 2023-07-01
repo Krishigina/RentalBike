@@ -186,6 +186,12 @@ public class PersonalAccountController {
         AnchorPaneChangePass.setVisible(false);
         AnchorPaneProfile.setVisible(true);
         AnchorPaneRentals.setVisible(false);
+        ProfileLastName_field.setText(dbHandler.geLastName(HelloController.getUserLogin()));
+        ProfileFirstName_field.setText(dbHandler.getFirstName(HelloController.getUserLogin()));
+        ProfileSecondNmae_field.setText(dbHandler.getSecondName(HelloController.getUserLogin()));
+        ProfilePassport_field.setText(dbHandler.getPassport(HelloController.getUserLogin()));
+        ProfileAddress_field.setText(dbHandler.getAddress(HelloController.getUserLogin()));
+        ProfileLoginField.setText(dbHandler.getLoginField(HelloController.getUserLogin()));
     }
     public void buttonHistory(ActionEvent event) {
         AnchorPaneChangePass.setVisible(false);

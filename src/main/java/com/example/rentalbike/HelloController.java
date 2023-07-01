@@ -63,7 +63,11 @@ public class HelloController {
                             if (roleId == 1) {
                                 userLogin = loginText;
                                 Threads.changeWindow(event, "app.fxml", "rentalbike");
-                            } else {
+                            }
+                            if (roleId == 2){
+                                Threads.changeWindow(event, "/com/example/rentalbike/managerApp.fxml", "rentalbike");
+                            }
+                            else {
                                 // Другие действия для других ролей
                             }
                         } else {

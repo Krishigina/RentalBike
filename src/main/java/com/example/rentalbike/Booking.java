@@ -2,15 +2,37 @@ package com.example.rentalbike;
 
 public class Booking {
     private Integer id;
-    private Integer client_id;
+    private String clientName;
+    private String passport;
     private Integer bike_id;
-    private String pickup_date;
+    private String storeName;
+    private String pickupDate;
+    private String clientFirstName;
+    private String clientLastName;
+    private String clientSecondName;
 
-    public Booking(Integer id, Integer client_id, Integer bike_id, String pickup_date) {
-        this.id = id;
-        this.client_id = client_id;
-        this.bike_id = bike_id;
-        this.pickup_date = pickup_date;
+    public String getClientFirstName() {
+        return clientFirstName;
+    }
+
+    public void setClientFirstName(String clientFirstName) {
+        this.clientFirstName = clientFirstName;
+    }
+
+    public String getClientLastName() {
+        return clientLastName;
+    }
+
+    public void setClientLastName(String clientLastName) {
+        this.clientLastName = clientLastName;
+    }
+
+    public String getClientSecondName() {
+        return clientSecondName;
+    }
+
+    public void setClientSecondName(String clientSecondName) {
+        this.clientSecondName = clientSecondName;
     }
 
     public Integer getId() {
@@ -21,12 +43,38 @@ public class Booking {
         this.id = id;
     }
 
-    public Integer getClient_id() {
-        return client_id;
+    public Booking(Integer id, String clientName, String passport, Integer bike_id, String storeName, String pickupDate) {
+        this.id = id;
+        this.clientName = clientName;
+        this.passport = passport;
+        this.bike_id = bike_id;
+        this.storeName = storeName;
+        this.pickupDate = pickupDate;
+    }
+    public Booking(String clientLastName, String clientFirstName, String clientSecondName, String passport, String bike_id, String storeName, String pickupDate){
+        this.clientLastName = clientLastName;
+        this.clientFirstName = clientFirstName;
+        this.clientSecondName = clientSecondName;
+        this.passport = passport;
+        this.bike_id = Integer.valueOf(bike_id);
+        this.storeName = storeName;
+        this.pickupDate = pickupDate;
     }
 
-    public void setClient_id(Integer client_id) {
-        this.client_id = client_id;
+    public String getClientName() {
+        return clientName;
+    }
+
+    public void setClientName(String clientName) {
+        this.clientName = clientName;
+    }
+
+    public String getPassport() {
+        return passport;
+    }
+
+    public void setPassport(String passport) {
+        this.passport = passport;
     }
 
     public Integer getBike_id() {
@@ -37,11 +85,19 @@ public class Booking {
         this.bike_id = bike_id;
     }
 
-    public String getPickup_date() {
-        return pickup_date;
+    public String getStoreName() {
+        return storeName;
     }
 
-    public void setPickup_date(String pickup_date) {
-        this.pickup_date = pickup_date;
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
+    }
+
+    public String getPickupDate() {
+        return pickupDate;
+    }
+
+    public void setPickupDate(String pickupDate) {
+        this.pickupDate = pickupDate;
     }
 }
