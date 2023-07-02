@@ -151,56 +151,76 @@
                   </VBox>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="AnchorPaneClients" layoutX="209.0" prefHeight="518.0" prefWidth="584.0" visible="false">
+            <AnchorPane fx:id="AnchorPaneClients" layoutX="209.0" prefHeight="518.0" prefWidth="584.0">
                <children>
                   <TableView fx:id="ClientsTable" layoutX="9.0" layoutY="86.0" prefHeight="427.0" prefWidth="575.0">
                     <columns>
-                      <TableColumn fx:id="ClientsIdColumn" prefWidth="50.4000244140625" />
+                      <TableColumn fx:id="ClientsIdColumn" prefWidth="50.4000244140625" text="ID" />
                       <TableColumn fx:id="ClientsNameColumn" prefWidth="212.0" text="ФИО клиента" />
                         <TableColumn fx:id="ClientsPassportColumn" prefWidth="96.0" text="Паспорт" />
-                        <TableColumn fx:id="ClientsAddressColumn" prefWidth="211.199951171875" text="Адрес" />
+                        <TableColumn fx:id="ClientsAddressColumn" prefWidth="308.0" text="Адрес" />
                     </columns>
                   </TableView>
+                  <Label layoutX="260.0" layoutY="1.0" text="Клиенты" textFill="#1b1a1a">
+                     <font>
+                        <Font name="Segoe UI Historic" size="16.0" />
+                     </font>
+                  </Label>
                </children>
             </AnchorPane>
             <AnchorPane fx:id="AnchorPaneManagers" layoutX="219.0" layoutY="10.0" prefHeight="518.0" prefWidth="575.0" visible="false">
                <children>
-                  <TableView fx:id="ManagersTable" layoutX="9.0" layoutY="86.0" prefHeight="427.0" prefWidth="361.0">
+                  <TableView fx:id="ManagersTable" layoutX="9.0" layoutY="86.0" prefHeight="427.0" prefWidth="554.0">
                      <columns>
-                        <TableColumn fx:id="ManagersIdColumn" prefWidth="50.4000244140625" />
-                        <TableColumn fx:id="ManagersNameColumn" prefWidth="212.0" text="ФИО менеджера" />
-                        <TableColumn fx:id="ManagersLoginColumn" prefWidth="95.19992065429688" text="Логин" />
+                        <TableColumn fx:id="ManagersIdColumn" prefWidth="50.4000244140625" text="ID" />
+                        <TableColumn fx:id="ManagersNameColumn" prefWidth="362.39996337890625" text="ФИО менеджера" />
+                        <TableColumn fx:id="ManagersLoginColumn" prefWidth="135.20001220703125" text="Логин" />
                      </columns>
                   </TableView>
+                  <Label layoutX="244.0" layoutY="1.0" text="Менеджеры" textFill="#1b1a1a">
+                     <font>
+                        <Font name="Segoe UI Historic" size="16.0" />
+                     </font>
+                  </Label>
                </children>
             </AnchorPane>
             <AnchorPane fx:id="AnchorPaneBikes" layoutX="219.0" layoutY="10.0" prefHeight="518.0" prefWidth="575.0" visible="false">
                <children>
-                  <TableView fx:id="BikesTable" layoutX="9.0" layoutY="86.0" prefHeight="427.0" prefWidth="270.0">
+                  <TableView fx:id="BikesTable" layoutX="9.0" layoutY="86.0" prefHeight="427.0" prefWidth="554.0">
                      <columns>
-                        <TableColumn fx:id="BikesIdColumn" prefWidth="50.4000244140625" />
-                        <TableColumn fx:id="BikesNameColumn" prefWidth="212.0" text="Название модели" />
+                        <TableColumn fx:id="BikesIdColumn" prefWidth="141.59999084472656" text="№ велосипеда" />
+                        <TableColumn fx:id="BikesNameColumn" prefWidth="406.40008544921875" text="Название модели" />
                      </columns>
                   </TableView>
+                  <Label layoutX="243.0" layoutY="1.0" text="Велосипеды" textFill="#1b1a1a">
+                     <font>
+                        <Font name="Segoe UI Historic" size="16.0" />
+                     </font>
+                  </Label>
                </children>
             </AnchorPane>
             <AnchorPane fx:id="AnchorPaneModels" layoutX="209.0" prefHeight="518.0" prefWidth="575.0" visible="false">
                <children>
                   <TableView fx:id="ModelsTable" layoutX="9.0" layoutY="86.0" prefHeight="427.0" prefWidth="563.0">
                      <columns>
-                        <TableColumn fx:id="ModelsIdColumn" prefWidth="50.4000244140625" />
+                        <TableColumn fx:id="ModelsIdColumn" prefWidth="50.4000244140625" text="ID" />
                         <TableColumn fx:id="ModelsNameColumn" prefWidth="263.1999816894531" text="Название модели" />
                         <TableColumn fx:id="ModelsTypeColumn" prefWidth="111.199951171875" text="Тип" />
                         <TableColumn fx:id="ModelsGearsColumn" prefWidth="131.20001220703125" text="Количество передач" />
                      </columns>
                   </TableView>
+                  <Label layoutX="210.0" layoutY="1.0" text="Модели велосипедов" textFill="#1b1a1a">
+                     <font>
+                        <Font name="Segoe UI Historic" size="16.0" />
+                     </font>
+                  </Label>
                </children>
             </AnchorPane>
             <AnchorPane fx:id="AnchorPaneBookings" layoutX="219.0" layoutY="10.0" prefHeight="518.0" prefWidth="575.0" visible="false">
                <children>
                   <TableView fx:id="BookingsTable" layoutX="-6.0" layoutY="63.0" prefHeight="454.0" prefWidth="585.0">
                      <columns>
-                        <TableColumn fx:id="BookingsIdColumn" prefWidth="38.40000915527344" />
+                        <TableColumn fx:id="BookingsIdColumn" prefWidth="38.40000915527344" text="ID" />
                         <TableColumn fx:id="BookingsClientNameColumn" prefWidth="182.39996337890625" text="ФИО клиента" />
                         <TableColumn fx:id="BookingsClientPassportColumn" prefWidth="91.199951171875" text="Паспорт" />
                         <TableColumn fx:id="BookingsBikeIdColumn" prefWidth="92.800048828125" text="№ велосипеда" />
@@ -208,19 +228,29 @@
                         <TableColumn fx:id="BookingsPickUpDateColumn" prefWidth="80.7999267578125" text="Дата начала" />
                      </columns>
                   </TableView>
+                  <Label layoutX="233.0" layoutY="1.0" text="Бронирования" textFill="#1b1a1a">
+                     <font>
+                        <Font name="Segoe UI Historic" size="16.0" />
+                     </font>
+                  </Label>
                </children>
             </AnchorPane>
             <AnchorPane fx:id="AnchorPaneRentals" layoutX="209.0" prefHeight="530.0" prefWidth="585.0" visible="false">
                <children>
                   <TableView fx:id="RentalsTable" layoutX="5.0" layoutY="75.0" prefHeight="454.0" prefWidth="575.0">
                      <columns>
-                        <TableColumn fx:id="RentalsIdColumn" prefWidth="50.39996337890625" />
+                        <TableColumn fx:id="RentalsIdColumn" prefWidth="50.39996337890625" text="ID" />
                         <TableColumn fx:id="RentalsClientNameColumn" prefWidth="213.60003662109375" text="ФИО клиента" />
                         <TableColumn fx:id="RentalsBikeIdColumn" prefWidth="93.5999755859375" text="№ велосипеда" />
                         <TableColumn fx:id="RentalsPickUpDateColumn" prefWidth="103.20001220703125" text="Дата начала" />
                         <TableColumn fx:id="RentalsReturnDateColumn" prefWidth="110.4000244140625" text="Дата окончания" />
                      </columns>
                   </TableView>
+                  <Label layoutX="263.0" layoutY="1.0" text="Возврат" textFill="#1b1a1a">
+                     <font>
+                        <Font name="Segoe UI Historic" size="16.0" />
+                     </font>
+                  </Label>
                </children>
             </AnchorPane>
             <AnchorPane fx:id="AnchorPaneAccountings" layoutX="209.0" prefHeight="530.0" prefWidth="586.0" visible="false">
@@ -232,28 +262,43 @@
                         <TableColumn fx:id="AccountingsPickUpDateColumn" prefWidth="162.40008544921875" text="Дата начала аренды" />
                      </columns>
                   </TableView>
+                  <Label layoutX="266.0" layoutY="7.0" text="Аренда" textFill="#1b1a1a">
+                     <font>
+                        <Font name="Segoe UI Historic" size="16.0" />
+                     </font>
+                  </Label>
                </children>
             </AnchorPane>
             <AnchorPane fx:id="AnchorPaneStores" layoutX="209.0" prefHeight="530.0" prefWidth="585.0" visible="false">
                <children>
                   <TableView fx:id="StoreTable" layoutX="14.0" layoutY="76.0" prefHeight="454.0" prefWidth="563.0">
                      <columns>
-                        <TableColumn fx:id="StoreIdColumn" prefWidth="60.800018310546875" />
+                        <TableColumn fx:id="StoreIdColumn" prefWidth="60.800018310546875" text="ID" />
                         <TableColumn fx:id="StoreNameColumn" prefWidth="183.99993896484375" text="Название магазина" />
                         <TableColumn fx:id="StoreAddressColumn" minWidth="0.0" prefWidth="312.00006103515625" text="Адрес" />
                      </columns>
                   </TableView>
+                  <Label layoutX="256.0" layoutY="1.0" text="Магазины" textFill="#1b1a1a">
+                     <font>
+                        <Font name="Segoe UI Historic" size="16.0" />
+                     </font>
+                  </Label>
                </children>
             </AnchorPane>
             <AnchorPane fx:id="AnchorPaneAdmins" layoutX="209.0" prefHeight="530.0" prefWidth="586.0" visible="false">
                <children>
                   <TableView fx:id="AdminsTable" layoutX="11.0" layoutY="67.0" prefHeight="462.0" prefWidth="563.0">
                      <columns>
-                        <TableColumn fx:id="AdminsIdColumn" prefWidth="60.800018310546875" />
+                        <TableColumn fx:id="AdminsIdColumn" prefWidth="60.800018310546875" text="ID" />
                         <TableColumn fx:id="AdminsNameColumn" prefWidth="183.99993896484375" text="ФИО администратора" />
                         <TableColumn fx:id="AdminsLoginColumn" minWidth="0.0" prefWidth="312.00006103515625" text="Логин" />
                      </columns>
                   </TableView>
+                  <Label layoutX="231.0" layoutY="1.0" text="Администраторы" textFill="#1b1a1a">
+                     <font>
+                        <Font name="Segoe UI Historic" size="16.0" />
+                     </font>
+                  </Label>
                </children>
             </AnchorPane>
             </children>

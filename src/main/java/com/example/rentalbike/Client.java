@@ -1,6 +1,16 @@
 package com.example.rentalbike;
 
 public class Client {
+    private Integer id;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     private String firstname;
     private String lastname;
     private String secondname;
@@ -8,8 +18,15 @@ public class Client {
     private String address;
     private String login;
     private String password;
+    private String clientName;
 
+    public String getClientName() {
+        return clientName;
+    }
 
+    public void setClientName(String clientName) {
+        this.clientName = clientName;
+    }
 
     public String getLogin() {
         return login;
@@ -37,6 +54,15 @@ public class Client {
         this.password = password;
 
     }
+
+    public Client(Integer id, String clientName, String npassport, String address) {
+        this.id = id;
+        this.clientName = clientName;
+        this.npassport = npassport;
+        this.address = address;
+
+    }
+
     public Client(){
 
     }
