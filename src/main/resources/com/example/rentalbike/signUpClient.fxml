@@ -14,7 +14,7 @@
         <AnchorPane layoutY="82.0" prefHeight="518.0" prefWidth="800.0" style="-fx-background-color: #F5F5F5;">
             <children>
                 <TextField fx:id="SignUpClient_FirstName" layoutX="94.0" layoutY="159.0" prefHeight="34.0" prefWidth="244.0" promptText="Имя" />
-                <Button fx:id="RegSignUpClient" layoutX="313.0" layoutY="402.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="174.0" text="Зарегестрироваться" textFill="#1d354f">
+                <Button fx:id="RegSignUpClient" layoutX="313.0" layoutY="402.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="174.0" text="Зарегистрироваться" textFill="#1d354f">
                     <font>
                         <Font name="Segoe UI" size="16.0" />
                     </font>

@@ -72,8 +72,8 @@ public class HelloController {
                             else if (roleId == 2){
                                 Threads.changeWindow(event, "managerApp.fxml", "rentalbike");
                             }
-                            else {
-                                // Другие действия для других ролей
+                            else if (roleId == 3){
+                                Threads.changeWindow(event, "adminApp.fxml", "rentalbike");
                             }
                         } else {
                             // Пароль неверный

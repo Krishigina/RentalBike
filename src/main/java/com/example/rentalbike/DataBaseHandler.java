@@ -305,12 +305,16 @@ public class DataBaseHandler extends Configs {
 
     public ResultSet getHistory(Integer user_id) {
         ResultSet resSet = null;
-        String select = "SELECT " + Const.MODELS_TABLE + "." + Const.MODELS_NAME + ", " + Const.STORE_TABLE + "." + Const.STORE_NAME +
-                ", DATE_FORMAT(" + Const.BOOKINGS_TABLE + "." + Const.BOOKINGS_PICKUPDATE + ", '%d.%m.%Y'), " +
-                "DATE_FORMAT(" + Const.RENTALC_RETURNDATE + ", '%d.%m.%Y') FROM " + Const.BOOKINGS_TABLE +
-                " JOIN " + Const.RENTALS_TABLE + " JOIN bikes ON " + Const.BOOKINGS_TABLE + ".bike_id = bikes.id " +
-                "JOIN bike_models ON bikes.model_id = bike_models.id JOIN stores ON " + Const.BOOKINGS_TABLE + ".store_id = stores.id " +
-                "JOIN clients ON " + Const.BOOKINGS_TABLE + ".client_id = clients.id WHERE clients.user_id = ? ";
+        String select = "SELECT bike_models.name, stores.name, DATE_FORMAT(bookings.pickup_date, '%d.%m.%Y'), " +
+                "CASE WHEN rentals.return_date IS NOT NULL THEN DATE_FORMAT(rentals.return_date, '%d.%m.%Y') " +
+                "ELSE 'в аренде' END " +
+                "FROM bookings " +
+                "JOIN bikes ON bookings.bike_id = bikes.id " +
+                "JOIN bike_models ON bikes.model_id = bike_models.id " +
+                "JOIN stores ON bookings.store_id = stores.id " +
+                "JOIN clients ON bookings.client_id = clients.id " +
+                "LEFT JOIN rentals ON bookings.id = rentals.booking_id " +
+                "WHERE clients.user_id = ?";
 
         try {
             PreparedStatement prSt = getInstance().getDbConnection().prepareStatement(select);

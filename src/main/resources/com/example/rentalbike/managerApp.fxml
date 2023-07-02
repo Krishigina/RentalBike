@@ -286,7 +286,7 @@
                         <Font name="Segoe UI Historic" size="16.0" />
                      </font>
                   </Label>
-                  <TableView fx:id="RentTable" layoutX="12.0" layoutY="82.0" prefHeight="426.0" prefWidth="577.0">
+                  <TableView fx:id="RentTable" layoutX="12.0" layoutY="66.0" prefHeight="442.0" prefWidth="578.0">
                     <columns>
                       <TableColumn fx:id="RentBikeId" prefWidth="127.19999694824219" text="№ велосипеда" />
                       <TableColumn fx:id="RentBikeName" prefWidth="283.199951171875" text="Название модели" />
