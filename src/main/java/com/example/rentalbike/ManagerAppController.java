@@ -8,7 +8,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
@@ -87,7 +86,13 @@ public class ManagerAppController {
     @FXML
     private Label InsertSuccessLabel;
     @FXML
+    private Label InsertSuccessLabel1;
+    @FXML
+    private Label InsertSuccessLabel11;
+    @FXML
     private Label DeleteErrorLabel;
+    @FXML
+    private Label DeleteErrorLabel1;
 
     @FXML
     private Button InsertToBookings;
@@ -106,42 +111,111 @@ public class ManagerAppController {
     @FXML
     private TableView<Booking> Bookings;
     @FXML
-    private TableView<?> Rentals;
+    private TableView<Rentals> Rentals;
 
     @FXML
-    private TableColumn<?, ?> RentalsBikeId;
+    private TableColumn<Rentals, Integer> RentalsBikeId;
 
     @FXML
-    private TableColumn<?, ?> RentalsClientName;
+    private TableColumn<Rentals, String> RentalsClientName;
 
     @FXML
-    private TableColumn<?, ?> RentalsId;
+    private TableColumn<Rentals, Integer> RentalsId;
 
     @FXML
-    private TableColumn<?, ?> RentalsPickUpDate;
+    private TableColumn<Rentals, String> RentalsPickUpDate;
 
     @FXML
-    private TableColumn<?, ?> RentalsReturnDate;
+    private TableColumn<Rentals, String> RentalsReturnDate;
+    @FXML
+    private Button RentalsDeleteButton;
+    @FXML
+    private Button RentalsNewButton;
+    @FXML
+    private AnchorPane AnchorPaneRentalsInsert;
+    @FXML
+    private TextField RentalsInsertBikeId;
+
+    @FXML
+    private Button RentalsInsertButton;
+
+    @FXML
+    private Button RentalsInsertButtonExit;
+    @FXML
+    private DatePicker RentalsInsertDatePickUp;
+
+    @FXML
+    private DatePicker RentalsInsertDateReturn;
+
+    @FXML
+    private Label RentalsInsertErrorLabel;
+
+    @FXML
+    private TextField RentalsInsertFirstName;
+
+    @FXML
+    private TextField RentalsInsertLastName;
+
+    @FXML
+    private TextField RentalsInsertSecondName;
+
+    @FXML
+    private Label RentalsInsertSuccessLabel;
+    @FXML
+    private AnchorPane AnchorPaneRentalsDelete;
+    @FXML
+    private TextField RentalsDeleteNumber;
+    @FXML
+    private Button RentalsDeleteExit;
+    @FXML
+    private Button RentalsDeleteButtonDelete;
+    @FXML
+    private AnchorPane AnchorPaneRentalBike;
+    @FXML
+    private TableColumn<Accounting, Integer> RentBikeId;
+
+    @FXML
+    private TableColumn<Accounting, String> RentBikeName;
+
+    @FXML
+    private TableColumn<Accounting, String> RentDatePickUp;
+
+    @FXML
+    private TableView<Accounting> RentTable;
+
     private final ObservableList<Booking> data = FXCollections.observableArrayList();
+    private final ObservableList<Rentals> rent = FXCollections.observableArrayList();
+    private final ObservableList<Accounting> accountings = FXCollections.observableArrayList();
     DataBaseHandler dbHandler = null;
 
 
     @FXML
-    void initialize() {
-        try {
-            dbHandler = DataBaseHandler.getInstance();
-        } catch (ClassNotFoundException | SQLException e) {
-            throw new RuntimeException(e);
-        }
+    void initialize() throws SQLException, ClassNotFoundException {
+        dbHandler = DataBaseHandler.getInstance();
+
 
         addInfAboutBookings();
         BookingIdBookings.setCellValueFactory(new PropertyValueFactory<>("id"));
-        BookingClientName.setCellValueFactory(new PropertyValueFactory<>("clientName"));
+        RentalsClientName.setCellValueFactory(new PropertyValueFactory<>("clientName"));
         BookingCleintPassport.setCellValueFactory(new PropertyValueFactory<>("passport"));
         BookingNumberBike.setCellValueFactory(new PropertyValueFactory<>("bike_id"));
         BookingNameStore.setCellValueFactory(new PropertyValueFactory<>("storeName"));
         BookingDateStart.setCellValueFactory(new PropertyValueFactory<>("pickupDate"));
         Bookings.setItems(data);
+
+        addInfAboutRentals();
+        RentalsId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        BookingClientName.setCellValueFactory(new PropertyValueFactory<>("clientName"));
+        RentalsBikeId.setCellValueFactory(new PropertyValueFactory<>("bike_id"));
+        RentalsPickUpDate.setCellValueFactory(new PropertyValueFactory<>("pickup_date"));
+        RentalsReturnDate.setCellValueFactory(new PropertyValueFactory<>("return_date"));
+        Rentals.setItems(rent);
+
+        addInfAboutAccountings();
+        RentBikeId.setCellValueFactory(new PropertyValueFactory<>("bikeId"));
+        RentBikeName.setCellValueFactory(new PropertyValueFactory<>("bikeName"));
+        RentDatePickUp.setCellValueFactory(new PropertyValueFactory<>("pickUpDate"));
+        RentTable.setItems(accountings);
 
         ButtonManagerAppExit.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -165,17 +239,93 @@ public class ManagerAppController {
             addInfAboutBookings();
             AnchorPaneInsert.setVisible(false);
             AnchorPaneBookings.setVisible(true);
+            //AnchorPaneInsert.setVisible(false);
+            AnchorPaneRentalsInsert.setVisible(false);
         });
 
         BookingsDeleteButton.setOnAction(event ->{
             AnchorPaneBookings.setVisible(false);
             AnchorPaneDeleteBooking.setVisible(true);
+            AnchorPaneRentalsInsert.setVisible(false);
+            //AnchorPaneInsert.setVisible(false);
         });
 
         DeleteBookingExitButton.setOnAction(event ->{
+            addInfAboutBookings();
             AnchorPaneBookings.setVisible(true);
             AnchorPaneDeleteBooking.setVisible(false);
-            DeleteBookingNumber.clear();
+            AnchorPaneInsert.setVisible(false);
+            AnchorPaneRentalsInsert.setVisible(false);
+        });
+        RentalsDeleteExit.setOnAction(event ->{
+            addInfAboutRentals();
+            AnchorPaneBookings.setVisible(false);
+            AnchorPaneDeleteBooking.setVisible(false);
+            AnchorPaneInsert.setVisible(false);
+            AnchorPaneRentalsInsert.setVisible(false);
+            AnchorPaneRentals.setVisible(true);
+            AnchorPaneRentalsDelete.setVisible(false);
+        });
+
+        ButtonRentals.setOnAction(event ->{
+            addInfAboutRentals();
+            AnchorPaneBookings.setVisible(false);
+            AnchorPaneRentals.setVisible(true);
+            AnchorPaneInsert.setVisible(false);
+            AnchorPaneRentalsInsert.setVisible(false);
+            AnchorPaneDeleteBooking.setVisible(false);
+            AnchorPaneRentalsDelete.setVisible(false);
+            AnchorPaneRentalBike.setVisible(false);
+        });
+        ButtonBookings.setOnAction(event ->{
+            AnchorPaneBookings.setVisible(true);
+            AnchorPaneRentals.setVisible(false);
+            AnchorPaneInsert.setVisible(false);
+            AnchorPaneDeleteBooking.setVisible(false);
+            AnchorPaneRentalsInsert.setVisible(false);
+            AnchorPaneRentalsDelete.setVisible(false);
+            AnchorPaneRentalBike.setVisible(false);
+        });
+
+        RentalsNewButton.setOnAction(event ->{
+            AnchorPaneBookings.setVisible(false);
+            AnchorPaneRentals.setVisible(false);
+            AnchorPaneInsert.setVisible(false);
+            AnchorPaneDeleteBooking.setVisible(false);
+            AnchorPaneRentalsInsert.setVisible(true);
+        });
+        RentalsDeleteButton.setOnAction(event ->{
+            AnchorPaneBookings.setVisible(false);
+            AnchorPaneRentals.setVisible(false);
+            AnchorPaneInsert.setVisible(false);
+            AnchorPaneDeleteBooking.setVisible(false);
+            AnchorPaneRentalsInsert.setVisible(false);
+            AnchorPaneRentalsDelete.setVisible(true);
+        });
+        ButtonBikesRental.setOnAction(event ->{
+            addInfAboutAccountings();
+            AnchorPaneBookings.setVisible(false);
+            AnchorPaneRentals.setVisible(false);
+            AnchorPaneInsert.setVisible(false);
+            AnchorPaneDeleteBooking.setVisible(false);
+            AnchorPaneRentalsInsert.setVisible(false);
+            AnchorPaneRentalsDelete.setVisible(false);
+            AnchorPaneRentalBike.setVisible(true);
+        });
+
+        RentalsInsertButtonExit.setOnAction(event ->{
+            addInfAboutRentals();
+            AnchorPaneBookings.setVisible(false);
+            AnchorPaneRentals.setVisible(true);
+            AnchorPaneInsert.setVisible(false);
+            AnchorPaneDeleteBooking.setVisible(false);
+            AnchorPaneRentalsInsert.setVisible(false);
+            RentalsInsertLastName.clear();
+            RentalsInsertFirstName.clear();
+            RentalsInsertSecondName.clear();
+            RentalsInsertBikeId.clear();
+            RentalsInsertDatePickUp.setValue(null);
+            RentalsInsertDateReturn.setValue(null);
         });
 
         ObservableList<String> values = FXCollections.observableArrayList();
@@ -221,9 +371,40 @@ public class ManagerAppController {
             }
         });
 
+        RentalsInsertButton.setOnAction(event -> {
+            if (newRentals()) {
+                RentalsInsertSuccessLabel.setText("Запись успешно добавлена!");
+                FadeTransition fadeOut = new FadeTransition(Duration.millis(2000), RentalsInsertSuccessLabel);
+                fadeOut.setFromValue(1.0);
+                fadeOut.setToValue(0.0);
+                fadeOut.setDelay(Duration.seconds(2));
+                fadeOut.play();
+                RentalsInsertLastName.clear();
+                RentalsInsertFirstName.clear();
+                RentalsInsertSecondName.clear();
+                RentalsInsertBikeId.clear();
+                RentalsInsertDatePickUp.setValue(null);
+                RentalsInsertDateReturn.setValue(null);
+
+            } else {
+                RentalsInsertErrorLabel.setText("Ошибка!");
+                FadeTransition fadeOut = new FadeTransition(Duration.millis(2000), RentalsInsertErrorLabel);
+                fadeOut.setFromValue(1.0);
+                fadeOut.setToValue(0.0);
+                fadeOut.setDelay(Duration.seconds(2));
+                fadeOut.play();
+            }
+        });
+
         DeleteBookingDeleteButton.setOnAction(event -> {
             if (deleteBooking()) {
                 DeleteBookingNumber.clear();
+                InsertSuccessLabel1.setText("Запись удалена");
+                FadeTransition fadeOut = new FadeTransition(Duration.millis(2000), InsertSuccessLabel1);
+                fadeOut.setFromValue(1.0);
+                fadeOut.setToValue(0.0);
+                fadeOut.setDelay(Duration.seconds(2));
+                fadeOut.play();
             } else {
                 DeleteErrorLabel.setText("Ошибка!");
                 FadeTransition fadeOut = new FadeTransition(Duration.millis(2000), DeleteErrorLabel);
@@ -234,9 +415,28 @@ public class ManagerAppController {
             }
         });
 
+        RentalsDeleteButtonDelete.setOnAction(event -> {
+            if (deleteRental()) {
+                RentalsDeleteNumber.clear();
+                InsertSuccessLabel11.setText("Запись удалена");
+                FadeTransition fadeOut = new FadeTransition(Duration.millis(2000), InsertSuccessLabel11);
+                fadeOut.setFromValue(1.0);
+                fadeOut.setToValue(0.0);
+                fadeOut.setDelay(Duration.seconds(2));
+                fadeOut.play();
+            } else {
+                DeleteErrorLabel1.setText("Ошибка!");
+                FadeTransition fadeOut = new FadeTransition(Duration.millis(2000), DeleteErrorLabel1);
+                fadeOut.setFromValue(1.0);
+                fadeOut.setToValue(0.0);
+                fadeOut.setDelay(Duration.seconds(2));
+                fadeOut.play();
+            }
+        });
+
 
     }
-    private void addInfAboutBookings(){
+    private void addInfAboutBookings() {
         try {
             dbHandler = DataBaseHandler.getInstance();
         } catch (ClassNotFoundException | SQLException e) {
@@ -245,9 +445,8 @@ public class ManagerAppController {
         // очищаем данные таблицы
         data.clear();
 
-        ResultSet bookings = dbHandler.getBookings();
-        try{
-            while(bookings.next()){
+        try (ResultSet bookings = dbHandler.getBookings()) {
+            while (bookings.next()) {
                 Booking booking = new Booking(
                         bookings.getInt(1),
                         bookings.getString(2),
@@ -257,6 +456,54 @@ public class ManagerAppController {
                         bookings.getString(6));
 
                 data.add(booking);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    private void addInfAboutRentals(){
+        try {
+            dbHandler = DataBaseHandler.getInstance();
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new RuntimeException(e);
+        }
+        // очищаем данные таблицы
+        rent.clear();
+
+        ResultSet rentals = dbHandler.getRentals();
+        try{
+            while(rentals.next()){
+                Rentals rental = new Rentals(
+                        rentals.getInt(1),
+                        rentals.getString(2),
+                        rentals.getInt(3),
+                        rentals.getString(4),
+                        rentals.getString(5));
+
+                rent.add(rental);
+            }
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
+    private void addInfAboutAccountings()  {
+        try {
+            dbHandler = DataBaseHandler.getInstance();
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new RuntimeException(e);
+        }
+        // очищаем данные таблицы
+        accountings.clear();
+
+        ResultSet resultSet = dbHandler.getAccountings();
+        try{
+            while(resultSet.next()){
+                Accounting accounting = new Accounting(
+                        resultSet.getInt(1),
+                        resultSet.getString(2),
+                        resultSet.getString(3));
+
+                accountings.add(accounting);
             }
         }catch (SQLException e){
             throw new RuntimeException(e);
@@ -274,6 +521,7 @@ public class ManagerAppController {
 
         if (firstname.isEmpty() || lastname.isEmpty() || secondname.isEmpty() ||
                 npassport.isEmpty() || bikeid.isEmpty() || storename.isEmpty() || datepickup.isEmpty()) {
+            //System.out.println("Данные пустые");
             return false;
         }
 
@@ -289,6 +537,7 @@ public class ManagerAppController {
         if (dbHandler.newBooking(booking)) {
             return true;
         } else {
+            System.out.println("ошибка тут");
             return false;
         }
     }
@@ -304,7 +553,50 @@ public class ManagerAppController {
             dbHandler = DataBaseHandler.getInstance();
             return dbHandler.deleteBooking(Integer.parseInt(numberBooking));
         } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
+            return false;
+        }
+    }
+    private boolean newRentals() {
+        String lastname = RentalsInsertLastName.getText().trim();
+        String firstname = RentalsInsertFirstName.getText().trim();
+        String secondname = RentalsInsertSecondName.getText().trim();
+        String bikeid = RentalsInsertBikeId.getText().trim();
+        String pickupdate =  String.valueOf(RentalsInsertDatePickUp.getValue());
+        String returndate = String.valueOf(RentalsInsertDateReturn.getValue());
+
+        if (firstname.isEmpty() || lastname.isEmpty() || secondname.isEmpty()
+                || bikeid.isEmpty() || pickupdate.isEmpty() || returndate.isEmpty()) {
+            System.out.println("Данные пустые");
+            return false;
+        }
+
+        try {
+            dbHandler = DataBaseHandler.getInstance();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        Rentals rental = new Rentals(lastname, firstname, secondname, Integer.parseInt(bikeid), pickupdate, returndate);
+        if (dbHandler.newRental(rental)) {
+            return true;
+        } else {
+            //System.out.println("ошибка тут");
+            return false;
+        }
+    }
+    private boolean deleteRental() {
+        String numberRental = RentalsDeleteNumber.getText();
+
+        if (numberRental.isEmpty()) {
+            return false;
+        }
+
+        try {
+            dbHandler = DataBaseHandler.getInstance();
+            return dbHandler.deleteRental(Integer.parseInt(numberRental));
+        } catch (ClassNotFoundException | SQLException e) {
             return false;
         }
     }

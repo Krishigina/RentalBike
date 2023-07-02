@@ -34,6 +34,11 @@
                   <Font name="Times New Roman" size="23.0" />
                </font>
             </Label>
+            <Label fx:id="ErrorLabel" layoutX="373.0" layoutY="110.0" textFill="#db2525">
+               <font>
+                  <Font name="Times New Roman" size="14.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
       <Label layoutX="296.0" layoutY="28.0" text="Прокат велосипедов" textFill="WHITE">

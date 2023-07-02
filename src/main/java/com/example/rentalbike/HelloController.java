@@ -6,9 +6,11 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import com.example.rentalbike.animation.Shake;
+import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.util.Duration;
 
 
 public class HelloController {
@@ -18,6 +20,8 @@ public class HelloController {
 
     @FXML
     private URL location;
+    @FXML
+    private Label ErrorLabel;
 
     @FXML
     private Button authSignInButton;
@@ -31,19 +35,19 @@ public class HelloController {
     @FXML
     private PasswordField password_field;
     private static String userLogin; // переменная для хранения логина пользователя
+    DataBaseHandler dbHandler = null;
 
 
     @FXML
     void initialize() {
-        DataBaseHandler dbHandler = null;
+
         try {
             dbHandler = DataBaseHandler.getInstance();
         } catch (ClassNotFoundException | SQLException e) {
             throw new RuntimeException(e);
         }
 
-        // Изменил код проверки логина и пароля пользователя
-        DataBaseHandler finalDbHandler = dbHandler;
+
         authSignInButton.setOnAction(event -> {
             String loginText = login_field.getText().trim();
             String loginPassword = password_field.getText().trim();
@@ -51,6 +55,7 @@ public class HelloController {
             if (!loginText.isEmpty() && !loginPassword.isEmpty()) {
                 Client client = new Client();
                 client.setLogin(loginText);
+                DataBaseHandler finalDbHandler = dbHandler;
                 ResultSet result = finalDbHandler.getUser(client);
 
                 try {
@@ -64,14 +69,20 @@ public class HelloController {
                                 userLogin = loginText;
                                 Threads.changeWindow(event, "app.fxml", "rentalbike");
                             }
-                            if (roleId == 2){
-                                Threads.changeWindow(event, "/com/example/rentalbike/managerApp.fxml", "rentalbike");
+                            else if (roleId == 2){
+                                Threads.changeWindow(event, "managerApp.fxml", "rentalbike");
                             }
                             else {
                                 // Другие действия для других ролей
                             }
                         } else {
                             // Пароль неверный
+                            ErrorLabel.setText("Ошибка!");
+                            FadeTransition fadeOut = new FadeTransition(Duration.millis(2000), ErrorLabel);
+                            fadeOut.setFromValue(1.0);
+                            fadeOut.setToValue(0.0);
+                            fadeOut.setDelay(Duration.seconds(2));
+                            fadeOut.play();
                             Shake userLoginAnim = new Shake(login_field);
                             Shake userPassAnim = new Shake(password_field);
                             userLoginAnim.playAnim();
@@ -81,6 +92,12 @@ public class HelloController {
                         }
                     } else {
                         // Пользователь не найден
+                        ErrorLabel.setText("Ошибка!");
+                        FadeTransition fadeOut = new FadeTransition(Duration.millis(2000), ErrorLabel);
+                        fadeOut.setFromValue(1.0);
+                        fadeOut.setToValue(0.0);
+                        fadeOut.setDelay(Duration.seconds(2));
+                        fadeOut.play();
                         Shake userLoginAnim = new Shake(login_field);
                         Shake userPassAnim = new Shake(password_field);
                         userLoginAnim.playAnim();
@@ -92,6 +109,12 @@ public class HelloController {
                     e.printStackTrace();
                 }
             } else {
+                ErrorLabel.setText("Ошибка!");
+                FadeTransition fadeOut = new FadeTransition(Duration.millis(2000), ErrorLabel);
+                fadeOut.setFromValue(1.0);
+                fadeOut.setToValue(0.0);
+                fadeOut.setDelay(Duration.seconds(2));
+                fadeOut.play();
                 Shake userLoginAnim = new Shake(login_field);
                 Shake userPassAnim = new Shake(password_field);
                 userLoginAnim.playAnim();

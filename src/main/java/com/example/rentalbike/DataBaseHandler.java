@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class DataBaseHandler extends Configs {
+    private boolean keepConnectionOpen = false; // Переменная класса DataBaseHandler
     private static DataBaseHandler instance; // Статическое поле для хранения единственного экземпляра класса
     private Connection dbConnection;
 
@@ -17,10 +18,13 @@ public class DataBaseHandler extends Configs {
         if (instance == null) {
             instance = new DataBaseHandler(); // Создание экземпляра класса, если он еще не был создан
         }
+        else if (instance.getDbConnection().isClosed()){
+            instance = new DataBaseHandler();
+        }
         return instance;
     }
 
-    public Connection getDbConnection() {
+    public Connection getDbConnection() throws SQLException {
         return dbConnection; // Возвращение уже установленного соединения
     }
 
@@ -168,14 +172,25 @@ public class DataBaseHandler extends Configs {
         ResultSet resSet = null;
         String select = "SELECT * FROM " + Const.USER_TABLE + " WHERE " + Const.USER_LOGIN + "=?";
         try {
-            PreparedStatement prSt = getDbConnection().prepareStatement(select);
+            Connection connection = getInstance().getDbConnection();
+            if (connection == null || connection.isClosed()) {
+                // Если соединение равно null или закрыто, создаем новое соединение
+                connection = getNewDbConnection();
+            }
+            PreparedStatement prSt = connection.prepareStatement(select);
             prSt.setString(1, client.getLogin());
 
             resSet = prSt.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
         return resSet;
+    }
+
+    private Connection getNewDbConnection() throws SQLException, ClassNotFoundException {
+        return DriverManager.getConnection( "jdbc:mysql://" + dbHost + ":" + dbPort + "/" + dbName, dbUser, dbPass);
     }
     protected String hashPassword(String password) {
         return BCrypt.hashpw(password, BCrypt.gensalt());
@@ -197,7 +212,7 @@ public class DataBaseHandler extends Configs {
         String select = "SELECT " + Const.USER_ROLE + " FROM " + Const.USER_TABLE + " WHERE " + Const.USER_LOGIN + "=?";
 
         try {
-            PreparedStatement prSt = getDbConnection().prepareStatement(select);
+            PreparedStatement prSt = getInstance().getDbConnection().prepareStatement(select);
             prSt.setString(1, login);
             ResultSet resultSet = prSt.executeQuery();
 
@@ -206,6 +221,8 @@ public class DataBaseHandler extends Configs {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
 
         return roleId;
@@ -215,10 +232,12 @@ public class DataBaseHandler extends Configs {
         ResultSet resSet = null;
         String select = "SELECT * FROM " + Const.STORE_TABLE + ";";
         try {
-            PreparedStatement prSt = getDbConnection().prepareStatement(select);
+            PreparedStatement prSt = getInstance().getDbConnection().prepareStatement(select);
             resSet = prSt.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
 
         return resSet;
@@ -227,10 +246,12 @@ public class DataBaseHandler extends Configs {
         ResultSet resSet = null;
         String select = "SELECT name FROM " + Const.STORE_TABLE + ";";
         try {
-            PreparedStatement prSt = getDbConnection().prepareStatement(select);
+            PreparedStatement prSt = getInstance().getDbConnection().prepareStatement(select);
             resSet = prSt.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
 
         return resSet;
@@ -238,7 +259,7 @@ public class DataBaseHandler extends Configs {
 
     public ResultSet getBookings() {
         ResultSet resultSet = null;
-        String select = "SELECT bookings.id, CONCAT(clients.last_name, ' ', clients.first_name, ' ', clients.second_name) AS name, " +
+        String select1 = "SELECT bookings.id, CONCAT(clients.last_name, ' ', clients.first_name, ' ', clients.second_name) AS name, " +
                 "clients.passport, " +
                 "bookings.bike_id, " +
                 "stores.name, " +
@@ -249,10 +270,34 @@ public class DataBaseHandler extends Configs {
                 "INNER JOIN stores ON bookings.store_id = stores.id;";
 
         try {
-            PreparedStatement prSt = getDbConnection().prepareStatement(select);
+            PreparedStatement prSt = getInstance().getDbConnection().prepareStatement(select1);
             resultSet = prSt.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        return resultSet;
+    }
+    public ResultSet getRentals() {
+        ResultSet resultSet = null;
+        String select = "SELECT rentals.id, CONCAT(clients.last_name, ' ', clients.first_name, ' ', clients.second_name) AS name, " +
+                "bookings.bike_id, " +
+                "DATE_FORMAT(bookings.pickup_date, '%d.%m.%Y') AS pickup_date, " +
+                "DATE_FORMAT(rentals.return_date, '%d.%m.%Y') AS return_date " +
+                "FROM bookings " +
+                "INNER JOIN clients ON bookings.client_id = clients.id " +
+                "INNER JOIN bikes ON bookings.bike_id = bikes.id " +
+                "INNER JOIN rentals ON bookings.id = rentals.booking_id;";
+
+        try {
+            PreparedStatement prSt = getInstance().getDbConnection().prepareStatement(select);
+            resultSet = prSt.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
 
         return resultSet;
@@ -268,11 +313,13 @@ public class DataBaseHandler extends Configs {
                 "JOIN clients ON " + Const.BOOKINGS_TABLE + ".client_id = clients.id WHERE clients.user_id = ? ";
 
         try {
-            PreparedStatement prSt = getDbConnection().prepareStatement(select);
+            PreparedStatement prSt = getInstance().getDbConnection().prepareStatement(select);
             prSt.setString(1, String.valueOf(user_id));
             resSet = prSt.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
 
         return resSet;
@@ -282,7 +329,7 @@ public class DataBaseHandler extends Configs {
         String select = "SELECT " + Const.USER_ID + " FROM " + Const.USER_TABLE + " WHERE " + Const.USER_LOGIN + "=?";
 
         try {
-            PreparedStatement prSt = getDbConnection().prepareStatement(select);
+            PreparedStatement prSt = getInstance().getDbConnection().prepareStatement(select);
             prSt.setString(1, login);
             ResultSet resultSet = prSt.executeQuery();
 
@@ -291,6 +338,8 @@ public class DataBaseHandler extends Configs {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
 
         return userId;
@@ -301,7 +350,7 @@ public class DataBaseHandler extends Configs {
                 + Const.CLIENT_USERID + " = " + Const.USER_TABLE + "." + Const.USER_ID + " WHERE " + Const.USER_TABLE + "." + Const.USER_LOGIN + " = ?";
 
         try {
-            PreparedStatement prSt = getDbConnection().prepareStatement(select);
+            PreparedStatement prSt = getInstance().getDbConnection().prepareStatement(select);
             prSt.setString(1, login);
             ResultSet resultSet = prSt.executeQuery();
             if (resultSet.next()) {
@@ -309,6 +358,8 @@ public class DataBaseHandler extends Configs {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
         return lastname;
     }
@@ -318,7 +369,7 @@ public class DataBaseHandler extends Configs {
                 + Const.CLIENT_USERID + " = " + Const.USER_TABLE + "." + Const.USER_ID + " WHERE " + Const.USER_TABLE + "." + Const.USER_LOGIN + " = ?";
 
         try {
-            PreparedStatement prSt = getDbConnection().prepareStatement(select);
+            PreparedStatement prSt = getInstance().getDbConnection().prepareStatement(select);
             prSt.setString(1, login);
             ResultSet resultSet = prSt.executeQuery();
             if (resultSet.next()) {
@@ -326,6 +377,8 @@ public class DataBaseHandler extends Configs {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
         return firstname;
     }
@@ -335,7 +388,7 @@ public class DataBaseHandler extends Configs {
                 + Const.CLIENT_USERID + " = " + Const.USER_TABLE + "." + Const.USER_ID + " WHERE " + Const.USER_TABLE + "." + Const.USER_LOGIN + " = ?";
 
         try {
-            PreparedStatement prSt = getDbConnection().prepareStatement(select);
+            PreparedStatement prSt = getInstance().getDbConnection().prepareStatement(select);
             prSt.setString(1, login);
             ResultSet resultSet = prSt.executeQuery();
             if (resultSet.next()) {
@@ -343,6 +396,8 @@ public class DataBaseHandler extends Configs {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
         return secondname;
     }
@@ -352,7 +407,7 @@ public class DataBaseHandler extends Configs {
                 + Const.CLIENT_USERID + " = " + Const.USER_TABLE + "." + Const.USER_ID + " WHERE " + Const.USER_TABLE + "." + Const.USER_LOGIN + " = ?";
 
         try {
-            PreparedStatement prSt = getDbConnection().prepareStatement(select);
+            PreparedStatement prSt = getInstance().getDbConnection().prepareStatement(select);
             prSt.setString(1, login);
             ResultSet resultSet = prSt.executeQuery();
             if (resultSet.next()) {
@@ -360,6 +415,8 @@ public class DataBaseHandler extends Configs {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
         return passport;
     }
@@ -369,7 +426,7 @@ public class DataBaseHandler extends Configs {
                 + Const.CLIENT_USERID + " = " + Const.USER_TABLE + "." + Const.USER_ID + " WHERE " + Const.USER_TABLE + "." + Const.USER_LOGIN + " = ?";
 
         try {
-            PreparedStatement prSt = getDbConnection().prepareStatement(select);
+            PreparedStatement prSt = getInstance().getDbConnection().prepareStatement(select);
             prSt.setString(1, login);
             ResultSet resultSet = prSt.executeQuery();
             if (resultSet.next()) {
@@ -377,6 +434,8 @@ public class DataBaseHandler extends Configs {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
         return address;
     }
@@ -385,7 +444,7 @@ public class DataBaseHandler extends Configs {
         String select = "SELECT " + Const.USER_LOGIN + " FROM " + Const.USER_TABLE +  " WHERE " +  Const.USER_LOGIN + " = ?";
 
         try {
-            PreparedStatement prSt = getDbConnection().prepareStatement(select);
+            PreparedStatement prSt = getInstance().getDbConnection().prepareStatement(select);
             prSt.setString(1, login);
             ResultSet resultSet = prSt.executeQuery();
             if (resultSet.next()) {
@@ -393,6 +452,8 @@ public class DataBaseHandler extends Configs {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
         return loginfield;
     }
@@ -401,24 +462,24 @@ public class DataBaseHandler extends Configs {
         String clientIdQuery = "SELECT " + Const.CLIENT_ID + " FROM " + Const.CLIENT_TABLE + " WHERE " + Const.CLIENT_PASSPORT + "=? AND " +
                 Const.CLIENT_FIRSTNAME + "=? AND " + Const.CLIENT_LASTNAME + "=? AND " + Const.CLIENT_SECONDNAME + "=?";
         try {
-            PreparedStatement clientIdStatement = getDbConnection().prepareStatement(clientIdQuery);
+            PreparedStatement clientIdStatement = getInstance().getDbConnection().prepareStatement(clientIdQuery);
             clientIdStatement.setString(1, booking.getPassport());
             clientIdStatement.setString(2, booking.getClientFirstName());
             clientIdStatement.setString(3, booking.getClientLastName());
             clientIdStatement.setString(4, booking.getClientSecondName());
             ResultSet clientIdResult = clientIdStatement.executeQuery();
             if (!clientIdResult.next()) {
-                //System.out.println("Клиент с указанными данными не существует");
+                System.out.println("Клиент с указанными данными не существует");
                 return false; // Клиент с указанными данными не существует
             }
             int clientId = clientIdResult.getInt(Const.CLIENT_ID);
 
             String storeIdQuery = "SELECT " + Const.STORE_ID + " FROM " + Const.STORE_TABLE + " WHERE " + Const.STORE_NAME + "=?";
-            PreparedStatement storeIdStatement = getDbConnection().prepareStatement(storeIdQuery);
+            PreparedStatement storeIdStatement = getInstance().getDbConnection().prepareStatement(storeIdQuery);
             storeIdStatement.setString(1, booking.getStoreName());
             ResultSet storeIdResult = storeIdStatement.executeQuery();
             if (!storeIdResult.next()) {
-                //System.out.println("Магазин с указанным названием не существует");
+                System.out.println("Магазин с указанным названием не существует");
                 return false; // Магазин с указанным названием не существует
             }
             int storeId = storeIdResult.getInt(Const.STORE_ID);
@@ -432,21 +493,26 @@ public class DataBaseHandler extends Configs {
 
             int bikeId = booking.getBike_id();
 
-            // Проверяем, свободен ли велосипед
-            String checkBookingsQuery = "SELECT * FROM " + Const.BOOKINGS_TABLE + " WHERE " + Const.BOOKINGS_BIKEID + "=? " +
-                    "AND " + Const.BOOKINGS_PICKUPDATE + " >= CURDATE()";
-            PreparedStatement checkBookingsStatement = getDbConnection().prepareStatement(checkBookingsQuery);
+            String checkBookingsQuery = "SELECT * FROM " + Const.BOOKINGS_TABLE + " LEFT JOIN " + Const.RENTALS_TABLE +
+                    " ON " + Const.BOOKINGS_TABLE + ".id = " + Const.RENTALS_TABLE + ".booking_id " +
+                    " WHERE " + Const.BOOKINGS_TABLE + "." + Const.BOOKINGS_BIKEID + "=? " +
+                    " AND (" +
+                    "     " + Const.BOOKINGS_TABLE + "." + Const.BOOKINGS_PICKUPDATE + " >= ? " + // Дата начала аренды больше или равна заданной
+                    "     OR " + Const.RENTALS_TABLE + ".return_date IS NULL" + // Дата возврата равна NULL
+                    " )";
+            PreparedStatement checkBookingsStatement = getInstance().getDbConnection().prepareStatement(checkBookingsQuery);
             checkBookingsStatement.setInt(1, bikeId);
+            checkBookingsStatement.setString(2, pickupDate);
             ResultSet checkBookingsResult = checkBookingsStatement.executeQuery();
 
             if (checkBookingsResult.next()) {
-                //System.out.println("Велосипед с id " + bikeId + " недоступен");
+                System.out.println("Велосипед с id " + bikeId + " недоступен");
                 return false; // Велосипед занят
             }
 
             String addBookingQuery = "INSERT INTO " + Const.BOOKINGS_TABLE + " (" + Const.BOOKINGS_CLIENTID + ", " +
                     Const.BOOKINGS_STOREID + ", " + Const.BOOKINGS_PICKUPDATE + ", " + Const.BOOKINGS_BIKEID + ") VALUES (?, ?, ?, ?)";
-            PreparedStatement addBookingStatement = getDbConnection().prepareStatement(addBookingQuery);
+            PreparedStatement addBookingStatement = getInstance().getDbConnection().prepareStatement(addBookingQuery);
             addBookingStatement.setInt(1, clientId);
             addBookingStatement.setInt(2, storeId);
             addBookingStatement.setString(3, pickupDate);
@@ -454,40 +520,133 @@ public class DataBaseHandler extends Configs {
 
             int rowsAffected = addBookingStatement.executeUpdate();
             if (rowsAffected == 1) {
-                //System.out.println("Бронирование добавлено успешно");
+                System.out.println("Бронирование добавлено успешно");
                 return true;
             } else {
-                //System.out.println("Ошибка при добавлении бронирования");
+                System.out.println("Ошибка при добавлении бронирования");
                 return false;
             }
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
     public boolean deleteBooking(int bookingId) {
-        String deleteBookingQuery = "DELETE FROM " + Const.BOOKINGS_TABLE + " WHERE " + Const.BOOKINGS_ID + " = ?";
         String deleteRentalQuery = "DELETE FROM " + Const.RENTALS_TABLE + " WHERE " + Const.RENTALS_BOOKINGID + " = ?";
+        String deleteBookingQuery = "DELETE FROM " + Const.BOOKINGS_TABLE + " WHERE " + Const.BOOKINGS_ID + " = ?";
 
-        try (Connection connection = getDbConnection();
-             PreparedStatement deleteBookingStatement = connection.prepareStatement(deleteBookingQuery);
-             PreparedStatement deleteRentalStatement = connection.prepareStatement(deleteRentalQuery)) {
-
-            deleteBookingStatement.setInt(1, bookingId);
-            int rowsAffected1 = deleteBookingStatement.executeUpdate();
+        try (
+                PreparedStatement deleteRentalStatement = getInstance().getDbConnection().prepareStatement(deleteRentalQuery);
+                PreparedStatement deleteBookingStatement = getInstance().getDbConnection().prepareStatement(deleteBookingQuery)) {
 
             deleteRentalStatement.setInt(1, bookingId);
-            int rowsAffected2 = deleteRentalStatement.executeUpdate();
+            int rowsAffected1 = deleteRentalStatement.executeUpdate();
 
-            if (rowsAffected1 > 0 || rowsAffected2 > 0) {
-                return true;
-            } else {
-                return false;
-            }
+            deleteBookingStatement.setInt(1, bookingId);
+            int rowsAffected2 = deleteBookingStatement.executeUpdate();
+
+            return rowsAffected1 > 0 || rowsAffected2 > 0;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
+    public boolean newRental(Rentals rental) {
+        String returnDate = "";
+        String pickupDate = "";
+        if (rental.getReturn_date() != null && rental.getPickup_date() != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate datereturn = LocalDate.parse(rental.getReturn_date(), formatter);
+            LocalDate datepickup = LocalDate.parse(rental.getPickup_date(), formatter);
+            returnDate = datereturn.format(DateTimeFormatter.ISO_DATE);
+            pickupDate = datepickup.format(DateTimeFormatter.ISO_DATE);
+        }
+        String bookingIdQuery = "SELECT bookings.id FROM bookings JOIN clients ON bookings.client_id = clients.id " +
+                " WHERE clients.last_name =? AND clients.first_name = ? AND clients.second_name =? AND bookings.bike_id = ? " +
+                " AND bookings.pickup_date = ? ";
+        try {
+            PreparedStatement bookingId = getInstance().getDbConnection().prepareStatement(bookingIdQuery);
+            bookingId.setString(1, rental.getClientLastName());
+            bookingId.setString(2, rental.getClientFirstName());
+            bookingId.setString(3, rental.getClientSecondName());
+            bookingId.setString(4, String.valueOf(rental.getBike_id()));
+            bookingId.setString(5, pickupDate);
+
+            ResultSet bookingIdResult = bookingId.executeQuery();
+            if (!bookingIdResult.next()) {
+                // Запись не существует, возвращаем false
+                return false;
+            }
+
+            int bookingIdResultInt = bookingIdResult.getInt(Const.BOOKINGS_ID);
+
+            String addRentalQuery = "INSERT INTO " + Const.RENTALS_TABLE + " (" + Const.RENTALS_BOOKINGID + ", " +
+                    Const.RENTALC_RETURNDATE  + ") VALUES (?, ?)";
+            PreparedStatement addRentalStatement = getInstance().getDbConnection().prepareStatement(addRentalQuery);
+            addRentalStatement.setInt(1, bookingIdResultInt);
+            addRentalStatement.setString(2, returnDate);
+
+            int rowsAffected = addRentalStatement.executeUpdate();
+            if (rowsAffected == 1) {
+                //System.out.println("Аренда добавлена успешно");
+                return true;
+            } else {
+                //System.out.println("Ошибка при добавлении аренды");
+                return false;
+            }
+        } catch (SQLException e) {
+            if (e.getMessage().equals("Illegal operation on empty result set")) {
+                // Запись не существует, возвращаем false
+                return false;
+            } else {
+                e.printStackTrace();
+                return false;
+            }
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean deleteRental(int rentalId) {
+        String deleteBookingQuery = "DELETE FROM " + Const.RENTALS_TABLE + " WHERE " + Const.RENTALS_ID + " = ?";
+
+        try (
+             PreparedStatement deleteBookingStatement = getInstance().getDbConnection().prepareStatement(deleteBookingQuery)) {
+
+            deleteBookingStatement.setInt(1, rentalId);
+            int rowsAffected = deleteBookingStatement.executeUpdate();
+
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ResultSet getAccountings() {
+        String query = "SELECT bikes.id, bike_models.name, DATE_FORMAT(bookings.pickup_date, '%d.%m.%Y') as pickup_date " +
+                "FROM " + Const.BIKES_TABLE + " bikes " +
+                "JOIN " + Const.MODELS_TABLE + " bike_models ON bikes.model_id = bike_models.id " +
+                "JOIN " + Const.BOOKINGS_TABLE + " bookings ON bikes.id = bookings.bike_id " +
+                "LEFT JOIN " + Const.RENTALS_TABLE + " rentals ON bookings.id = rentals.booking_id " +
+                "WHERE rentals.return_date IS NULL ";
+
+        try {
+            Connection connection = getInstance().getDbConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            return statement.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
