@@ -5,208 +5,238 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import javafx.animation.FadeTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Duration;
 
 public class AdminAppController {
 
     @FXML
     private ResourceBundle resources;
-
     @FXML
     private URL location;
-
     @FXML
     private TableColumn<Accounting, Integer> AccountingsBikeIdColumn;
-
     @FXML
     private TableColumn<Accounting, String> AccountingsModelNameColumn;
-
     @FXML
     private TableColumn<Accounting, String> AccountingsPickUpDateColumn;
-
     @FXML
     private TableView<Accounting> AccountingsTable;
-
     @FXML
     private TableColumn<Admin, Integer> AdminsIdColumn;
-
     @FXML
     private TableColumn<Admin, String> AdminsLoginColumn;
-
     @FXML
     private TableColumn<Admin, String> AdminsNameColumn;
-
     @FXML
     private TableView<Admin> AdminsTable;
-
     @FXML
     private AnchorPane AnchorPaneAccountings;
-
     @FXML
     private AnchorPane AnchorPaneAdmins;
-
     @FXML
     private AnchorPane AnchorPaneBikes;
-
     @FXML
     private AnchorPane AnchorPaneBookings;
-
     @FXML
     private AnchorPane AnchorPaneClients;
-
     @FXML
     private AnchorPane AnchorPaneManagers;
-
     @FXML
     private AnchorPane AnchorPaneModels;
-
     @FXML
     private AnchorPane AnchorPaneRentals;
-
     @FXML
     private AnchorPane AnchorPaneStores;
-
+    @FXML
+    private AnchorPane AnchorPaneInsertAdmin;
     @FXML
     private TableColumn<Bike, Integer> BikesIdColumn;
-
     @FXML
     private TableColumn<Bike, String> BikesNameColumn;
-
     @FXML
     private TableView<Bike> BikesTable;
-
     @FXML
     private TableView<Models> ModelsTable;
-
     @FXML
     private TableColumn<Booking, Integer> BookingsBikeIdColumn;
-
     @FXML
     private TableColumn<Booking, String> BookingsClientNameColumn;
-
     @FXML
     private TableColumn<Booking, String> BookingsClientPassportColumn;
-
     @FXML
     private TableColumn<Booking, Integer> BookingsIdColumn;
-
     @FXML
     private TableColumn<Booking, String> BookingsPickUpDateColumn;
-
     @FXML
     private TableColumn<Booking, String> BookingsStoreNameColumn;
-
     @FXML
     private TableView<Booking> BookingsTable;
-
     @FXML
     private Button ButtonAccountings;
-
     @FXML
     private Button ButtonAdminAppExit;
-
     @FXML
     private Button ButtonAdmins;
-
     @FXML
     private Button ButtonBikes;
-
     @FXML
     private Button ButtonBookings;
-
     @FXML
     private Button ButtonClients;
-
     @FXML
     private Button ButtonManagers;
-
     @FXML
     private Button ButtonModels;
-
     @FXML
     private Button ButtonRentals;
-
     @FXML
     private Button ButtonStores;
-
     @FXML
     private TableColumn<Client, String> ClientsAddressColumn;
-
     @FXML
     private TableColumn<Client, Integer> ClientsIdColumn;
-
     @FXML
     private TableColumn<Client, String> ClientsNameColumn;
-
     @FXML
     private TableColumn<Client, String> ClientsPassportColumn;
-
     @FXML
     private TableView<Client> ClientsTable;
-
     @FXML
     private TableColumn<Manager, Integer> ManagersIdColumn;
-
     @FXML
     private TableColumn<Manager, String> ManagersLoginColumn;
-
     @FXML
     private TableColumn<Manager, String> ManagersNameColumn;
-
     @FXML
     private TableView<Manager> ManagersTable;
-
     @FXML
     private TableColumn<Models, Integer> ModelsGearsColumn;
-
     @FXML
     private TableColumn<Models, Integer> ModelsIdColumn;
-
     @FXML
     private TableColumn<Models, String> ModelsNameColumn;
-
     @FXML
     private TableColumn<Models, String> ModelsTypeColumn;
-
     @FXML
     private TableColumn<Rentals, Integer> RentalsBikeIdColumn;
-
     @FXML
     private TableColumn<Rentals, String> RentalsClientNameColumn;
-
     @FXML
     private TableColumn<Rentals, Integer> RentalsIdColumn;
-
     @FXML
     private TableColumn<Rentals, String> RentalsPickUpDateColumn;
-
     @FXML
     private TableColumn<Rentals, String> RentalsReturnDateColumn;
-
     @FXML
     private TableView<Rentals> RentalsTable;
-
     @FXML
     private TableColumn<Store, String> StoreAddressColumn;
-
     @FXML
     private TableColumn<Store, Integer> StoreIdColumn;
-
     @FXML
     private TableColumn<Store, String> StoreNameColumn;
-
+    @FXML
+    private Button InsertAdminExit;
+    @FXML
+    private TextField InsertAdminFirstName;
+    @FXML
+    private Button InsertAdminInsert;
+    @FXML
+    private TextField InsertAdminLastName;
+    @FXML
+    private TextField InsertAdminLogin;
+    @FXML
+    private PasswordField InsertAdminPassword;
+    @FXML
+    private TextField InsertAdminSecondName;
+    @FXML
+    private Button AdminButtonInsert;
+    @FXML
+    private AnchorPane AnchorPaneDeleteAdmins;
+    @FXML
+    private Button AdminButtonDelete;
+    @FXML
+    private Button DeleteAdminsDelete;
+    @FXML
+    private Button DeleteAdminsExit;
+    @FXML
+    private TextField DeleteAdminsId;
+    @FXML
+    private Button ManagersDeleteManager;
+    @FXML
+    private Button ManagersNewManager;
+    @FXML
+    private AnchorPane AnchorPaneManagersInsert;
+    @FXML
+    private Button InsertManagersExit;
+    @FXML
+    private TextField InsertManagersFirstName;
+    @FXML
+    private Button InsertManagersInsert;
+    @FXML
+    private TextField InsertManagersLastName;
+    @FXML
+    private TextField InsertManagersLogin;
+    @FXML
+    private PasswordField InsertManagersPassword;
+    @FXML
+    private TextField InsertManagersSecondName;
+    @FXML
+    private AnchorPane AnchorPaneDeleteManagers;
+    @FXML
+    private Button DeleteManagersDelete;
+    @FXML
+    private Button DeleteManagersExit;
+    @FXML
+    private TextField DeleteManagersID;
     @FXML
     private TableView<Store> StoreTable;
+    @FXML
+    private Button BookingsNewBooking;
+    @FXML
+    private Button BookingsDeleteBooking;
+    @FXML
+    private AnchorPane AnchorPaneInsertBookings;
+    @FXML
+    private TextField InsertBookingsBikeId;
+
+    @FXML
+    private DatePicker InsertBookingsDatePickUp;
+
+    @FXML
+    private Button InsertBookingsExit;
+
+    @FXML
+    private TextField InsertBookingsFirstName;
+
+    @FXML
+    private Button InsertBookingsInsert;
+
+    @FXML
+    private TextField InsertBookingsLastName;
+    @FXML
+    private TextField InsertBookingsPassport;
+    @FXML
+    private TextField InsertBookingsSecondName;
+    @FXML
+    private ChoiceBox<String> InsertBookingsStoreName;
+    @FXML
+    private AnchorPane AnchorPaneDeleteBookings;
+    @FXML
+    private Button DeleteBookingsDelete;
+    @FXML
+    private Button DeleteBookingsExit;
+    @FXML
+    private TextField DeleteBookingsID;
     private final ObservableList<Booking> booking = FXCollections.observableArrayList();
     private final ObservableList<Rentals> rent = FXCollections.observableArrayList();
     private final ObservableList<Accounting> accountings = FXCollections.observableArrayList();
@@ -216,7 +246,6 @@ public class AdminAppController {
     private final ObservableList<Admin> admins = FXCollections.observableArrayList();
     private final ObservableList<Store> storess = FXCollections.observableArrayList();
     private final ObservableList<Client> client = FXCollections.observableArrayList();
-
     DataBaseHandler dbHandler = null;
 
     @FXML
@@ -232,6 +261,12 @@ public class AdminAppController {
             AnchorPaneModels.setVisible(false);
             AnchorPaneRentals.setVisible(false);
             AnchorPaneStores.setVisible(false);
+            AnchorPaneInsertAdmin.setVisible(false);
+            AnchorPaneDeleteAdmins.setVisible(false);
+            AnchorPaneManagersInsert.setVisible(false);
+            AnchorPaneDeleteManagers.setVisible(false);
+            AnchorPaneInsertBookings.setVisible(false);
+            AnchorPaneDeleteBookings.setVisible(false);
         });
 
         ButtonManagers.setOnAction(event ->{
@@ -244,6 +279,12 @@ public class AdminAppController {
             AnchorPaneModels.setVisible(false);
             AnchorPaneRentals.setVisible(false);
             AnchorPaneStores.setVisible(false);
+            AnchorPaneInsertAdmin.setVisible(false);
+            AnchorPaneDeleteAdmins.setVisible(false);
+            AnchorPaneManagersInsert.setVisible(false);
+            AnchorPaneDeleteManagers.setVisible(false);
+            AnchorPaneInsertBookings.setVisible(false);
+            AnchorPaneDeleteBookings.setVisible(false);
         });
 
         ButtonBikes.setOnAction(event ->{
@@ -256,6 +297,12 @@ public class AdminAppController {
             AnchorPaneModels.setVisible(false);
             AnchorPaneRentals.setVisible(false);
             AnchorPaneStores.setVisible(false);
+            AnchorPaneInsertAdmin.setVisible(false);
+            AnchorPaneDeleteAdmins.setVisible(false);
+            AnchorPaneManagersInsert.setVisible(false);
+            AnchorPaneDeleteManagers.setVisible(false);
+            AnchorPaneInsertBookings.setVisible(false);
+            AnchorPaneDeleteBookings.setVisible(false);
         });
 
         ButtonModels.setOnAction(event ->{
@@ -268,6 +315,12 @@ public class AdminAppController {
             AnchorPaneAccountings.setVisible(false);
             AnchorPaneRentals.setVisible(false);
             AnchorPaneStores.setVisible(false);
+            AnchorPaneInsertAdmin.setVisible(false);
+            AnchorPaneDeleteAdmins.setVisible(false);
+            AnchorPaneManagersInsert.setVisible(false);
+            AnchorPaneDeleteManagers.setVisible(false);
+            AnchorPaneInsertBookings.setVisible(false);
+            AnchorPaneDeleteBookings.setVisible(false);
         });
 
         ButtonBookings.setOnAction(event ->{
@@ -280,6 +333,12 @@ public class AdminAppController {
             AnchorPaneAccountings.setVisible(false);
             AnchorPaneRentals.setVisible(false);
             AnchorPaneStores.setVisible(false);
+            AnchorPaneInsertAdmin.setVisible(false);
+            AnchorPaneDeleteAdmins.setVisible(false);
+            AnchorPaneManagersInsert.setVisible(false);
+            AnchorPaneDeleteManagers.setVisible(false);
+            AnchorPaneInsertBookings.setVisible(false);
+            AnchorPaneDeleteBookings.setVisible(false);
         });
 
         ButtonRentals.setOnAction(event ->{
@@ -292,6 +351,12 @@ public class AdminAppController {
             AnchorPaneAdmins.setVisible(false);
             AnchorPaneAccountings.setVisible(false);
             AnchorPaneStores.setVisible(false);
+            AnchorPaneInsertAdmin.setVisible(false);
+            AnchorPaneDeleteAdmins.setVisible(false);
+            AnchorPaneManagersInsert.setVisible(false);
+            AnchorPaneDeleteManagers.setVisible(false);
+            AnchorPaneInsertBookings.setVisible(false);
+            AnchorPaneDeleteBookings.setVisible(false);
         });
 
         ButtonAccountings.setOnAction(event ->{
@@ -304,6 +369,12 @@ public class AdminAppController {
             AnchorPaneClients.setVisible(false);
             AnchorPaneAdmins.setVisible(false);
             AnchorPaneStores.setVisible(false);
+            AnchorPaneInsertAdmin.setVisible(false);
+            AnchorPaneDeleteAdmins.setVisible(false);
+            AnchorPaneManagersInsert.setVisible(false);
+            AnchorPaneDeleteManagers.setVisible(false);
+            AnchorPaneInsertBookings.setVisible(false);
+            AnchorPaneDeleteBookings.setVisible(false);
         });
 
         ButtonStores.setOnAction(event ->{
@@ -316,9 +387,16 @@ public class AdminAppController {
             AnchorPaneManagers.setVisible(false);
             AnchorPaneClients.setVisible(false);
             AnchorPaneAdmins.setVisible(false);
+            AnchorPaneInsertAdmin.setVisible(false);
+            AnchorPaneDeleteAdmins.setVisible(false);
+            AnchorPaneManagersInsert.setVisible(false);
+            AnchorPaneDeleteManagers.setVisible(false);
+            AnchorPaneInsertBookings.setVisible(false);
+            AnchorPaneDeleteBookings.setVisible(false);
         });
 
         ButtonAdmins.setOnAction(event ->{
+            addInfAboutAdmins();
             AnchorPaneAdmins.setVisible(true);
             AnchorPaneStores.setVisible(false);
             AnchorPaneAccountings.setVisible(false);
@@ -328,6 +406,12 @@ public class AdminAppController {
             AnchorPaneBikes.setVisible(false);
             AnchorPaneManagers.setVisible(false);
             AnchorPaneClients.setVisible(false);
+            AnchorPaneInsertAdmin.setVisible(false);
+            AnchorPaneDeleteAdmins.setVisible(false);
+            AnchorPaneManagersInsert.setVisible(false);
+            AnchorPaneDeleteManagers.setVisible(false);
+            AnchorPaneInsertBookings.setVisible(false);
+            AnchorPaneDeleteBookings.setVisible(false);
         });
 
         addInfAboutBookings();
@@ -395,6 +479,148 @@ public class AdminAppController {
             public void handle(ActionEvent event) {
                 Threads.changeWindow(event, "hello-view.fxml", "rentalbike");
             }
+        });
+
+        AdminButtonInsert.setOnAction(event -> {
+            AnchorPaneInsertAdmin.setVisible(true);
+            AnchorPaneAdmins.setVisible(false);
+        });
+        InsertAdminExit.setOnAction(event -> {
+            addInfAboutAdmins();
+            AnchorPaneInsertAdmin.setVisible(false);
+            AnchorPaneAdmins.setVisible(true);
+            InsertAdminLastName.clear();
+            InsertAdminFirstName.clear();
+            InsertAdminSecondName.clear();
+            InsertAdminLogin.clear();
+            InsertAdminPassword.clear();
+        });
+
+        AdminButtonDelete.setOnAction(event -> {
+            AnchorPaneInsertAdmin.setVisible(false);
+            AnchorPaneAdmins.setVisible(false);
+            AnchorPaneDeleteAdmins.setVisible(true);
+        });
+        DeleteAdminsExit.setOnAction(event -> {
+            addInfAboutAdmins();
+            AnchorPaneAdmins.setVisible(true);
+            AnchorPaneDeleteAdmins.setVisible(false);
+            DeleteAdminsId.clear();
+        });
+
+        InsertAdminInsert.setOnAction(event -> {
+            if (newAdmin()) {
+                //successLabel.setText("Вы успешно зарегистрировались!");
+                InsertAdminLastName.clear();
+                InsertAdminFirstName.clear();
+                InsertAdminSecondName.clear();
+                InsertAdminLogin.clear();
+                InsertAdminPassword.clear();
+            } else {
+                System.out.println("ошибка");
+            }
+        });
+
+        DeleteAdminsDelete.setOnAction(event -> {
+            if (deleteAdmin()) {
+                //successLabel.setText("Вы успешно зарегистрировались!");
+                DeleteAdminsId.clear();
+            } else {
+                System.out.println("ошибка");
+            }
+        });
+
+        ManagersNewManager.setOnAction(event -> {
+            AnchorPaneManagersInsert.setVisible(true);
+            AnchorPaneManagers.setVisible(false);
+        });
+        InsertManagersExit.setOnAction(event -> {
+            AnchorPaneManagersInsert.setVisible(false);
+            AnchorPaneManagers.setVisible(true);
+        });
+        InsertManagersInsert.setOnAction(event -> {
+            if (newManager()) {
+                //successLabel.setText("Вы успешно зарегистрировались!");
+                InsertManagersLastName.clear();
+                InsertManagersFirstName.clear();
+                InsertManagersSecondName.clear();
+                InsertManagersLogin.clear();
+                InsertManagersPassword.clear();
+                addInfAboutManagers();
+            } else {
+                System.out.println("ошибка");
+            }
+        });
+
+        ManagersDeleteManager.setOnAction(event -> {
+            AnchorPaneManagers.setVisible(false);
+            AnchorPaneDeleteManagers.setVisible(true);
+        });
+        DeleteManagersExit.setOnAction(event -> {
+            AnchorPaneManagers.setVisible(true);
+            AnchorPaneDeleteManagers.setVisible(false);
+            DeleteManagersID.clear();
+        });
+        DeleteManagersDelete.setOnAction(event -> {
+            if (deleteManager()) {
+                //successLabel.setText("Вы успешно зарегистрировались!");
+                DeleteManagersID.clear();
+                addInfAboutManagers();
+            } else {
+                System.out.println("ошибка");
+            }
+        });
+
+        BookingsNewBooking.setOnAction(event -> {
+            AnchorPaneBookings.setVisible(false);
+            AnchorPaneInsertBookings.setVisible(true);
+        });
+        InsertBookingsExit.setOnAction(event -> {
+            AnchorPaneBookings.setVisible(true);
+            AnchorPaneInsertBookings.setVisible(false);
+        });
+        ObservableList<String> values = FXCollections.observableArrayList();
+        ResultSet resSet = dbHandler.getStoreName();
+
+        while (true) {
+            try {
+                if (!resSet.next()) break;
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                values.add(resSet.getString("name"));
+                InsertBookingsStoreName.setItems(values);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        InsertBookingsInsert.setOnAction(event -> {
+            if (newBookings()) {
+                InsertBookingsLastName.clear();
+                InsertBookingsFirstName.clear();
+                InsertBookingsSecondName.clear();
+                InsertBookingsPassport.clear();
+                InsertBookingsBikeId.clear();
+                InsertBookingsStoreName.getSelectionModel().clearSelection();
+                InsertBookingsDatePickUp.setValue(null);
+
+            } else {
+            }
+        });
+        BookingsDeleteBooking.setOnAction(event -> {
+            AnchorPaneDeleteBookings.setVisible(true);
+            AnchorPaneBookings.setVisible(false);
+        });
+        DeleteBookingsDelete.setOnAction(event -> {
+            if (deleteBooking()) {
+                DeleteBookingsID.clear();
+            } else {
+        }});
+        DeleteBookingsExit.setOnAction(event -> {
+            addInfAboutBookings();
+            AnchorPaneDeleteBookings.setVisible(false);
+            AnchorPaneBookings.setVisible(true);
         });
 
 
@@ -619,6 +845,135 @@ public class AdminAppController {
             }
         }catch (SQLException e){
             throw new RuntimeException(e);
+        }
+    }
+
+    private boolean newAdmin() {
+        String lastname = InsertAdminLastName.getText().trim();
+        String firstname = InsertAdminFirstName.getText().trim();
+        String secondname = InsertAdminSecondName.getText().trim();
+        String login = InsertAdminLogin.getText().trim();
+        String password =  InsertAdminPassword.getText().trim();
+
+
+        if (firstname.isEmpty() || lastname.isEmpty() || secondname.isEmpty() ||
+               login.isEmpty() || password.isEmpty()) {
+            return false;
+        }
+
+        try {
+            dbHandler = DataBaseHandler.getInstance();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        Admin admin = new Admin(firstname,lastname, secondname, login, password);
+        if (dbHandler.newAdmin(admin)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean deleteAdmin() {
+        String idAdmin = DeleteAdminsId.getText();
+
+        if (idAdmin.isEmpty()) {
+            return false;
+        }
+
+        try {
+            dbHandler = DataBaseHandler.getInstance();
+            return dbHandler.deleteAdmin(Integer.parseInt(idAdmin));
+        } catch (ClassNotFoundException | SQLException e) {
+            return false;
+        }
+    }
+
+    private boolean newManager() {
+        String lastname = InsertManagersLastName.getText().trim();
+        String firstname = InsertManagersFirstName.getText().trim();
+        String secondname = InsertManagersSecondName.getText().trim();
+        String login = InsertManagersLogin.getText().trim();
+        String password =  InsertManagersPassword.getText().trim();
+
+        if (firstname.isEmpty() || lastname.isEmpty() || secondname.isEmpty() ||
+                login.isEmpty() || password.isEmpty()) {
+            return false;
+        }
+
+        try {
+            dbHandler = DataBaseHandler.getInstance();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        Manager manager = new Manager(firstname,lastname, secondname, login, password);
+        if (dbHandler.newManager(manager)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    private boolean deleteManager() {
+        String idManager = DeleteManagersID.getText();
+
+        if (idManager.isEmpty()) {
+            return false;
+        }
+
+        try {
+            dbHandler = DataBaseHandler.getInstance();
+            return dbHandler.deleteManager(Integer.parseInt(idManager));
+        } catch (ClassNotFoundException | SQLException e) {
+            return false;
+        }
+    }
+    private boolean newBookings() {
+        String lastname = InsertBookingsLastName.getText().trim();
+        String firstname = InsertBookingsFirstName.getText().trim();
+        String secondname = InsertBookingsSecondName.getText().trim();
+        String npassport = InsertBookingsPassport.getText().trim();
+        String bikeid =  InsertBookingsBikeId.getText().trim();
+        String storename = InsertBookingsStoreName.getValue();
+        String datepickup = String.valueOf(InsertBookingsDatePickUp.getValue());
+
+        if (firstname.isEmpty() || lastname.isEmpty() || secondname.isEmpty() ||
+                npassport.isEmpty() || bikeid.isEmpty() || storename.isEmpty() || datepickup.isEmpty()) {
+            return false;
+        }
+
+        try {
+            dbHandler = DataBaseHandler.getInstance();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        Booking booking = new Booking(lastname, firstname, secondname, npassport, bikeid, storename, datepickup);
+        if (dbHandler.newBooking(booking)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    private boolean deleteBooking() {
+        String numberBooking = DeleteBookingsID.getText();
+
+        if (numberBooking.isEmpty()) {
+            return false;
+        }
+
+        try {
+            dbHandler = DataBaseHandler.getInstance();
+            return dbHandler.deleteBooking(Integer.parseInt(numberBooking));
+        } catch (ClassNotFoundException | SQLException e) {
+            return false;
         }
     }
 

@@ -735,4 +735,172 @@ public class DataBaseHandler extends Configs {
         }
         return resultSet;
     }
+
+    public boolean newAdmin(Admin admin) {
+        String adminCheck = "SELECT * FROM " + Const.USER_TABLE + " WHERE " + Const.USER_LOGIN + "=?";
+        String insertClient = "INSERT INTO admins " + "( lastname, firstname, secondname, user_id "+ ")" + "VALUES(?,?,?,?);";
+
+        String insertUser = "INSERT INTO " + Const.USER_TABLE + "(" + Const.USER_LOGIN + ", " + Const.USER_PASSWORD + ", " + Const.USER_ROLE + ")" + "VALUES(?, ?, " + "3" + ");";
+
+        try {
+            PreparedStatement adminCheckSt = getDbConnection().prepareStatement(adminCheck);
+            adminCheckSt.setString(1, admin.getLogin());
+
+            ResultSet adminCheckRes = adminCheckSt.executeQuery();
+            if (adminCheckRes.next()) {
+                // Логин уже существует, вернуть false или выполнить другие действия
+                return false;
+            }
+
+            PreparedStatement prStUser = getInstance().getDbConnection().prepareStatement(insertUser, Statement.RETURN_GENERATED_KEYS);
+            prStUser.setString(1, admin.getLogin());
+            prStUser.setString(2, hashPassword(admin.getPassword())); // Сохранение хэша пароля
+
+            int resultUser = prStUser.executeUpdate();
+
+            if (resultUser == 0) {
+                // Вставка пользователя не удалась, вернуть false или выполнить другие действия
+                return false;
+            }
+
+            ResultSet generatedKeys = prStUser.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                int userId = generatedKeys.getInt(1);
+
+                PreparedStatement prSt = getInstance().getDbConnection().prepareStatement(insertClient);
+                prSt.setString(1, admin.getFirstname());
+                prSt.setString(2, admin.getLastname());
+                prSt.setString(3, admin.getSecondname());
+                prSt.setInt(4, userId);
+
+                int resultAdmin = prSt.executeUpdate();
+
+                return resultAdmin == 1; // Вернуть true, если запрос на вставку клиента выполнен успешно
+            } else {
+                // Идентификатор пользователя не был сгенерирован, вернуть false или выполнить другие действия
+                return false;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean deleteAdmin(int id) {
+        String selectAdmin = "SELECT user_id FROM admins WHERE id=?";
+        String deleteAdmin = "DELETE FROM admins WHERE id=?";
+        String deleteUser = "DELETE FROM " + Const.USER_TABLE + " WHERE " + Const.USER_ID + "=?";
+
+        try {
+            PreparedStatement selectAdminSt = getInstance().getDbConnection().prepareStatement(selectAdmin);
+            selectAdminSt.setInt(1, id);
+
+            ResultSet adminRes = selectAdminSt.executeQuery();
+            if (!adminRes.next()) {
+                // Запись с указанным id не найдена, вернуть false или выполнить другие действия
+                return false;
+            }
+
+            int userId = adminRes.getInt("user_id");
+
+            PreparedStatement deleteAdminSt = getInstance().getDbConnection().prepareStatement(deleteAdmin);
+            deleteAdminSt.setInt(1, id);
+            int resultAdmin = deleteAdminSt.executeUpdate();
+
+            PreparedStatement deleteUserSt = getInstance().getDbConnection().prepareStatement(deleteUser);
+            deleteUserSt.setInt(1, userId);
+            int resultUser = deleteUserSt.executeUpdate();
+
+            return resultAdmin == 1 && resultUser == 1; // Вернуть true, если записи успешно удалены
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean newManager(Manager manager) {
+        String managerCheck = "SELECT * FROM " + Const.USER_TABLE + " WHERE " + Const.USER_LOGIN + "=?";
+        String insertManager = "INSERT INTO managers " + "( lastname, firstname, secondname, user_id "+ ")" + "VALUES(?,?,?,?);";
+
+        String insertUser = "INSERT INTO " + Const.USER_TABLE + "(" + Const.USER_LOGIN + ", " + Const.USER_PASSWORD + ", " + Const.USER_ROLE + ")" + "VALUES(?, ?, " + "3" + ");";
+
+        try {
+            PreparedStatement managerCheckSt = getDbConnection().prepareStatement(managerCheck);
+            managerCheckSt.setString(1, manager.getLogin());
+
+            ResultSet managerCheckRes = managerCheckSt.executeQuery();
+            if (managerCheckRes.next()) {
+                // Логин уже существует, вернуть false или выполнить другие действия
+                return false;
+            }
+
+            PreparedStatement prStUser = getInstance().getDbConnection().prepareStatement(insertUser, Statement.RETURN_GENERATED_KEYS);
+            prStUser.setString(1, manager.getLogin());
+            prStUser.setString(2, hashPassword(manager.getPassword())); // Сохранение хэша пароля
+
+            int resultUser = prStUser.executeUpdate();
+
+            if (resultUser == 0) {
+                // Вставка пользователя не удалась, вернуть false или выполнить другие действия
+                return false;
+            }
+
+            ResultSet generatedKeys = prStUser.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                int userId = generatedKeys.getInt(1);
+
+                PreparedStatement prSt = getInstance().getDbConnection().prepareStatement(insertManager);
+                prSt.setString(1, manager.getFirstname());
+                prSt.setString(2, manager.getLastname());
+                prSt.setString(3, manager.getSecondname());
+                prSt.setInt(4, userId);
+
+                int resultManager = prSt.executeUpdate();
+
+                return resultManager == 1; // Вернуть true, если запрос на вставку клиента выполнен успешно
+            } else {
+                // Идентификатор пользователя не был сгенерирован, вернуть false или выполнить другие действия
+                return false;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean deleteManager(int id) {
+        String selectManager = "SELECT user_id FROM managers WHERE id=?";
+        String deleteManager = "DELETE FROM managers WHERE id=?";
+        String deleteUser = "DELETE FROM " + Const.USER_TABLE + " WHERE " + Const.USER_ID + "=?";
+
+        try {
+            PreparedStatement selectManagerSt = getInstance().getDbConnection().prepareStatement(selectManager);
+            selectManagerSt.setInt(1, id);
+
+            ResultSet managerRes = selectManagerSt.executeQuery();
+            if (!managerRes.next()) {
+                // Запись с указанным id не найдена, вернуть false или выполнить другие действия
+                return false;
+            }
+
+            int userId = managerRes.getInt("user_id");
+
+            PreparedStatement deleteManagerSt = getInstance().getDbConnection().prepareStatement(deleteManager);
+            deleteManagerSt.setInt(1, id);
+            int resultAdmin = deleteManagerSt.executeUpdate();
+
+            PreparedStatement deleteUserSt = getInstance().getDbConnection().prepareStatement(deleteUser);
+            deleteUserSt.setInt(1, userId);
+            int resultUser = deleteUserSt.executeUpdate();
+
+            return resultAdmin == 1 && resultUser == 1; // Вернуть true, если записи успешно удалены
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

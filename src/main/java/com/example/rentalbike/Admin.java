@@ -7,6 +7,15 @@ public class Admin {
     private String secondname;
     private String adminName;
     private String login;
+    private String password;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public String getLogin() {
         return login;
@@ -24,11 +33,12 @@ public class Admin {
         this.adminName = adminName;
     }
 
-    public Admin(Integer id, String lastname, String firstname, String secondname) {
-        this.id = id;
+    public Admin(String lastname, String firstname, String secondname, String login, String password) {
         this.lastname = lastname;
         this.firstname = firstname;
         this.secondname = secondname;
+        this.login = login;
+        this.password = password;
     }
     public Admin(Integer id, String adminName, String login) {
         this.id = id;

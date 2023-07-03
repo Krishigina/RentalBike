@@ -4,6 +4,15 @@ public class Manager {
     private Integer id;
     private String lastname;
     private String firstname;
+    private String password;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public String getManagerName() {
         return managerName;
@@ -25,12 +34,13 @@ public class Manager {
         this.login = login;
     }
 
-    public Manager(Integer id, String lastname, String firstname, String secondname, String login) {
-        this.id = id;
+    public Manager(String lastname, String firstname, String secondname, String login, String password) {
         this.lastname = lastname;
         this.firstname = firstname;
         this.secondname = secondname;
         this.login = login;
+        this.password = password;
+
     }
     public Manager(Integer id, String managerName, String login) {
         this.id = id;

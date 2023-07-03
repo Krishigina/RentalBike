@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -12,7 +16,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #1D354F;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.rentalbike.AdminAppController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="800.0" style="-fx-background-color: #1D354F;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.rentalbike.AdminAppController">
     <children>
         <AnchorPane layoutY="82.0" prefHeight="530.0" prefWidth="815.0" style="-fx-background-color: #F5F5F5;">
             <children>
@@ -161,16 +165,16 @@
                         <TableColumn fx:id="ClientsAddressColumn" prefWidth="308.0" text="Адрес" />
                     </columns>
                   </TableView>
-                  <Label layoutX="260.0" layoutY="1.0" text="Клиенты" textFill="#1b1a1a">
+                  <Label layoutX="260.0" layoutY="14.0" text="Клиенты" textFill="#1b1a1a">
                      <font>
-                        <Font name="Segoe UI Historic" size="16.0" />
+                        <Font name="Segoe UI" size="16.0" />
                      </font>
                   </Label>
                </children>
             </AnchorPane>
             <AnchorPane fx:id="AnchorPaneManagers" layoutX="219.0" layoutY="10.0" prefHeight="518.0" prefWidth="575.0" visible="false">
                <children>
-                  <TableView fx:id="ManagersTable" layoutX="9.0" layoutY="86.0" prefHeight="427.0" prefWidth="554.0">
+                  <TableView fx:id="ManagersTable" layoutX="9.0" layoutY="86.0" prefHeight="411.0" prefWidth="554.0">
                      <columns>
                         <TableColumn fx:id="ManagersIdColumn" prefWidth="50.4000244140625" text="ID" />
                         <TableColumn fx:id="ManagersNameColumn" prefWidth="362.39996337890625" text="ФИО менеджера" />
@@ -179,22 +183,24 @@
                   </TableView>
                   <Label layoutX="244.0" layoutY="1.0" text="Менеджеры" textFill="#1b1a1a">
                      <font>
-                        <Font name="Segoe UI Historic" size="16.0" />
+                        <Font name="Segoe UI" size="16.0" />
                      </font>
                   </Label>
+                  <Button fx:id="ManagersNewManager" layoutX="9.0" layoutY="40.0" mnemonicParsing="false" text="Добавить менеджера" />
+                  <Button fx:id="ManagersDeleteManager" layoutX="167.0" layoutY="40.0" mnemonicParsing="false" text="Удалить менеджера" />
                </children>
             </AnchorPane>
             <AnchorPane fx:id="AnchorPaneBikes" layoutX="219.0" layoutY="10.0" prefHeight="518.0" prefWidth="575.0" visible="false">
                <children>
-                  <TableView fx:id="BikesTable" layoutX="9.0" layoutY="86.0" prefHeight="427.0" prefWidth="554.0">
+                  <TableView fx:id="BikesTable" layoutX="9.0" layoutY="86.0" prefHeight="411.0" prefWidth="554.0">
                      <columns>
                         <TableColumn fx:id="BikesIdColumn" prefWidth="141.59999084472656" text="№ велосипеда" />
                         <TableColumn fx:id="BikesNameColumn" prefWidth="406.40008544921875" text="Название модели" />
                      </columns>
                   </TableView>
-                  <Label layoutX="243.0" layoutY="1.0" text="Велосипеды" textFill="#1b1a1a">
+                  <Label layoutX="242.0" layoutY="10.0" text="Велосипеды" textFill="#1b1a1a">
                      <font>
-                        <Font name="Segoe UI Historic" size="16.0" />
+                        <Font name="Segoe UI" size="16.0" />
                      </font>
                   </Label>
                </children>
@@ -209,16 +215,16 @@
                         <TableColumn fx:id="ModelsGearsColumn" prefWidth="131.20001220703125" text="Количество передач" />
                      </columns>
                   </TableView>
-                  <Label layoutX="210.0" layoutY="1.0" text="Модели велосипедов" textFill="#1b1a1a">
+                  <Label layoutX="211.0" layoutY="14.0" text="Модели велосипедов" textFill="#1b1a1a">
                      <font>
-                        <Font name="Segoe UI Historic" size="16.0" />
+                        <Font name="Segoe UI" size="16.0" />
                      </font>
                   </Label>
                </children>
             </AnchorPane>
             <AnchorPane fx:id="AnchorPaneBookings" layoutX="219.0" layoutY="10.0" prefHeight="518.0" prefWidth="575.0" visible="false">
                <children>
-                  <TableView fx:id="BookingsTable" layoutX="-6.0" layoutY="63.0" prefHeight="454.0" prefWidth="585.0">
+                  <TableView fx:id="BookingsTable" layoutX="-6.0" layoutY="99.0" prefHeight="402.0" prefWidth="586.0">
                      <columns>
                         <TableColumn fx:id="BookingsIdColumn" prefWidth="38.40000915527344" text="ID" />
                         <TableColumn fx:id="BookingsClientNameColumn" prefWidth="182.39996337890625" text="ФИО клиента" />
@@ -228,16 +234,18 @@
                         <TableColumn fx:id="BookingsPickUpDateColumn" prefWidth="80.7999267578125" text="Дата начала" />
                      </columns>
                   </TableView>
-                  <Label layoutX="233.0" layoutY="1.0" text="Бронирования" textFill="#1b1a1a">
+                  <Label layoutX="233.0" layoutY="8.0" text="Бронирования" textFill="#1b1a1a">
                      <font>
-                        <Font name="Segoe UI Historic" size="16.0" />
+                        <Font name="Segoe UI" size="16.0" />
                      </font>
                   </Label>
+                  <Button fx:id="BookingsNewBooking" layoutX="14.0" layoutY="54.0" mnemonicParsing="false" text="Добавить запись" />
+                  <Button fx:id="BookingsDeleteBooking" layoutX="158.0" layoutY="54.0" mnemonicParsing="false" text="Удалить запись" />
                </children>
             </AnchorPane>
             <AnchorPane fx:id="AnchorPaneRentals" layoutX="209.0" prefHeight="530.0" prefWidth="585.0" visible="false">
                <children>
-                  <TableView fx:id="RentalsTable" layoutX="5.0" layoutY="75.0" prefHeight="454.0" prefWidth="575.0">
+                  <TableView fx:id="RentalsTable" layoutX="4.0" layoutY="73.0" prefHeight="435.0" prefWidth="575.0">
                      <columns>
                         <TableColumn fx:id="RentalsIdColumn" prefWidth="50.39996337890625" text="ID" />
                         <TableColumn fx:id="RentalsClientNameColumn" prefWidth="213.60003662109375" text="ФИО клиента" />
@@ -246,59 +254,294 @@
                         <TableColumn fx:id="RentalsReturnDateColumn" prefWidth="110.4000244140625" text="Дата окончания" />
                      </columns>
                   </TableView>
-                  <Label layoutX="263.0" layoutY="1.0" text="Возврат" textFill="#1b1a1a">
+                  <Label layoutX="263.0" layoutY="14.0" text="Возврат" textFill="#1b1a1a">
                      <font>
-                        <Font name="Segoe UI Historic" size="16.0" />
+                        <Font name="Segoe UI" size="16.0" />
                      </font>
                   </Label>
                </children>
             </AnchorPane>
             <AnchorPane fx:id="AnchorPaneAccountings" layoutX="209.0" prefHeight="530.0" prefWidth="586.0" visible="false">
                <children>
-                  <TableView fx:id="AccountingsTable" layoutX="5.0" layoutY="87.0" prefHeight="442.0" prefWidth="575.0">
+                  <TableView fx:id="AccountingsTable" layoutX="5.0" layoutY="75.0" prefHeight="435.0" prefWidth="575.0">
                      <columns>
                         <TableColumn fx:id="AccountingsBikeIdColumn" prefWidth="127.19999694824219" text="№ велосипеда" />
                         <TableColumn fx:id="AccountingsModelNameColumn" prefWidth="283.199951171875" text="Название модели" />
                         <TableColumn fx:id="AccountingsPickUpDateColumn" prefWidth="162.40008544921875" text="Дата начала аренды" />
                      </columns>
                   </TableView>
-                  <Label layoutX="266.0" layoutY="7.0" text="Аренда" textFill="#1b1a1a">
+                  <Label layoutX="265.0" layoutY="24.0" text="Аренда" textFill="#1b1a1a">
                      <font>
-                        <Font name="Segoe UI Historic" size="16.0" />
+                        <Font name="Segoe UI" size="16.0" />
                      </font>
                   </Label>
                </children>
             </AnchorPane>
             <AnchorPane fx:id="AnchorPaneStores" layoutX="209.0" prefHeight="530.0" prefWidth="585.0" visible="false">
                <children>
-                  <TableView fx:id="StoreTable" layoutX="14.0" layoutY="76.0" prefHeight="454.0" prefWidth="563.0">
+                  <TableView fx:id="StoreTable" layoutX="14.0" layoutY="86.0" prefHeight="422.0" prefWidth="563.0">
                      <columns>
                         <TableColumn fx:id="StoreIdColumn" prefWidth="60.800018310546875" text="ID" />
                         <TableColumn fx:id="StoreNameColumn" prefWidth="183.99993896484375" text="Название магазина" />
                         <TableColumn fx:id="StoreAddressColumn" minWidth="0.0" prefWidth="312.00006103515625" text="Адрес" />
                      </columns>
                   </TableView>
-                  <Label layoutX="256.0" layoutY="1.0" text="Магазины" textFill="#1b1a1a">
+                  <Label layoutX="258.0" layoutY="15.0" text="Магазины" textFill="#1b1a1a">
                      <font>
-                        <Font name="Segoe UI Historic" size="16.0" />
+                        <Font name="Segoe UI" size="16.0" />
                      </font>
                   </Label>
                </children>
             </AnchorPane>
             <AnchorPane fx:id="AnchorPaneAdmins" layoutX="209.0" prefHeight="530.0" prefWidth="586.0" visible="false">
                <children>
-                  <TableView fx:id="AdminsTable" layoutX="11.0" layoutY="67.0" prefHeight="462.0" prefWidth="563.0">
+                  <TableView fx:id="AdminsTable" layoutX="11.0" layoutY="102.0" prefHeight="411.0" prefWidth="563.0">
                      <columns>
                         <TableColumn fx:id="AdminsIdColumn" prefWidth="60.800018310546875" text="ID" />
                         <TableColumn fx:id="AdminsNameColumn" prefWidth="183.99993896484375" text="ФИО администратора" />
                         <TableColumn fx:id="AdminsLoginColumn" minWidth="0.0" prefWidth="312.00006103515625" text="Логин" />
                      </columns>
                   </TableView>
-                  <Label layoutX="231.0" layoutY="1.0" text="Администраторы" textFill="#1b1a1a">
+                  <Label layoutX="230.0" layoutY="14.0" text="Администраторы" textFill="#1b1a1a">
+                     <font>
+                        <Font name="Segoe UI" size="16.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="AdminButtonInsert" layoutX="14.0" layoutY="53.0" mnemonicParsing="false" text="Добавить администратора" />
+                  <Button fx:id="AdminButtonDelete" layoutX="216.0" layoutY="53.0" mnemonicParsing="false" text="Удалить администратора" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="AnchorPaneInsertAdmin" layoutX="209.0" prefHeight="530.0" prefWidth="586.0" visible="false">
+               <children>
+                  <Label layoutX="213.0" layoutY="14.0" text="Добавить администратора" textFill="#0d0d0d">
+                     <font>
+                        <Font name="Segoe UI" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="26.0" layoutY="89.0" text="Фамилия" textFill="#0d0d0d">
                      <font>
                         <Font name="Segoe UI Historic" size="16.0" />
                      </font>
                   </Label>
+                  <TextField fx:id="InsertAdminLastName" layoutX="162.0" layoutY="86.0" prefHeight="34.0" prefWidth="296.0" />
+                  <Label layoutX="26.0" layoutY="154.0" text="Имя" textFill="#0d0d0d">
+                     <font>
+                        <Font name="Segoe UI Historic" size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="InsertAdminFirstName" layoutX="162.0" layoutY="151.0" prefHeight="34.0" prefWidth="296.0" />
+                  <Label layoutX="26.0" layoutY="220.0" text="Отчество" textFill="#0d0d0d">
+                     <font>
+                        <Font name="Segoe UI Historic" size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="InsertAdminSecondName" layoutX="162.0" layoutY="216.0" prefHeight="34.0" prefWidth="296.0" />
+                  <Label layoutX="26.0" layoutY="285.0" text="Логин" textFill="#0d0d0d">
+                     <font>
+                        <Font name="Segoe UI Historic" size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="InsertAdminLogin" layoutX="162.0" layoutY="281.0" prefHeight="34.0" prefWidth="296.0" />
+                  <Label layoutX="26.0" layoutY="350.0" text="Пароль" textFill="#0d0d0d">
+                     <font>
+                        <Font name="Segoe UI Historic" size="16.0" />
+                     </font>
+                  </Label>
+                  <PasswordField fx:id="InsertAdminPassword" layoutX="162.0" layoutY="346.0" prefHeight="34.0" prefWidth="296.0" />
+                  <Button fx:id="InsertAdminInsert" layoutX="257.0" layoutY="411.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="106.0" text="Добавить">
+                     <font>
+                        <Font name="Segoe UI" size="16.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="InsertAdminExit" layoutX="276.0" layoutY="461.0" mnemonicParsing="false" text="Отмена">
+                     <font>
+                        <Font name="Segoe UI" size="14.0" />
+                     </font>
+                  </Button>
+               </children></AnchorPane>
+            <AnchorPane fx:id="AnchorPaneDeleteAdmins" layoutX="209.0" prefHeight="530.0" prefWidth="586.0" visible="false">
+               <children>
+                  <Label layoutX="201.0" layoutY="31.0" text="Удалить администратора" textFill="#0d0d0d">
+                     <font>
+                        <Font name="Segoe UI" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="27.0" layoutY="122.0" text="ID администратора" textFill="#0d0d0d">
+                     <font>
+                        <Font name="Segoe UI" size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="DeleteAdminsId" layoutX="210.0" layoutY="114.0" prefHeight="34.0" prefWidth="296.0" />
+                  <Button fx:id="DeleteAdminsDelete" layoutX="240.0" layoutY="193.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="106.0" text="Удалить">
+                     <font>
+                        <Font name="Segoe UI" size="16.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="DeleteAdminsExit" layoutX="259.0" layoutY="244.0" mnemonicParsing="false" text="Отмена">
+                     <font>
+                        <Font name="Segoe UI" size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="AnchorPaneManagersInsert" layoutX="209.0" prefHeight="518.0" prefWidth="586.0" visible="false">
+               <children>
+                  <Label layoutX="213.0" layoutY="26.0" text="Добавить менеджера" textFill="#0d0d0d">
+                     <font>
+                        <Font name="Segoe UI" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="20.0" layoutY="91.0" text="Фамилия" textFill="#0d0d0d">
+                     <font>
+                        <Font name="Segoe UI" size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="InsertManagersLastName" layoutX="148.0" layoutY="85.0" prefHeight="34.0" prefWidth="319.0" />
+                  <Label layoutX="20.0" layoutY="155.0" text="Имя" textFill="#0d0d0d">
+                     <font>
+                        <Font name="Segoe UI" size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="InsertManagersFirstName" layoutX="148.0" layoutY="150.0" prefHeight="34.0" prefWidth="319.0" />
+                  <Label layoutX="20.0" layoutY="223.0" text="Отчество" textFill="#0d0d0d">
+                     <font>
+                        <Font name="Segoe UI" size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="InsertManagersSecondName" layoutX="148.0" layoutY="215.0" prefHeight="34.0" prefWidth="319.0" />
+                  <Label layoutX="20.0" layoutY="288.0" text="Логин" textFill="#0d0d0d">
+                     <font>
+                        <Font name="Segoe UI" size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="InsertManagersLogin" layoutX="148.0" layoutY="280.0" prefHeight="34.0" prefWidth="319.0" />
+                  <Label layoutX="20.0" layoutY="353.0" text="Пароль" textFill="#0d0d0d">
+                     <font>
+                        <Font name="Segoe UI" size="16.0" />
+                     </font>
+                  </Label>
+                  <PasswordField fx:id="InsertManagersPassword" layoutX="148.0" layoutY="345.0" prefHeight="34.0" prefWidth="319.0" />
+                  <Button fx:id="InsertManagersInsert" layoutX="254.0" layoutY="405.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="106.0" text="Добавить">
+                     <font>
+                        <Font name="Segoe UI" size="16.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="InsertManagersExit" layoutX="274.0" layoutY="461.0" mnemonicParsing="false" text="Отмена">
+                     <font>
+                        <Font name="Segoe UI" size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="AnchorPaneDeleteManagers" layoutX="209.0" prefHeight="530.0" prefWidth="585.0" visible="false">
+               <children>
+                  <Label layoutX="219.0" layoutY="32.0" text="Удалить менеджера" textFill="#0d0d0d">
+                     <font>
+                        <Font name="Segoe UI" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="24.0" layoutY="149.0" text="ID менеджера" textFill="#0d0d0d">
+                     <font>
+                        <Font name="Segoe UI" size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="DeleteManagersID" layoutX="164.0" layoutY="141.0" prefHeight="34.0" prefWidth="296.0" />
+                  <Button fx:id="DeleteManagersDelete" layoutX="239.0" layoutY="232.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="106.0" text="Удалить">
+                     <font>
+                        <Font name="Segoe UI" size="16.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="DeleteManagersExit" layoutX="258.0" layoutY="292.0" mnemonicParsing="false" text="Отмена">
+                     <font>
+                        <Font name="Segoe UI" size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="AnchorPaneInsertBookings" layoutX="209.0" prefHeight="530.0" prefWidth="586.0" visible="false">
+               <children>
+                  <Label layoutX="201.0" layoutY="14.0" text="Добавить бронирование" textFill="#0d0d0d">
+                     <font>
+                        <Font name="Segoe UI" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="21.0" layoutY="65.0" text="Фамилия">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="21.0" layoutY="120.0" text="Имя">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="21.0" layoutY="175.0" text="Отчество">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="InsertBookingsLastName" layoutX="201.0" layoutY="61.0" prefHeight="34.0" prefWidth="294.0" />
+                  <TextField fx:id="InsertBookingsFirstName" layoutX="201.0" layoutY="116.0" prefHeight="34.0" prefWidth="294.0" />
+                  <TextField fx:id="InsertBookingsSecondName" layoutX="201.0" layoutY="171.0" prefHeight="34.0" prefWidth="294.0" />
+                  <Label layoutX="21.0" layoutY="230.0" text="Паспорт">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="InsertBookingsPassport" layoutX="201.0" layoutY="226.0" prefHeight="34.0" prefWidth="294.0" />
+                  <Label layoutX="21.0" layoutY="285.0" text="№ велосипеда">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="InsertBookingsBikeId" layoutX="201.0" layoutY="281.0" prefHeight="34.0" prefWidth="294.0" />
+                  <ChoiceBox fx:id="InsertBookingsStoreName" layoutX="201.0" layoutY="336.0" prefHeight="28.0" prefWidth="294.0" />
+                  <DatePicker fx:id="InsertBookingsDatePickUp" layoutX="201.0" layoutY="391.0" prefHeight="28.0" prefWidth="294.0" />
+                  <Button fx:id="InsertBookingsInsert" layoutX="232.0" layoutY="461.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="85.0" text="Добавить">
+                     <font>
+                        <Font name="Segoe UI" size="14.0" />
+                     </font>
+                  </Button>
+                  <Label layoutX="21.0" layoutY="337.0" text="Магазин">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="21.0" layoutY="392.0" text="Дата начала аренды">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="InsertBookingsExit" layoutX="385.0" layoutY="461.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="86.0" text="Отмена">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="AnchorPaneDeleteBookings" layoutX="209.0" prefHeight="530.0" prefWidth="586.0" visible="false">
+               <children>
+                  <Label layoutX="208.0" layoutY="22.0" text="Удалить запись бронирования">
+                     <font>
+                        <Font name="Segoe UI" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="33.0" layoutY="150.0" text="Номер записи">
+                     <font>
+                        <Font name="Segoe UI" size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="DeleteBookingsID" layoutX="181.0" layoutY="141.0" prefHeight="35.0" prefWidth="281.0" />
+                  <Button fx:id="DeleteBookingsDelete" layoutX="278.0" layoutY="207.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="86.0" text="Удалить">
+                     <font>
+                        <Font name="Segoe UI" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="DeleteBookingsExit" layoutX="288.0" layoutY="258.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="68.0" text="Отмена">
+                     <font>
+                        <Font name="Segoe UI" size="14.0" />
+                     </font>
+                  </Button>
                </children>
             </AnchorPane>
             </children>
