@@ -237,6 +237,58 @@ public class AdminAppController {
     private Button DeleteBookingsExit;
     @FXML
     private TextField DeleteBookingsID;
+    @FXML
+    private AnchorPane AnchorPaneDeleteRentals;
+    @FXML
+    private Button DeleteRentalsDelete;
+    @FXML
+    private Button DeleteRentalsExit;
+    @FXML
+    private TextField DeleteRentalsID;
+    @FXML
+    private Button RentalsNewRental;
+    @FXML
+    private Button RentalsDeleteRental;
+    @FXML
+    private AnchorPane AnchorPaneRentalsInsert;
+    @FXML
+    private TextField RentalsInsertBikeId;
+    @FXML
+    private Button RentalsInsertButton;
+    @FXML
+    private Button RentalsInsertButtonExit;
+    @FXML
+    private DatePicker RentalsInsertDatePickUp;
+    @FXML
+    private DatePicker RentalsInsertDateReturn;
+    @FXML
+    private TextField RentalsInsertFirstName;
+    @FXML
+    private TextField RentalsInsertLastName;
+    @FXML
+    private TextField RentalsInsertSecondName;
+    @FXML
+    private AnchorPane AnchorPaneInsertStore;
+    @FXML
+    private Button StoresDeleteStore;
+    @FXML
+    private Button StoresInsertStore;
+    @FXML
+    private TextField StoresInsertName;
+    @FXML
+    private TextField StoresInsertAddress;
+    @FXML
+    private Button StoresInsertButton;
+    @FXML
+    private Button StoresInsertExit;
+    @FXML
+    private AnchorPane AnchorPaneStoresDelete;
+    @FXML
+    private Button StoresDeleteButton;
+    @FXML
+    private Button StoresDeleteExit;
+    @FXML
+    private ChoiceBox<String> StoresDeleteName;
     private final ObservableList<Booking> booking = FXCollections.observableArrayList();
     private final ObservableList<Rentals> rent = FXCollections.observableArrayList();
     private final ObservableList<Accounting> accountings = FXCollections.observableArrayList();
@@ -267,6 +319,10 @@ public class AdminAppController {
             AnchorPaneDeleteManagers.setVisible(false);
             AnchorPaneInsertBookings.setVisible(false);
             AnchorPaneDeleteBookings.setVisible(false);
+            AnchorPaneDeleteRentals.setVisible(false);
+            AnchorPaneRentalsInsert.setVisible(false);
+            AnchorPaneInsertStore.setVisible(false);
+            AnchorPaneStoresDelete.setVisible(false);
         });
 
         ButtonManagers.setOnAction(event ->{
@@ -285,6 +341,10 @@ public class AdminAppController {
             AnchorPaneDeleteManagers.setVisible(false);
             AnchorPaneInsertBookings.setVisible(false);
             AnchorPaneDeleteBookings.setVisible(false);
+            AnchorPaneDeleteRentals.setVisible(false);
+            AnchorPaneRentalsInsert.setVisible(false);
+            AnchorPaneInsertStore.setVisible(false);
+            AnchorPaneStoresDelete.setVisible(false);
         });
 
         ButtonBikes.setOnAction(event ->{
@@ -303,6 +363,10 @@ public class AdminAppController {
             AnchorPaneDeleteManagers.setVisible(false);
             AnchorPaneInsertBookings.setVisible(false);
             AnchorPaneDeleteBookings.setVisible(false);
+            AnchorPaneDeleteRentals.setVisible(false);
+            AnchorPaneRentalsInsert.setVisible(false);
+            AnchorPaneInsertStore.setVisible(false);
+            AnchorPaneStoresDelete.setVisible(false);
         });
 
         ButtonModels.setOnAction(event ->{
@@ -321,6 +385,10 @@ public class AdminAppController {
             AnchorPaneDeleteManagers.setVisible(false);
             AnchorPaneInsertBookings.setVisible(false);
             AnchorPaneDeleteBookings.setVisible(false);
+            AnchorPaneDeleteRentals.setVisible(false);
+            AnchorPaneRentalsInsert.setVisible(false);
+            AnchorPaneInsertStore.setVisible(false);
+            AnchorPaneStoresDelete.setVisible(false);
         });
 
         ButtonBookings.setOnAction(event ->{
@@ -339,9 +407,14 @@ public class AdminAppController {
             AnchorPaneDeleteManagers.setVisible(false);
             AnchorPaneInsertBookings.setVisible(false);
             AnchorPaneDeleteBookings.setVisible(false);
+            AnchorPaneDeleteRentals.setVisible(false);
+            AnchorPaneRentalsInsert.setVisible(false);
+            AnchorPaneInsertStore.setVisible(false);
+            AnchorPaneStoresDelete.setVisible(false);
         });
 
         ButtonRentals.setOnAction(event ->{
+            addInfAboutRentals();
             AnchorPaneRentals.setVisible(true);
             AnchorPaneBookings.setVisible(false);
             AnchorPaneModels.setVisible(false);
@@ -357,6 +430,10 @@ public class AdminAppController {
             AnchorPaneDeleteManagers.setVisible(false);
             AnchorPaneInsertBookings.setVisible(false);
             AnchorPaneDeleteBookings.setVisible(false);
+            AnchorPaneDeleteRentals.setVisible(false);
+            AnchorPaneRentalsInsert.setVisible(false);
+            AnchorPaneInsertStore.setVisible(false);
+            AnchorPaneStoresDelete.setVisible(false);
         });
 
         ButtonAccountings.setOnAction(event ->{
@@ -375,9 +452,14 @@ public class AdminAppController {
             AnchorPaneDeleteManagers.setVisible(false);
             AnchorPaneInsertBookings.setVisible(false);
             AnchorPaneDeleteBookings.setVisible(false);
+            AnchorPaneDeleteRentals.setVisible(false);
+            AnchorPaneRentalsInsert.setVisible(false);
+            AnchorPaneInsertStore.setVisible(false);
+            AnchorPaneStoresDelete.setVisible(false);
         });
 
         ButtonStores.setOnAction(event ->{
+            addInfAboutStore();
             AnchorPaneStores.setVisible(true);
             AnchorPaneAccountings.setVisible(false);
             AnchorPaneRentals.setVisible(false);
@@ -393,6 +475,10 @@ public class AdminAppController {
             AnchorPaneDeleteManagers.setVisible(false);
             AnchorPaneInsertBookings.setVisible(false);
             AnchorPaneDeleteBookings.setVisible(false);
+            AnchorPaneDeleteRentals.setVisible(false);
+            AnchorPaneRentalsInsert.setVisible(false);
+            AnchorPaneInsertStore.setVisible(false);
+            AnchorPaneStoresDelete.setVisible(false);
         });
 
         ButtonAdmins.setOnAction(event ->{
@@ -412,6 +498,10 @@ public class AdminAppController {
             AnchorPaneDeleteManagers.setVisible(false);
             AnchorPaneInsertBookings.setVisible(false);
             AnchorPaneDeleteBookings.setVisible(false);
+            AnchorPaneDeleteRentals.setVisible(false);
+            AnchorPaneRentalsInsert.setVisible(false);
+            AnchorPaneInsertStore.setVisible(false);
+            AnchorPaneStoresDelete.setVisible(false);
         });
 
         addInfAboutBookings();
@@ -579,22 +669,7 @@ public class AdminAppController {
             AnchorPaneBookings.setVisible(true);
             AnchorPaneInsertBookings.setVisible(false);
         });
-        ObservableList<String> values = FXCollections.observableArrayList();
-        ResultSet resSet = dbHandler.getStoreName();
 
-        while (true) {
-            try {
-                if (!resSet.next()) break;
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            try {
-                values.add(resSet.getString("name"));
-                InsertBookingsStoreName.setItems(values);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
         InsertBookingsInsert.setOnAction(event -> {
             if (newBookings()) {
                 InsertBookingsLastName.clear();
@@ -622,6 +697,97 @@ public class AdminAppController {
             AnchorPaneDeleteBookings.setVisible(false);
             AnchorPaneBookings.setVisible(true);
         });
+
+        RentalsDeleteRental.setOnAction(event -> {
+            AnchorPaneRentals.setVisible(false);
+            AnchorPaneDeleteRentals.setVisible(true);
+        });
+        DeleteRentalsExit.setOnAction(event -> {
+            addInfAboutRentals();
+            AnchorPaneDeleteRentals.setVisible(false);
+            AnchorPaneRentals.setVisible(true);
+        });
+        DeleteRentalsDelete.setOnAction(event -> {
+            if (deleteRental()) {
+                DeleteRentalsID.clear();
+            } else {
+            }
+        });
+
+        RentalsNewRental.setOnAction(event -> {
+            AnchorPaneRentals.setVisible(false);
+            AnchorPaneRentalsInsert.setVisible(true);
+        });
+        RentalsInsertButtonExit.setOnAction(event -> {
+            addInfAboutRentals();
+            AnchorPaneRentals.setVisible(true);
+            AnchorPaneRentalsInsert.setVisible(false);
+        });
+        RentalsInsertButton.setOnAction(event -> {
+            if (newRentals()) {
+                RentalsInsertLastName.clear();
+                RentalsInsertFirstName.clear();
+                RentalsInsertSecondName.clear();
+                RentalsInsertBikeId.clear();
+                RentalsInsertDatePickUp.setValue(null);
+                RentalsInsertDateReturn.setValue(null);
+
+            } else {
+            }
+        });
+
+        StoresInsertStore.setOnAction(event -> {
+            AnchorPaneStores.setVisible(false);
+            AnchorPaneInsertStore.setVisible(true);
+        });
+        StoresInsertExit.setOnAction(event -> {
+            addInfAboutStore();
+            AnchorPaneStores.setVisible(true);
+            AnchorPaneInsertStore.setVisible(false);
+        });
+        StoresInsertButton.setOnAction(event -> {
+            if (newStores()) {
+                StoresInsertName.clear();
+                StoresInsertAddress.clear();
+            } else {
+            }
+        });
+
+        StoresDeleteStore.setOnAction(event -> {
+            AnchorPaneStores.setVisible(false);
+            AnchorPaneStoresDelete.setVisible(true);
+        });
+        StoresDeleteExit.setOnAction(event -> {
+            addInfAboutStore();
+            AnchorPaneStores.setVisible(true);
+            AnchorPaneStoresDelete.setVisible(false);
+        });
+        StoresDeleteButton.setOnAction(event -> {
+            if (deleteStore()) {
+                StoresDeleteName.getSelectionModel().clearSelection();
+            } else {
+            }
+        });
+
+
+
+        ObservableList<String> values = FXCollections.observableArrayList();
+        ResultSet resSet = dbHandler.getStoreName();
+
+        while (true) {
+            try {
+                if (!resSet.next()) break;
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                values.add(resSet.getString("name"));
+                InsertBookingsStoreName.setItems(values);
+                StoresDeleteName.setItems(values);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
 
 
     }
@@ -972,6 +1138,106 @@ public class AdminAppController {
         try {
             dbHandler = DataBaseHandler.getInstance();
             return dbHandler.deleteBooking(Integer.parseInt(numberBooking));
+        } catch (ClassNotFoundException | SQLException e) {
+            return false;
+        }
+    }
+    private boolean deleteRental() {
+        String numberRental = DeleteRentalsID.getText();
+
+        if (numberRental.isEmpty()) {
+            return false;
+        }
+
+        try {
+            dbHandler = DataBaseHandler.getInstance();
+            return dbHandler.deleteRental(Integer.parseInt(numberRental));
+        } catch (ClassNotFoundException | SQLException e) {
+            return false;
+        }
+    }
+    private boolean newRentals() {
+        String lastname = RentalsInsertLastName.getText().trim();
+        String firstname = RentalsInsertFirstName.getText().trim();
+        String secondname = RentalsInsertSecondName.getText().trim();
+        String bikeid = RentalsInsertBikeId.getText().trim();
+        String pickupdate =  String.valueOf(RentalsInsertDatePickUp.getValue());
+        String returndate = String.valueOf(RentalsInsertDateReturn.getValue());
+
+        if (firstname.isEmpty() || lastname.isEmpty() || secondname.isEmpty()
+                || bikeid.isEmpty() || pickupdate.isEmpty() || returndate.isEmpty()) {
+            System.out.println("Данные пустые");
+            return false;
+        }
+
+        try {
+            dbHandler = DataBaseHandler.getInstance();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        Rentals rental = new Rentals(lastname, firstname, secondname, Integer.parseInt(bikeid), pickupdate, returndate);
+        if (dbHandler.newRental(rental)) {
+            return true;
+        } else {
+            //System.out.println("ошибка тут");
+            return false;
+        }
+    }
+    private boolean newStores() {
+        String name = StoresInsertName.getText().trim();
+        String address = StoresInsertAddress.getText().trim();
+
+        if (name.isEmpty() || address.isEmpty()) {
+            return false;
+        }
+
+        try {
+            dbHandler = DataBaseHandler.getInstance();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        Store store = new Store(name, address);
+        if (dbHandler.newStore(store)) {
+            // Обновление данных в ChoiceBox
+            ObservableList<String> values = FXCollections.observableArrayList();
+            ResultSet resSet = dbHandler.getStoreName();
+
+            while (true) {
+                try {
+                    if (!resSet.next()) break;
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                try {
+                    values.add(resSet.getString("name"));
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            InsertBookingsStoreName.setItems(values);
+            StoresDeleteName.setItems(values);
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+    private boolean deleteStore() {
+        String name = StoresDeleteName.getValue();
+
+        if (name.isEmpty()) {
+            return false;
+        }
+
+        try {
+            dbHandler = DataBaseHandler.getInstance();
+            return dbHandler.deleteStore(name);
         } catch (ClassNotFoundException | SQLException e) {
             return false;
         }

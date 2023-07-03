@@ -824,7 +824,7 @@ public class DataBaseHandler extends Configs {
         String managerCheck = "SELECT * FROM " + Const.USER_TABLE + " WHERE " + Const.USER_LOGIN + "=?";
         String insertManager = "INSERT INTO managers " + "( lastname, firstname, secondname, user_id "+ ")" + "VALUES(?,?,?,?);";
 
-        String insertUser = "INSERT INTO " + Const.USER_TABLE + "(" + Const.USER_LOGIN + ", " + Const.USER_PASSWORD + ", " + Const.USER_ROLE + ")" + "VALUES(?, ?, " + "3" + ");";
+        String insertUser = "INSERT INTO " + Const.USER_TABLE + "(" + Const.USER_LOGIN + ", " + Const.USER_PASSWORD + ", " + Const.USER_ROLE + ")" + "VALUES(?, ?, " + "2" + ");";
 
         try {
             PreparedStatement managerCheckSt = getDbConnection().prepareStatement(managerCheck);
@@ -899,6 +899,48 @@ public class DataBaseHandler extends Configs {
             return resultAdmin == 1 && resultUser == 1; // Вернуть true, если записи успешно удалены
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean newStore(Store store) {
+        String insertStore = "INSERT INTO stores (name, address) VALUES(?, ?)";
+
+        try (
+             PreparedStatement pstmt = getInstance().getDbConnection().prepareStatement(insertStore)) {
+
+            pstmt.setString(1, store.getName());
+            pstmt.setString(2, store.getAddress());
+
+            int rowsInserted = pstmt.executeUpdate();
+            if (rowsInserted > 0) {
+                return true;
+            }
+            return false;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public boolean deleteStore(String name) {
+        String deleteStoresQuery = "DELETE FROM " + Const.STORE_TABLE + " WHERE " + Const.STORE_NAME + " = ?";
+
+        try (
+                PreparedStatement deleteStoresStatement = getInstance().getDbConnection().prepareStatement(deleteStoresQuery)) {
+
+            deleteStoresStatement.setString(1, name);
+            int rowsAffected = deleteStoresStatement.executeUpdate();
+
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }

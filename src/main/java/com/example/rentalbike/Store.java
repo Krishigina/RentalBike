@@ -10,6 +10,10 @@ public class Store {
         this.name = name;
         this.address = address;
     }
+    public Store(String name, String address) {
+        this.name = name;
+        this.address = address;
+    }
 
     public Integer getId() {
         return id;
