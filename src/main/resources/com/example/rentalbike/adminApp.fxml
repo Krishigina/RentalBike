@@ -192,7 +192,7 @@
             </AnchorPane>
             <AnchorPane fx:id="AnchorPaneBikes" layoutX="219.0" layoutY="10.0" prefHeight="518.0" prefWidth="575.0" visible="false">
                <children>
-                  <TableView fx:id="BikesTable" layoutX="9.0" layoutY="86.0" prefHeight="411.0" prefWidth="554.0">
+                  <TableView fx:id="BikesTable" layoutX="9.0" layoutY="95.0" prefHeight="402.0" prefWidth="554.0">
                      <columns>
                         <TableColumn fx:id="BikesIdColumn" prefWidth="141.59999084472656" text="№ велосипеда" />
                         <TableColumn fx:id="BikesNameColumn" prefWidth="406.40008544921875" text="Название модели" />
@@ -203,6 +203,8 @@
                         <Font name="Segoe UI" size="16.0" />
                      </font>
                   </Label>
+                  <Button fx:id="BikeInsert" layoutX="14.0" layoutY="50.0" mnemonicParsing="false" text="Добавить велосипед" />
+                  <Button fx:id="BikeDelete" layoutX="181.0" layoutY="50.0" mnemonicParsing="false" text="Удалить велосипед" />
                </children>
             </AnchorPane>
             <AnchorPane fx:id="AnchorPaneModels" layoutX="209.0" prefHeight="518.0" prefWidth="575.0" visible="false">
@@ -682,6 +684,56 @@
                         <Font size="14.0" />
                      </font>
                   </Button>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="AnchorPaneInsertBike" layoutX="210.0" layoutY="5.0" prefHeight="518.0" prefWidth="575.0" visible="false">
+               <children>
+                  <Label layoutX="202.0" layoutY="21.0" text="Добавить велосипед">
+                     <font>
+                        <Font name="Segoe UI" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="23.0" layoutY="142.0" text="Модель велосипеда">
+                     <font>
+                        <Font name="Segoe UI" size="16.0" />
+                     </font>
+                  </Label>
+                  <ChoiceBox fx:id="InsertBikeModel" layoutX="202.0" layoutY="134.0" prefHeight="34.0" prefWidth="272.0" />
+                  <Button fx:id="InsertBikeButton" layoutX="245.0" layoutY="210.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="85.0" text="Добавить">
+                     <font>
+                        <Font name="Segoe UI" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="InsertBikeExit" layoutX="254.0" layoutY="259.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="68.0" text="Отмена">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="AnchorPaneDeleteBike" layoutX="209.0" prefHeight="530.0" prefWidth="582.0" visible="false">
+               <children>
+                  <Label layoutX="212.0" layoutY="24.0" text="Удалить велосипед">
+                     <font>
+                        <Font name="Segoe UI" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="24.0" layoutY="147.0" text="ID велосипеда">
+                     <font>
+                        <Font name="Segoe UI" size="16.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="DeleteBikeDelete" layoutX="248.0" layoutY="214.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="85.0" text="Удалить">
+                     <font>
+                        <Font name="Segoe UI" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="DeleteBikeExit" layoutX="257.0" layoutY="265.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="68.0" text="Отмена">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <TextField fx:id="DeleteBikeID" layoutX="179.0" layoutY="139.0" prefHeight="35.0" prefWidth="266.0" />
                </children>
             </AnchorPane>
             </children>

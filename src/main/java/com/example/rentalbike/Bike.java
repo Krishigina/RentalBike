@@ -21,6 +21,9 @@ public class Bike {
         this.id = id;
         this.modelName = modelName;
     }
+    public Bike(String modelName) {
+        this.modelName = modelName;
+    }
 
     public Integer getId() {
         return id;

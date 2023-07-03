@@ -905,7 +905,7 @@ public class DataBaseHandler extends Configs {
     }
 
     public boolean newStore(Store store) {
-        String insertStore = "INSERT INTO stores (name, address) VALUES(?, ?)";
+        String insertStore = "INSERT INTO " + Const.STORE_TABLE + "( " + Const.STORE_NAME + ", " + Const.STORE_ADDRESS + " )" + " VALUES(?, ?)";
 
         try (
              PreparedStatement pstmt = getInstance().getDbConnection().prepareStatement(insertStore)) {
@@ -935,6 +935,72 @@ public class DataBaseHandler extends Configs {
                 PreparedStatement deleteStoresStatement = getInstance().getDbConnection().prepareStatement(deleteStoresQuery)) {
 
             deleteStoresStatement.setString(1, name);
+            int rowsAffected = deleteStoresStatement.executeUpdate();
+
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ResultSet getModelName() {
+        ResultSet resSet = null;
+        String select = "SELECT " + Const.MODELS_NAME + " FROM " + Const.MODELS_TABLE + ";";
+        try {
+            PreparedStatement prSt = getInstance().getDbConnection().prepareStatement(select);
+            resSet = prSt.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        return resSet;
+    }
+
+    public boolean newBike(Bike bike1) {
+        String selectModel = "SELECT " + Const.MODELS_ID + " FROM " + Const.MODELS_TABLE + " WHERE name = ?";
+        String insertBike = "INSERT INTO " + Const.BIKES_TABLE + " (" + Const.BIKES_MODEL + " ) VALUES(?)";
+
+        try (
+             PreparedStatement selectStmt = getInstance().getDbConnection().prepareStatement(selectModel);
+             PreparedStatement insertStmt =getInstance().getDbConnection().prepareStatement(insertBike)) {
+
+            // Выполняем запрос для получения id модели велосипеда
+            selectStmt.setString(1, bike1.getModelName());
+            ResultSet modelResultSet = selectStmt.executeQuery();
+
+            if (modelResultSet.next()) {
+                int modelId = modelResultSet.getInt("id");
+
+                // Вставляем новый велосипед в таблицу bikes
+                insertStmt.setInt(1, modelId);
+                int rowsInserted = insertStmt.executeUpdate();
+
+                if (rowsInserted > 0) {
+                    return true;
+                }
+            }
+
+            return false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean deleteBike(String id) {
+        String deleteBikeQuery = "DELETE FROM " + Const.BIKES_TABLE + " WHERE " + Const.BIKES_ID + " = ?";
+
+        try (
+                PreparedStatement deleteStoresStatement = getInstance().getDbConnection().prepareStatement(deleteBikeQuery)) {
+
+            deleteStoresStatement.setInt(1, Integer.parseInt(id));
             int rowsAffected = deleteStoresStatement.executeUpdate();
 
             return rowsAffected > 0;

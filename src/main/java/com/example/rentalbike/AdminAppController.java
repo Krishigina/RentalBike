@@ -289,6 +289,27 @@ public class AdminAppController {
     private Button StoresDeleteExit;
     @FXML
     private ChoiceBox<String> StoresDeleteName;
+    @FXML
+    private Button BikeInsert;
+    @FXML
+    private Button BikeDelete;
+    @FXML
+    private AnchorPane AnchorPaneInsertBike;
+    @FXML
+    private ChoiceBox<String> InsertBikeModel;
+    @FXML
+    private Button InsertBikeExit;
+    @FXML
+    private Button InsertBikeButton;
+    @FXML
+    private AnchorPane AnchorPaneDeleteBike;
+    @FXML
+    private Button DeleteBikeDelete;
+    @FXML
+    private Button DeleteBikeExit;
+    @FXML
+    private TextField DeleteBikeID;
+
     private final ObservableList<Booking> booking = FXCollections.observableArrayList();
     private final ObservableList<Rentals> rent = FXCollections.observableArrayList();
     private final ObservableList<Accounting> accountings = FXCollections.observableArrayList();
@@ -323,6 +344,8 @@ public class AdminAppController {
             AnchorPaneRentalsInsert.setVisible(false);
             AnchorPaneInsertStore.setVisible(false);
             AnchorPaneStoresDelete.setVisible(false);
+            AnchorPaneInsertBike.setVisible(false);
+            AnchorPaneDeleteBike.setVisible(false);
         });
 
         ButtonManagers.setOnAction(event ->{
@@ -345,9 +368,12 @@ public class AdminAppController {
             AnchorPaneRentalsInsert.setVisible(false);
             AnchorPaneInsertStore.setVisible(false);
             AnchorPaneStoresDelete.setVisible(false);
+            AnchorPaneInsertBike.setVisible(false);
+            AnchorPaneDeleteBike.setVisible(false);
         });
 
         ButtonBikes.setOnAction(event ->{
+            addInfAboutBikes();
             AnchorPaneBikes.setVisible(true);
             AnchorPaneManagers.setVisible(false);
             AnchorPaneClients.setVisible(false);
@@ -367,6 +393,8 @@ public class AdminAppController {
             AnchorPaneRentalsInsert.setVisible(false);
             AnchorPaneInsertStore.setVisible(false);
             AnchorPaneStoresDelete.setVisible(false);
+            AnchorPaneInsertBike.setVisible(false);
+            AnchorPaneDeleteBike.setVisible(false);
         });
 
         ButtonModels.setOnAction(event ->{
@@ -389,6 +417,8 @@ public class AdminAppController {
             AnchorPaneRentalsInsert.setVisible(false);
             AnchorPaneInsertStore.setVisible(false);
             AnchorPaneStoresDelete.setVisible(false);
+            AnchorPaneInsertBike.setVisible(false);
+            AnchorPaneDeleteBike.setVisible(false);
         });
 
         ButtonBookings.setOnAction(event ->{
@@ -411,6 +441,8 @@ public class AdminAppController {
             AnchorPaneRentalsInsert.setVisible(false);
             AnchorPaneInsertStore.setVisible(false);
             AnchorPaneStoresDelete.setVisible(false);
+            AnchorPaneInsertBike.setVisible(false);
+            AnchorPaneDeleteBike.setVisible(false);
         });
 
         ButtonRentals.setOnAction(event ->{
@@ -434,6 +466,8 @@ public class AdminAppController {
             AnchorPaneRentalsInsert.setVisible(false);
             AnchorPaneInsertStore.setVisible(false);
             AnchorPaneStoresDelete.setVisible(false);
+            AnchorPaneInsertBike.setVisible(false);
+            AnchorPaneDeleteBike.setVisible(false);
         });
 
         ButtonAccountings.setOnAction(event ->{
@@ -456,6 +490,8 @@ public class AdminAppController {
             AnchorPaneRentalsInsert.setVisible(false);
             AnchorPaneInsertStore.setVisible(false);
             AnchorPaneStoresDelete.setVisible(false);
+            AnchorPaneInsertBike.setVisible(false);
+            AnchorPaneDeleteBike.setVisible(false);
         });
 
         ButtonStores.setOnAction(event ->{
@@ -479,6 +515,8 @@ public class AdminAppController {
             AnchorPaneRentalsInsert.setVisible(false);
             AnchorPaneInsertStore.setVisible(false);
             AnchorPaneStoresDelete.setVisible(false);
+            AnchorPaneInsertBike.setVisible(false);
+            AnchorPaneDeleteBike.setVisible(false);
         });
 
         ButtonAdmins.setOnAction(event ->{
@@ -502,6 +540,8 @@ public class AdminAppController {
             AnchorPaneRentalsInsert.setVisible(false);
             AnchorPaneInsertStore.setVisible(false);
             AnchorPaneStoresDelete.setVisible(false);
+            AnchorPaneInsertBike.setVisible(false);
+            AnchorPaneDeleteBike.setVisible(false);
         });
 
         addInfAboutBookings();
@@ -769,6 +809,39 @@ public class AdminAppController {
             }
         });
 
+        BikeInsert.setOnAction(event -> {
+            AnchorPaneInsertBike.setVisible(true);
+            AnchorPaneBikes.setVisible(false);
+        });
+        InsertBikeExit.setOnAction(event -> {
+            addInfAboutBikes();
+            AnchorPaneInsertBike.setVisible(false);
+            AnchorPaneBikes.setVisible(true);
+        });
+        InsertBikeButton.setOnAction(event -> {
+            if (newBike()) {
+                InsertBikeModel.getSelectionModel().clearSelection();
+            } else {
+            }
+        });
+        BikeDelete.setOnAction(event -> {
+            AnchorPaneDeleteBike.setVisible(true);
+            AnchorPaneBikes.setVisible(false);
+        });
+        DeleteBikeExit.setOnAction(event -> {
+            addInfAboutBikes();
+            AnchorPaneDeleteBike.setVisible(false);
+            AnchorPaneBikes.setVisible(true);
+        });
+        DeleteBikeDelete.setOnAction(event -> {
+            if (deleteBike()) {
+                DeleteBikeID.clear();
+            } else {
+            }
+        });
+
+
+
 
 
         ObservableList<String> values = FXCollections.observableArrayList();
@@ -784,6 +857,23 @@ public class AdminAppController {
                 values.add(resSet.getString("name"));
                 InsertBookingsStoreName.setItems(values);
                 StoresDeleteName.setItems(values);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        ObservableList<String> values2 = FXCollections.observableArrayList();
+        ResultSet resSet2 = dbHandler.getModelName();
+
+        while (true) {
+            try {
+                if (!resSet2.next()) break;
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                values2.add(resSet2.getString("name"));
+                InsertBikeModel.setItems(values2);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -1238,6 +1328,42 @@ public class AdminAppController {
         try {
             dbHandler = DataBaseHandler.getInstance();
             return dbHandler.deleteStore(name);
+        } catch (ClassNotFoundException | SQLException e) {
+            return false;
+        }
+    }
+    private boolean newBike() {
+        String model = InsertBikeModel.getValue();
+
+        if (model.isEmpty()) {
+            return false;
+        }
+
+        try {
+            dbHandler = DataBaseHandler.getInstance();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        Bike bike1 = new Bike(model);
+        if (dbHandler.newBike(bike1)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    private boolean deleteBike() {
+        String id = DeleteBikeID.getText().trim();
+
+        if (id.isEmpty()) {
+            return false;
+        }
+
+        try {
+            dbHandler = DataBaseHandler.getInstance();
+            return dbHandler.deleteBike(id);
         } catch (ClassNotFoundException | SQLException e) {
             return false;
         }
