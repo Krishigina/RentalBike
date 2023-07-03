@@ -2,6 +2,8 @@ package com.example.rentalbike;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DataBaseHandler extends Configs {
     private boolean keepConnectionOpen = false; // Переменная класса DataBaseHandler
@@ -172,12 +174,7 @@ public class DataBaseHandler extends Configs {
         ResultSet resSet = null;
         String select = "SELECT * FROM " + Const.USER_TABLE + " WHERE " + Const.USER_LOGIN + "=?";
         try {
-            Connection connection = getInstance().getDbConnection();
-            if (connection == null || connection.isClosed()) {
-                // Если соединение равно null или закрыто, создаем новое соединение
-                connection = getNewDbConnection();
-            }
-            PreparedStatement prSt = connection.prepareStatement(select);
+            PreparedStatement prSt = getInstance().getDbConnection().prepareStatement(select);
             prSt.setString(1, client.getLogin());
 
             resSet = prSt.executeQuery();
@@ -189,9 +186,6 @@ public class DataBaseHandler extends Configs {
         return resSet;
     }
 
-    private Connection getNewDbConnection() throws SQLException, ClassNotFoundException {
-        return DriverManager.getConnection( "jdbc:mysql://" + dbHost + ":" + dbPort + "/" + dbName, dbUser, dbPass);
-    }
     protected String hashPassword(String password) {
         return BCrypt.hashpw(password, BCrypt.gensalt());
     }
@@ -228,19 +222,27 @@ public class DataBaseHandler extends Configs {
         return roleId;
     }
 
-    public ResultSet getStore(){
-        ResultSet resSet = null;
-        String select = "SELECT * FROM " + Const.STORE_TABLE + ";";
-        try {
-            PreparedStatement prSt = getInstance().getDbConnection().prepareStatement(select);
-            resSet = prSt.executeQuery();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+    public List<Store> getStore() {
+        List<Store> stores = new ArrayList<>();
+        String query = "SELECT * FROM " + Const.STORE_TABLE + ";";
 
-        return resSet;
+        try (Connection connection = getInstance().getDbConnection();
+             PreparedStatement statement = connection.prepareStatement(query);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                int storeId = resultSet.getInt("id");
+                String storeName = resultSet.getString("name");
+                String address = resultSet.getString("address");
+                // Add more columns as needed
+
+                Store store = new Store(storeId, storeName, address);
+                stores.add(store);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return stores;
     }
     public ResultSet getStoreName(){
         ResultSet resSet = null;
@@ -257,8 +259,8 @@ public class DataBaseHandler extends Configs {
         return resSet;
     }
 
-    public ResultSet getBookings() {
-        ResultSet resultSet = null;
+    public List<Booking> getBookings() {
+        List<Booking> bookings = new ArrayList<>();
         String select1 = "SELECT bookings.id, CONCAT(clients.last_name, ' ', clients.first_name, ' ', clients.second_name) AS name, " +
                 "clients.passport, " +
                 "bookings.bike_id, " +
@@ -271,17 +273,25 @@ public class DataBaseHandler extends Configs {
 
         try {
             PreparedStatement prSt = getInstance().getDbConnection().prepareStatement(select1);
-            resultSet = prSt.executeQuery();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+            ResultSet resultSet = prSt.executeQuery();
+            while (resultSet.next()) {
+                Booking booking = new Booking();
+                booking.setId(resultSet.getInt("id"));
+                booking.setClientName(resultSet.getString("name"));
+                booking.setPassport(resultSet.getString("passport"));
+                booking.setBike_id(resultSet.getInt("bike_id"));
+                booking.setStoreName(resultSet.getString("name"));
+                booking.setPickupDate(resultSet.getString("pickup_date"));
+                bookings.add(booking);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
 
-        return resultSet;
+        return bookings;
     }
-    public ResultSet getRentals() {
-        ResultSet resultSet = null;
+    public List<Rentals> getRentals() {
+        List<Rentals> rentals = new ArrayList<>();
         String select = "SELECT rentals.id, CONCAT(clients.last_name, ' ', clients.first_name, ' ', clients.second_name) AS name, " +
                 "bookings.bike_id, " +
                 "DATE_FORMAT(bookings.pickup_date, '%d.%m.%Y') AS pickup_date, " +
@@ -293,14 +303,21 @@ public class DataBaseHandler extends Configs {
 
         try {
             PreparedStatement prSt = getInstance().getDbConnection().prepareStatement(select);
-            resultSet = prSt.executeQuery();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+            ResultSet resultSet = prSt.executeQuery();
+            while (resultSet.next()) {
+                Rentals rental = new Rentals();
+                rental.setId(resultSet.getInt("id"));
+                rental.setClientName(resultSet.getString("name"));
+                rental.setBike_id(resultSet.getInt("bike_id"));
+                rental.setPickup_date(resultSet.getString("pickup_date"));
+                rental.setReturn_date(resultSet.getString("return_date"));
+                rentals.add(rental);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
 
-        return resultSet;
+        return rentals;
     }
 
     public ResultSet getHistory(Integer user_id) {
@@ -588,6 +605,14 @@ public class DataBaseHandler extends Configs {
             }
 
             int bookingIdResultInt = bookingIdResult.getInt(Const.BOOKINGS_ID);
+            String rentalExistsQuery = "SELECT * FROM " + Const.RENTALS_TABLE + " WHERE " + Const.RENTALS_BOOKINGID + " = ?";
+            PreparedStatement rentalExists = getInstance().getDbConnection().prepareStatement(rentalExistsQuery);
+            rentalExists.setInt(1, bookingIdResultInt);
+            ResultSet rentalExistsResult = rentalExists.executeQuery();
+
+            if (rentalExistsResult.next()) {
+                return false;
+            }
 
             String addRentalQuery = "INSERT INTO " + Const.RENTALS_TABLE + " (" + Const.RENTALS_BOOKINGID + ", " +
                     Const.RENTALC_RETURNDATE  + ") VALUES (?, ?)";
@@ -597,15 +622,12 @@ public class DataBaseHandler extends Configs {
 
             int rowsAffected = addRentalStatement.executeUpdate();
             if (rowsAffected == 1) {
-                //System.out.println("Аренда добавлена успешно");
                 return true;
             } else {
-                //System.out.println("Ошибка при добавлении аренды");
                 return false;
             }
         } catch (SQLException e) {
             if (e.getMessage().equals("Illegal operation on empty result set")) {
-                // Запись не существует, возвращаем false
                 return false;
             } else {
                 e.printStackTrace();
@@ -634,7 +656,8 @@ public class DataBaseHandler extends Configs {
         }
     }
 
-    public ResultSet getAccountings() {
+    public List<Accounting> getAccountings() {
+        List<Accounting> accountings = new ArrayList<>();
         String query = "SELECT bikes.id, bike_models.name, DATE_FORMAT(bookings.pickup_date, '%d.%m.%Y') as pickup_date " +
                 "FROM " + Const.BIKES_TABLE + " bikes " +
                 "JOIN " + Const.MODELS_TABLE + " bike_models ON bikes.model_id = bike_models.id " +
@@ -642,98 +665,138 @@ public class DataBaseHandler extends Configs {
                 "LEFT JOIN " + Const.RENTALS_TABLE + " rentals ON bookings.id = rentals.booking_id " +
                 "WHERE rentals.return_date IS NULL ";
 
-        try {
-            Connection connection = getInstance().getDbConnection();
-            PreparedStatement statement = connection.prepareStatement(query);
-            return statement.executeQuery();
-        } catch (SQLException e) {
+        try (Connection connection = getInstance().getDbConnection();
+             PreparedStatement statement = connection.prepareStatement(query);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                int bikeId = resultSet.getInt("id");
+                String modelName = resultSet.getString("name");
+                String pickupDate = resultSet.getString("pickup_date");
+
+                Accounting accounting = new Accounting(bikeId, modelName, pickupDate);
+                accountings.add(accounting);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
-            return null;
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
         }
+        return accountings;
     }
 
-    public ResultSet getManagers() {
-        ResultSet resultSet = null;
+    public List<Manager> getManagers() {
+        List<Manager> managers = new ArrayList<>();
         String query = "SELECT managers.id, CONCAT(managers.lastname, ' ', managers.firstname, ' ', managers.secondname) AS name, users.login FROM managers JOIN users ON managers.user_id = users.id";
 
-        try {
-            PreparedStatement statement = getInstance().getDbConnection().prepareStatement(query);
-            resultSet = statement.executeQuery();
-        } catch (SQLException e) {
+        try (Connection connection = getInstance().getDbConnection();
+             PreparedStatement statement = connection.prepareStatement(query);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                int managerId = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                String login = resultSet.getString("login");
+
+                Manager manager = new Manager(managerId, name, login);
+                managers.add(manager);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
-            return null;
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
         }
-        return resultSet;
+        return managers;
     }
 
-    public ResultSet getAdmins() {
-        ResultSet resultSet = null;
+    public List<Admin> getAdmins() {
+        List<Admin> admins = new ArrayList<>();
         String query = "SELECT admins.id, CONCAT(admins.lastname, ' ', admins.firstname, ' ', admins.secondname) AS name, " +
                 "users.login FROM admins JOIN users ON admins.user_id = users.id";
 
-        try {
-            PreparedStatement statement = getInstance().getDbConnection().prepareStatement(query);
-            resultSet = statement.executeQuery();
-        } catch (SQLException e) {
+        try (Connection connection = getInstance().getDbConnection();
+             PreparedStatement statement = connection.prepareStatement(query);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                int adminId = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                String login = resultSet.getString("login");
+
+                Admin admin = new Admin(adminId, name, login);
+                admins.add(admin);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
-            return null;
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
         }
-        return resultSet;
+        return admins;
     }
 
-    public ResultSet getModel() {
-        ResultSet resultSet = null;
+    public List<Models> getModel() throws SQLException {
+        List<Models> modelList = new ArrayList<>();
         String query = "SELECT * FROM bike_models";
 
         try {
             PreparedStatement statement = getInstance().getDbConnection().prepareStatement(query);
-            resultSet = statement.executeQuery();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String modelName = resultSet.getString("name");
+                String type = resultSet.getString("type");
+                int modelGear = resultSet.getInt("gear_count");
+
+                Models model = new Models(id, modelName, type, modelGear);
+                modelList.add(model);
+            }
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-        return resultSet;
+
+        return modelList;
     }
 
-    public ResultSet getBike() {
-        ResultSet resultSet = null;
+    public List<Bike> getBike() throws SQLException {
+        List<Bike> bikeList = new ArrayList<>();
         String query = "SELECT bikes.id, bike_models.name FROM bikes JOIN bike_models ON bikes.model_id = bike_models.id";
 
         try {
             PreparedStatement statement = getInstance().getDbConnection().prepareStatement(query);
-            resultSet = statement.executeQuery();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String modelName = resultSet.getString("name");
+
+                Bike bike = new Bike(id, modelName);
+                bikeList.add(bike);
+            }
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-        return resultSet;
+
+        return bikeList;
     }
 
-    public ResultSet getClient() {
-        ResultSet resultSet = null;
+    public List<Client> getClient() throws SQLException {
+        List<Client> clientList = new ArrayList<>();
         String query = "SELECT clients.id,  CONCAT(clients.last_name, ' ', clients.first_name, ' ', clients.second_name) AS name, clients.passport, " +
                 " clients.address FROM clients ";
 
         try {
             PreparedStatement statement = getInstance().getDbConnection().prepareStatement(query);
-            resultSet = statement.executeQuery();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                String passport = resultSet.getString("passport");
+                String address = resultSet.getString("address");
+
+                Client client = new Client(id, name, passport, address);
+                clientList.add(client);
+            }
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-        return resultSet;
+
+        return clientList;
     }
 
     public boolean newAdmin(Admin admin) {

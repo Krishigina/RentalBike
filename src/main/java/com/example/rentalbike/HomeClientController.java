@@ -42,7 +42,7 @@ public class HomeClientController {
     @FXML
     void initialize() {
 
-        addInfAboutStore();
+        addInfAboutTables();
         idStore.setCellValueFactory(new PropertyValueFactory<>("id"));
         nameStore.setCellValueFactory(new PropertyValueFactory<>("name"));
         addressStore.setCellValueFactory(new PropertyValueFactory<>("address"));
@@ -62,23 +62,13 @@ public class HomeClientController {
         });
 
     }
-    private void addInfAboutStore(){
-        try {
-            dbHandler = DataBaseHandler.getInstance();
-        } catch (ClassNotFoundException | SQLException e) {
-            throw new RuntimeException(e);
-        }
-        ResultSet stores = dbHandler.getStore();
-        try{
-            while(stores.next()){
-                Store store = new Store(
-                        stores.getInt(1),
-                        stores.getString(2),
-                        stores.getString(3));
 
-                data.add(store);
-            }
-        }catch (SQLException e){
+    private void addInfAboutTables() {
+        try {
+            data.clear();
+            dbHandler = DataBaseHandler.getInstance();
+            data.addAll(dbHandler.getStore());
+        } catch (ClassNotFoundException | SQLException e) {
             throw new RuntimeException(e);
         }
     }

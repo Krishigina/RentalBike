@@ -1,5 +1,8 @@
 package com.example.rentalbike;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class Booking {
     private Integer id;
     private String clientName;
@@ -42,15 +45,6 @@ public class Booking {
     public void setId(Integer id) {
         this.id = id;
     }
-
-    public Booking(Integer id, String clientName, String passport, Integer bike_id, String storeName, String pickupDate) {
-        this.id = id;
-        this.clientName = clientName;
-        this.passport = passport;
-        this.bike_id = bike_id;
-        this.storeName = storeName;
-        this.pickupDate = pickupDate;
-    }
     public Booking(String clientLastName, String clientFirstName, String clientSecondName, String passport, String bike_id, String storeName, String pickupDate){
         this.clientLastName = clientLastName;
         this.clientFirstName = clientFirstName;
@@ -59,6 +53,8 @@ public class Booking {
         this.bike_id = Integer.valueOf(bike_id);
         this.storeName = storeName;
         this.pickupDate = pickupDate;
+    }
+    public Booking(){
     }
 
     public String getClientName() {
@@ -100,4 +96,5 @@ public class Booking {
     public void setPickupDate(String pickupDate) {
         this.pickupDate = pickupDate;
     }
+
 }

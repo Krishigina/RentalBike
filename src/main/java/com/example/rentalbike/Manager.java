@@ -47,6 +47,9 @@ public class Manager {
         this.managerName = managerName;
         this.login = login;
     }
+    public Manager() {
+
+    }
 
     public Integer getId() {
         return id;

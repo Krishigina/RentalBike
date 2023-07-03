@@ -45,6 +45,9 @@ public class Admin {
         this.adminName = adminName;
         this.login = login;
     }
+    public Admin() {
+
+    }
 
     public Integer getId() {
         return id;

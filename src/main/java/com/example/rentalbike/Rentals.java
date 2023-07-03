@@ -50,6 +50,9 @@ public class Rentals {
         this.pickup_date = pickup_date;
         this.return_date = return_date;
     }
+    public Rentals() {
+
+    }
 
     public Integer getId() {
         return id;

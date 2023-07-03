@@ -323,285 +323,104 @@ public class AdminAppController {
 
     @FXML
     void initialize() {
+        // Создаем массив всех AnchorPane для удобства работы
+        AnchorPane[] anchorPanes = {
+                AnchorPaneClients, AnchorPaneBookings, AnchorPaneAdmins, AnchorPaneBikes,
+                AnchorPaneAccountings, AnchorPaneManagers, AnchorPaneModels, AnchorPaneRentals,
+                AnchorPaneStores, AnchorPaneInsertAdmin, AnchorPaneDeleteAdmins, AnchorPaneManagersInsert,
+                AnchorPaneDeleteManagers, AnchorPaneInsertBookings, AnchorPaneDeleteBookings,
+                AnchorPaneDeleteRentals, AnchorPaneRentalsInsert, AnchorPaneInsertStore,
+                AnchorPaneStoresDelete, AnchorPaneInsertBike, AnchorPaneDeleteBike
+        };
 
-        ButtonClients.setOnAction(event ->{
-            AnchorPaneClients.setVisible(true);
-            AnchorPaneBookings.setVisible(false);
-            AnchorPaneAdmins.setVisible(false);
-            AnchorPaneBikes.setVisible(false);
-            AnchorPaneAccountings.setVisible(false);
-            AnchorPaneManagers.setVisible(false);
-            AnchorPaneModels.setVisible(false);
-            AnchorPaneRentals.setVisible(false);
-            AnchorPaneStores.setVisible(false);
-            AnchorPaneInsertAdmin.setVisible(false);
-            AnchorPaneDeleteAdmins.setVisible(false);
-            AnchorPaneManagersInsert.setVisible(false);
-            AnchorPaneDeleteManagers.setVisible(false);
-            AnchorPaneInsertBookings.setVisible(false);
-            AnchorPaneDeleteBookings.setVisible(false);
-            AnchorPaneDeleteRentals.setVisible(false);
-            AnchorPaneRentalsInsert.setVisible(false);
-            AnchorPaneInsertStore.setVisible(false);
-            AnchorPaneStoresDelete.setVisible(false);
-            AnchorPaneInsertBike.setVisible(false);
-            AnchorPaneDeleteBike.setVisible(false);
-        });
+        // Устанавливаем обработчики событий для всех кнопок
+        ButtonClients.setOnAction(event -> showAnchorPane(AnchorPaneClients, anchorPanes));
+        ButtonBookings.setOnAction(event -> showAnchorPane(AnchorPaneBookings, anchorPanes));
+        ButtonAdmins.setOnAction(event -> showAnchorPane(AnchorPaneAdmins, anchorPanes));
+        ButtonBikes.setOnAction(event -> showAnchorPane(AnchorPaneBikes, anchorPanes));
+        ButtonAccountings.setOnAction(event -> showAnchorPane(AnchorPaneAccountings, anchorPanes));
+        ButtonManagers.setOnAction(event -> showAnchorPane(AnchorPaneManagers, anchorPanes));
+        ButtonModels.setOnAction(event -> showAnchorPane(AnchorPaneModels, anchorPanes));
+        ButtonRentals.setOnAction(event -> showAnchorPane(AnchorPaneRentals, anchorPanes));
+        ButtonStores.setOnAction(event -> showAnchorPane(AnchorPaneStores, anchorPanes));
+        InsertAdminInsert.setOnAction(event -> showAnchorPane(AnchorPaneInsertAdmin, anchorPanes));
+        DeleteAdminsDelete.setOnAction(event -> showAnchorPane(AnchorPaneDeleteAdmins, anchorPanes));
+        InsertManagersInsert.setOnAction(event -> showAnchorPane(AnchorPaneManagersInsert, anchorPanes));
+        ManagersDeleteManager.setOnAction(event -> showAnchorPane(AnchorPaneDeleteManagers, anchorPanes));
+        InsertBookingsInsert.setOnAction(event -> showAnchorPane(AnchorPaneInsertBookings, anchorPanes));
+        BookingsDeleteBooking.setOnAction(event -> showAnchorPane(AnchorPaneDeleteBookings, anchorPanes));
+        RentalsDeleteRental.setOnAction(event -> showAnchorPane(AnchorPaneDeleteRentals, anchorPanes));
+        RentalsInsertButton.setOnAction(event -> showAnchorPane(AnchorPaneRentalsInsert, anchorPanes));
+        StoresInsertStore.setOnAction(event -> showAnchorPane(AnchorPaneInsertStore, anchorPanes));
+        StoresDeleteStore.setOnAction(event -> showAnchorPane(AnchorPaneStoresDelete, anchorPanes));
+        InsertBikeButton.setOnAction(event -> showAnchorPane(AnchorPaneInsertBike, anchorPanes));
+        DeleteBikeDelete.setOnAction(event -> showAnchorPane(AnchorPaneDeleteBike, anchorPanes));
 
-        ButtonManagers.setOnAction(event ->{
-            AnchorPaneManagers.setVisible(true);
-            AnchorPaneClients.setVisible(false);
-            AnchorPaneBookings.setVisible(false);
-            AnchorPaneAdmins.setVisible(false);
-            AnchorPaneBikes.setVisible(false);
-            AnchorPaneAccountings.setVisible(false);
-            AnchorPaneModels.setVisible(false);
-            AnchorPaneRentals.setVisible(false);
-            AnchorPaneStores.setVisible(false);
-            AnchorPaneInsertAdmin.setVisible(false);
-            AnchorPaneDeleteAdmins.setVisible(false);
-            AnchorPaneManagersInsert.setVisible(false);
-            AnchorPaneDeleteManagers.setVisible(false);
-            AnchorPaneInsertBookings.setVisible(false);
-            AnchorPaneDeleteBookings.setVisible(false);
-            AnchorPaneDeleteRentals.setVisible(false);
-            AnchorPaneRentalsInsert.setVisible(false);
-            AnchorPaneInsertStore.setVisible(false);
-            AnchorPaneStoresDelete.setVisible(false);
-            AnchorPaneInsertBike.setVisible(false);
-            AnchorPaneDeleteBike.setVisible(false);
-        });
+        // Скрываем все AnchorPane, кроме первого
+        for (int i = 1; i < anchorPanes.length; i++) {
+            anchorPanes[i].setVisible(false);
+        }
 
-        ButtonBikes.setOnAction(event ->{
-            addInfAboutBikes();
-            AnchorPaneBikes.setVisible(true);
-            AnchorPaneManagers.setVisible(false);
-            AnchorPaneClients.setVisible(false);
-            AnchorPaneBookings.setVisible(false);
-            AnchorPaneAdmins.setVisible(false);
-            AnchorPaneAccountings.setVisible(false);
-            AnchorPaneModels.setVisible(false);
-            AnchorPaneRentals.setVisible(false);
-            AnchorPaneStores.setVisible(false);
-            AnchorPaneInsertAdmin.setVisible(false);
-            AnchorPaneDeleteAdmins.setVisible(false);
-            AnchorPaneManagersInsert.setVisible(false);
-            AnchorPaneDeleteManagers.setVisible(false);
-            AnchorPaneInsertBookings.setVisible(false);
-            AnchorPaneDeleteBookings.setVisible(false);
-            AnchorPaneDeleteRentals.setVisible(false);
-            AnchorPaneRentalsInsert.setVisible(false);
-            AnchorPaneInsertStore.setVisible(false);
-            AnchorPaneStoresDelete.setVisible(false);
-            AnchorPaneInsertBike.setVisible(false);
-            AnchorPaneDeleteBike.setVisible(false);
-        });
+        addInfAboutTables();
 
-        ButtonModels.setOnAction(event ->{
-            AnchorPaneModels.setVisible(true);
-            AnchorPaneBikes.setVisible(false);
-            AnchorPaneManagers.setVisible(false);
-            AnchorPaneClients.setVisible(false);
-            AnchorPaneBookings.setVisible(false);
-            AnchorPaneAdmins.setVisible(false);
-            AnchorPaneAccountings.setVisible(false);
-            AnchorPaneRentals.setVisible(false);
-            AnchorPaneStores.setVisible(false);
-            AnchorPaneInsertAdmin.setVisible(false);
-            AnchorPaneDeleteAdmins.setVisible(false);
-            AnchorPaneManagersInsert.setVisible(false);
-            AnchorPaneDeleteManagers.setVisible(false);
-            AnchorPaneInsertBookings.setVisible(false);
-            AnchorPaneDeleteBookings.setVisible(false);
-            AnchorPaneDeleteRentals.setVisible(false);
-            AnchorPaneRentalsInsert.setVisible(false);
-            AnchorPaneInsertStore.setVisible(false);
-            AnchorPaneStoresDelete.setVisible(false);
-            AnchorPaneInsertBike.setVisible(false);
-            AnchorPaneDeleteBike.setVisible(false);
-        });
-
-        ButtonBookings.setOnAction(event ->{
-            AnchorPaneBookings.setVisible(true);
-            AnchorPaneModels.setVisible(false);
-            AnchorPaneBikes.setVisible(false);
-            AnchorPaneManagers.setVisible(false);
-            AnchorPaneClients.setVisible(false);
-            AnchorPaneAdmins.setVisible(false);
-            AnchorPaneAccountings.setVisible(false);
-            AnchorPaneRentals.setVisible(false);
-            AnchorPaneStores.setVisible(false);
-            AnchorPaneInsertAdmin.setVisible(false);
-            AnchorPaneDeleteAdmins.setVisible(false);
-            AnchorPaneManagersInsert.setVisible(false);
-            AnchorPaneDeleteManagers.setVisible(false);
-            AnchorPaneInsertBookings.setVisible(false);
-            AnchorPaneDeleteBookings.setVisible(false);
-            AnchorPaneDeleteRentals.setVisible(false);
-            AnchorPaneRentalsInsert.setVisible(false);
-            AnchorPaneInsertStore.setVisible(false);
-            AnchorPaneStoresDelete.setVisible(false);
-            AnchorPaneInsertBike.setVisible(false);
-            AnchorPaneDeleteBike.setVisible(false);
-        });
-
-        ButtonRentals.setOnAction(event ->{
-            addInfAboutRentals();
-            AnchorPaneRentals.setVisible(true);
-            AnchorPaneBookings.setVisible(false);
-            AnchorPaneModels.setVisible(false);
-            AnchorPaneBikes.setVisible(false);
-            AnchorPaneManagers.setVisible(false);
-            AnchorPaneClients.setVisible(false);
-            AnchorPaneAdmins.setVisible(false);
-            AnchorPaneAccountings.setVisible(false);
-            AnchorPaneStores.setVisible(false);
-            AnchorPaneInsertAdmin.setVisible(false);
-            AnchorPaneDeleteAdmins.setVisible(false);
-            AnchorPaneManagersInsert.setVisible(false);
-            AnchorPaneDeleteManagers.setVisible(false);
-            AnchorPaneInsertBookings.setVisible(false);
-            AnchorPaneDeleteBookings.setVisible(false);
-            AnchorPaneDeleteRentals.setVisible(false);
-            AnchorPaneRentalsInsert.setVisible(false);
-            AnchorPaneInsertStore.setVisible(false);
-            AnchorPaneStoresDelete.setVisible(false);
-            AnchorPaneInsertBike.setVisible(false);
-            AnchorPaneDeleteBike.setVisible(false);
-        });
-
-        ButtonAccountings.setOnAction(event ->{
-            AnchorPaneAccountings.setVisible(true);
-            AnchorPaneRentals.setVisible(false);
-            AnchorPaneBookings.setVisible(false);
-            AnchorPaneModels.setVisible(false);
-            AnchorPaneBikes.setVisible(false);
-            AnchorPaneManagers.setVisible(false);
-            AnchorPaneClients.setVisible(false);
-            AnchorPaneAdmins.setVisible(false);
-            AnchorPaneStores.setVisible(false);
-            AnchorPaneInsertAdmin.setVisible(false);
-            AnchorPaneDeleteAdmins.setVisible(false);
-            AnchorPaneManagersInsert.setVisible(false);
-            AnchorPaneDeleteManagers.setVisible(false);
-            AnchorPaneInsertBookings.setVisible(false);
-            AnchorPaneDeleteBookings.setVisible(false);
-            AnchorPaneDeleteRentals.setVisible(false);
-            AnchorPaneRentalsInsert.setVisible(false);
-            AnchorPaneInsertStore.setVisible(false);
-            AnchorPaneStoresDelete.setVisible(false);
-            AnchorPaneInsertBike.setVisible(false);
-            AnchorPaneDeleteBike.setVisible(false);
-        });
-
-        ButtonStores.setOnAction(event ->{
-            addInfAboutStore();
-            AnchorPaneStores.setVisible(true);
-            AnchorPaneAccountings.setVisible(false);
-            AnchorPaneRentals.setVisible(false);
-            AnchorPaneBookings.setVisible(false);
-            AnchorPaneModels.setVisible(false);
-            AnchorPaneBikes.setVisible(false);
-            AnchorPaneManagers.setVisible(false);
-            AnchorPaneClients.setVisible(false);
-            AnchorPaneAdmins.setVisible(false);
-            AnchorPaneInsertAdmin.setVisible(false);
-            AnchorPaneDeleteAdmins.setVisible(false);
-            AnchorPaneManagersInsert.setVisible(false);
-            AnchorPaneDeleteManagers.setVisible(false);
-            AnchorPaneInsertBookings.setVisible(false);
-            AnchorPaneDeleteBookings.setVisible(false);
-            AnchorPaneDeleteRentals.setVisible(false);
-            AnchorPaneRentalsInsert.setVisible(false);
-            AnchorPaneInsertStore.setVisible(false);
-            AnchorPaneStoresDelete.setVisible(false);
-            AnchorPaneInsertBike.setVisible(false);
-            AnchorPaneDeleteBike.setVisible(false);
-        });
-
-        ButtonAdmins.setOnAction(event ->{
-            addInfAboutAdmins();
-            AnchorPaneAdmins.setVisible(true);
-            AnchorPaneStores.setVisible(false);
-            AnchorPaneAccountings.setVisible(false);
-            AnchorPaneRentals.setVisible(false);
-            AnchorPaneBookings.setVisible(false);
-            AnchorPaneModels.setVisible(false);
-            AnchorPaneBikes.setVisible(false);
-            AnchorPaneManagers.setVisible(false);
-            AnchorPaneClients.setVisible(false);
-            AnchorPaneInsertAdmin.setVisible(false);
-            AnchorPaneDeleteAdmins.setVisible(false);
-            AnchorPaneManagersInsert.setVisible(false);
-            AnchorPaneDeleteManagers.setVisible(false);
-            AnchorPaneInsertBookings.setVisible(false);
-            AnchorPaneDeleteBookings.setVisible(false);
-            AnchorPaneDeleteRentals.setVisible(false);
-            AnchorPaneRentalsInsert.setVisible(false);
-            AnchorPaneInsertStore.setVisible(false);
-            AnchorPaneStoresDelete.setVisible(false);
-            AnchorPaneInsertBike.setVisible(false);
-            AnchorPaneDeleteBike.setVisible(false);
-        });
-
-        addInfAboutBookings();
-        BookingsIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        BookingsClientNameColumn.setCellValueFactory(new PropertyValueFactory<>("clientName"));
-        BookingsClientPassportColumn.setCellValueFactory(new PropertyValueFactory<>("passport"));
-        BookingsBikeIdColumn.setCellValueFactory(new PropertyValueFactory<>("bike_id"));
-        BookingsStoreNameColumn.setCellValueFactory(new PropertyValueFactory<>("storeName"));
-        BookingsPickUpDateColumn.setCellValueFactory(new PropertyValueFactory<>("pickupDate"));
+        // BookingsTable
+        configureColumn(BookingsIdColumn, "id");
+        configureColumn(BookingsClientNameColumn, "clientName");
+        configureColumn(BookingsClientPassportColumn, "passport");
+        configureColumn(BookingsBikeIdColumn, "bike_id");
+        configureColumn(BookingsStoreNameColumn, "storeName");
+        configureColumn(BookingsPickUpDateColumn, "pickupDate");
         BookingsTable.setItems(booking);
 
-        addInfAboutRentals();
-        RentalsIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        RentalsClientNameColumn.setCellValueFactory(new PropertyValueFactory<>("clientName"));
-        RentalsBikeIdColumn.setCellValueFactory(new PropertyValueFactory<>("bike_id"));
-        RentalsPickUpDateColumn.setCellValueFactory(new PropertyValueFactory<>("pickup_date"));
-        RentalsReturnDateColumn.setCellValueFactory(new PropertyValueFactory<>("return_date"));
+        // RentalsTable
+        configureColumn(RentalsIdColumn, "id");
+        configureColumn(RentalsClientNameColumn, "clientName");
+        configureColumn(RentalsBikeIdColumn, "bike_id");
+        configureColumn(RentalsPickUpDateColumn, "pickup_date");
+        configureColumn(RentalsReturnDateColumn, "return_date");
         RentalsTable.setItems(rent);
 
-        addInfAboutAccountings();
-        AccountingsBikeIdColumn.setCellValueFactory(new PropertyValueFactory<>("bikeId"));
-        AccountingsModelNameColumn.setCellValueFactory(new PropertyValueFactory<>("bikeName"));
-        AccountingsPickUpDateColumn.setCellValueFactory(new PropertyValueFactory<>("pickUpDate"));
+        // AccountingsTable
+        configureColumn(AccountingsBikeIdColumn, "bikeId");
+        configureColumn(AccountingsModelNameColumn, "bikeName");
+        configureColumn(AccountingsPickUpDateColumn, "pickUpDate");
         AccountingsTable.setItems(accountings);
 
-        addInfAboutManagers();
-        ManagersIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        ManagersNameColumn.setCellValueFactory(new PropertyValueFactory<>("managerName"));
-        ManagersLoginColumn.setCellValueFactory(new PropertyValueFactory<>("login"));
+        // ManagersTable
+        configureColumn(ManagersIdColumn, "id");
+        configureColumn(ManagersNameColumn, "managerName");
+        configureColumn(ManagersLoginColumn, "login");
         ManagersTable.setItems(managers);
 
-        addInfAboutAdmins();
-        AdminsIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        AdminsNameColumn.setCellValueFactory(new PropertyValueFactory<>("adminName"));
-        AdminsLoginColumn.setCellValueFactory(new PropertyValueFactory<>("login"));
+        // AdminsTable
+        configureColumn(AdminsIdColumn, "id");
+        configureColumn(AdminsNameColumn, "adminName");
+        configureColumn(AdminsLoginColumn, "login");
         AdminsTable.setItems(admins);
 
-        addInfAboutStore();
-        StoreIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        StoreNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        StoreAddressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
+        // StoreTable
+        configureColumn(StoreIdColumn, "id");
+        configureColumn(StoreNameColumn, "name");
+        configureColumn(StoreAddressColumn, "address");
         StoreTable.setItems(storess);
 
-        addInfAboutModels();
-        ModelsIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        ModelsNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        ModelsTypeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
-        ModelsGearsColumn.setCellValueFactory(new PropertyValueFactory<>("gear_count"));
+        // ModelsTable
+        configureColumn(ModelsIdColumn, "id");
+        configureColumn(ModelsNameColumn, "name");
+        configureColumn(ModelsTypeColumn, "type");
+        configureColumn(ModelsGearsColumn, "gear_count");
         ModelsTable.setItems(models);
 
-        addInfAboutBikes();
-        BikesIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        BikesNameColumn.setCellValueFactory(new PropertyValueFactory<>("modelName"));
+        // BikesTable
+        configureColumn(BikesIdColumn, "id");
+        configureColumn(BikesNameColumn, "modelName");
         BikesTable.setItems(bike);
 
-        addInfAboutClients();
-        ClientsIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        ClientsNameColumn.setCellValueFactory(new PropertyValueFactory<>("clientName"));
-        ClientsPassportColumn.setCellValueFactory(new PropertyValueFactory<>("npassport"));
-        ClientsAddressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
+        // ClientsTable
+        configureColumn(ClientsIdColumn, "id");
+        configureColumn(ClientsNameColumn, "clientName");
+        configureColumn(ClientsPassportColumn, "npassport");
+        configureColumn(ClientsAddressColumn, "address");
         ClientsTable.setItems(client);
 
         ButtonAdminAppExit.setOnAction(new EventHandler<ActionEvent>() {
@@ -616,7 +435,7 @@ public class AdminAppController {
             AnchorPaneAdmins.setVisible(false);
         });
         InsertAdminExit.setOnAction(event -> {
-            addInfAboutAdmins();
+            addInfAboutTables();
             AnchorPaneInsertAdmin.setVisible(false);
             AnchorPaneAdmins.setVisible(true);
             InsertAdminLastName.clear();
@@ -632,7 +451,7 @@ public class AdminAppController {
             AnchorPaneDeleteAdmins.setVisible(true);
         });
         DeleteAdminsExit.setOnAction(event -> {
-            addInfAboutAdmins();
+            addInfAboutTables();
             AnchorPaneAdmins.setVisible(true);
             AnchorPaneDeleteAdmins.setVisible(false);
             DeleteAdminsId.clear();
@@ -676,7 +495,7 @@ public class AdminAppController {
                 InsertManagersSecondName.clear();
                 InsertManagersLogin.clear();
                 InsertManagersPassword.clear();
-                addInfAboutManagers();
+                addInfAboutTables();
             } else {
                 System.out.println("ошибка");
             }
@@ -693,9 +512,8 @@ public class AdminAppController {
         });
         DeleteManagersDelete.setOnAction(event -> {
             if (deleteManager()) {
-                //successLabel.setText("Вы успешно зарегистрировались!");
                 DeleteManagersID.clear();
-                addInfAboutManagers();
+                addInfAboutTables();
             } else {
                 System.out.println("ошибка");
             }
@@ -733,7 +551,7 @@ public class AdminAppController {
             } else {
         }});
         DeleteBookingsExit.setOnAction(event -> {
-            addInfAboutBookings();
+            addInfAboutTables();
             AnchorPaneDeleteBookings.setVisible(false);
             AnchorPaneBookings.setVisible(true);
         });
@@ -743,7 +561,7 @@ public class AdminAppController {
             AnchorPaneDeleteRentals.setVisible(true);
         });
         DeleteRentalsExit.setOnAction(event -> {
-            addInfAboutRentals();
+            addInfAboutTables();
             AnchorPaneDeleteRentals.setVisible(false);
             AnchorPaneRentals.setVisible(true);
         });
@@ -759,7 +577,7 @@ public class AdminAppController {
             AnchorPaneRentalsInsert.setVisible(true);
         });
         RentalsInsertButtonExit.setOnAction(event -> {
-            addInfAboutRentals();
+            addInfAboutTables();
             AnchorPaneRentals.setVisible(true);
             AnchorPaneRentalsInsert.setVisible(false);
         });
@@ -781,7 +599,7 @@ public class AdminAppController {
             AnchorPaneInsertStore.setVisible(true);
         });
         StoresInsertExit.setOnAction(event -> {
-            addInfAboutStore();
+            addInfAboutTables();
             AnchorPaneStores.setVisible(true);
             AnchorPaneInsertStore.setVisible(false);
         });
@@ -798,7 +616,7 @@ public class AdminAppController {
             AnchorPaneStoresDelete.setVisible(true);
         });
         StoresDeleteExit.setOnAction(event -> {
-            addInfAboutStore();
+            addInfAboutTables();
             AnchorPaneStores.setVisible(true);
             AnchorPaneStoresDelete.setVisible(false);
         });
@@ -814,7 +632,7 @@ public class AdminAppController {
             AnchorPaneBikes.setVisible(false);
         });
         InsertBikeExit.setOnAction(event -> {
-            addInfAboutBikes();
+            addInfAboutTables();
             AnchorPaneInsertBike.setVisible(false);
             AnchorPaneBikes.setVisible(true);
         });
@@ -829,7 +647,7 @@ public class AdminAppController {
             AnchorPaneBikes.setVisible(false);
         });
         DeleteBikeExit.setOnAction(event -> {
-            addInfAboutBikes();
+            addInfAboutTables();
             AnchorPaneDeleteBike.setVisible(false);
             AnchorPaneBikes.setVisible(true);
         });
@@ -841,265 +659,60 @@ public class AdminAppController {
         });
 
 
+        ObservableList<String> values = fetchDataFromResultSet(dbHandler.getStoreName(), "name");
+        InsertBookingsStoreName.setItems(values);
+        StoresDeleteName.setItems(values);
 
-
-
-        ObservableList<String> values = FXCollections.observableArrayList();
-        ResultSet resSet = dbHandler.getStoreName();
-
-        while (true) {
-            try {
-                if (!resSet.next()) break;
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            try {
-                values.add(resSet.getString("name"));
-                InsertBookingsStoreName.setItems(values);
-                StoresDeleteName.setItems(values);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        ObservableList<String> values2 = FXCollections.observableArrayList();
-        ResultSet resSet2 = dbHandler.getModelName();
-
-        while (true) {
-            try {
-                if (!resSet2.next()) break;
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            try {
-                values2.add(resSet2.getString("name"));
-                InsertBikeModel.setItems(values2);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
+        ObservableList<String> values2 = fetchDataFromResultSet(dbHandler.getModelName(), "name");
+        InsertBikeModel.setItems(values2);
 
     }
+    private ObservableList<String> fetchDataFromResultSet(ResultSet resultSet, String columnName) {
+        ObservableList<String> values = FXCollections.observableArrayList();
 
-    private void addInfAboutBookings() {
         try {
-            dbHandler = DataBaseHandler.getInstance();
-        } catch (ClassNotFoundException | SQLException e) {
-            throw new RuntimeException(e);
-        }
-        // очищаем данные таблицы
-        booking.clear();
-
-        try (ResultSet bookings = dbHandler.getBookings()) {
-            while (bookings.next()) {
-                Booking boking = new Booking(
-                        bookings.getInt(1),
-                        bookings.getString(2),
-                        bookings.getString(3),
-                        bookings.getInt(4),
-                        bookings.getString(5),
-                        bookings.getString(6));
-
-                booking.add(boking);
+            while (resultSet.next()) {
+                values.add(resultSet.getString(columnName));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return values;
     }
 
-    private void addInfAboutRentals(){
-        try {
-            dbHandler = DataBaseHandler.getInstance();
-        } catch (ClassNotFoundException | SQLException e) {
-            throw new RuntimeException(e);
-        }
-        // очищаем данные таблицы
-        rent.clear();
+    private <T> void configureColumn(TableColumn<T, ?> column, String property) {
+        column.setCellValueFactory(new PropertyValueFactory<>(property));
+    }
 
-        ResultSet rentals = dbHandler.getRentals();
-        try{
-            while(rentals.next()){
-                Rentals rental = new Rentals(
-                        rentals.getInt(1),
-                        rentals.getString(2),
-                        rentals.getInt(3),
-                        rentals.getString(4),
-                        rentals.getString(5));
-
-                rent.add(rental);
-            }
-        }catch (SQLException e){
-            throw new RuntimeException(e);
+    // Метод для отображения выбранной AnchorPane и скрытия остальных
+    private void showAnchorPane(AnchorPane selectedPane, AnchorPane[] anchorPanes) {
+        for (AnchorPane pane : anchorPanes) {
+            pane.setVisible(pane == selectedPane);
         }
     }
 
-    private void addInfAboutAccountings()  {
+    private void addInfAboutTables() {
         try {
+            booking.clear();
+            rent.clear();
+            accountings.clear();
+            managers.clear();
+            admins.clear();
+            storess.clear();
+            models.clear();
+            bike.clear();
+            client.clear();
             dbHandler = DataBaseHandler.getInstance();
+            booking.addAll(dbHandler.getBookings());
+            rent.addAll(dbHandler.getRentals());
+            accountings.addAll(dbHandler.getAccountings());
+            managers.addAll(dbHandler.getManagers());
+            admins.addAll(dbHandler.getAdmins());
+            storess.addAll(dbHandler.getStore());
+            models.addAll(dbHandler.getModel());
+            bike.addAll(dbHandler.getBike());
+            client.addAll(dbHandler.getClient());
         } catch (ClassNotFoundException | SQLException e) {
-            throw new RuntimeException(e);
-        }
-        // очищаем данные таблицы
-        accountings.clear();
-
-        ResultSet resultSet = dbHandler.getAccountings();
-        try{
-            while(resultSet.next()){
-                Accounting accounting = new Accounting(
-                        resultSet.getInt(1),
-                        resultSet.getString(2),
-                        resultSet.getString(3));
-
-                accountings.add(accounting);
-            }
-        }catch (SQLException e){
-            throw new RuntimeException(e);
-        }
-    }
-    private void addInfAboutManagers()  {
-        try {
-            dbHandler = DataBaseHandler.getInstance();
-        } catch (ClassNotFoundException | SQLException e) {
-            throw new RuntimeException(e);
-        }
-        // очищаем данные таблицы
-        managers.clear();
-
-        ResultSet resultSet = dbHandler.getManagers();
-        try{
-            while(resultSet.next()){
-                Manager manager = new Manager(
-                        resultSet.getInt(1),
-                        resultSet.getString(2),
-                        resultSet.getString(3));
-
-                managers.add(manager);
-            }
-        }catch (SQLException e){
-            throw new RuntimeException(e);
-        }
-    }
-    private void addInfAboutAdmins()  {
-        try {
-            dbHandler = DataBaseHandler.getInstance();
-        } catch (ClassNotFoundException | SQLException e) {
-            throw new RuntimeException(e);
-        }
-        // очищаем данные таблицы
-        admins.clear();
-
-        ResultSet resultSet = dbHandler.getAdmins();
-        try{
-            while(resultSet.next()){
-                Admin admin = new Admin(
-                        resultSet.getInt(1),
-                        resultSet.getString(2),
-                        resultSet.getString(3));
-
-                admins.add(admin);
-            }
-        }catch (SQLException e){
-            throw new RuntimeException(e);
-        }
-    }
-
-    private void addInfAboutStore(){
-        try {
-            dbHandler = DataBaseHandler.getInstance();
-        } catch (ClassNotFoundException | SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        // очищаем данные таблицы
-        storess.clear();
-
-        ResultSet stores = dbHandler.getStore();
-        try{
-            while(stores.next()){
-                Store store = new Store(
-                        stores.getInt(1),
-                        stores.getString(2),
-                        stores.getString(3));
-
-                storess.add(store);
-            }
-        }catch (SQLException e){
-            throw new RuntimeException(e);
-        }
-    }
-
-    private void addInfAboutModels(){
-        try {
-            dbHandler = DataBaseHandler.getInstance();
-        } catch (ClassNotFoundException | SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        // очищаем данные таблицы
-        models.clear();
-
-        ResultSet resultSet = dbHandler.getModel();
-        try{
-            while(resultSet.next()){
-                Models model = new Models(
-                        resultSet.getInt(1),
-                        resultSet.getString(2),
-                        resultSet.getString(3),
-                        resultSet.getInt(4));
-
-                models.add(model);
-            }
-        }catch (SQLException e){
-            throw new RuntimeException(e);
-        }
-    }
-    private void addInfAboutBikes(){
-        try {
-            dbHandler = DataBaseHandler.getInstance();
-        } catch (ClassNotFoundException | SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        // очищаем данные таблицы
-        bike.clear();
-
-        ResultSet resultSet = dbHandler.getBike();
-        try{
-            while(resultSet.next()){
-                Bike bikes = new Bike(
-                        resultSet.getInt(1),
-                        resultSet.getString(2));
-
-                bike.add(bikes);
-            }
-        }catch (SQLException e){
-            throw new RuntimeException(e);
-        }
-    }
-
-    private void addInfAboutClients(){
-        try {
-            dbHandler = DataBaseHandler.getInstance();
-        } catch (ClassNotFoundException | SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        // очищаем данные таблицы
-        client.clear();
-
-        ResultSet resultSet = dbHandler.getClient();
-        try{
-            while(resultSet.next()){
-                Client clients = new Client(
-                        resultSet.getInt(1),
-                        resultSet.getString(2),
-                        resultSet.getString(3),
-                        resultSet.getString(4));
-
-                client.add(clients);
-            }
-        }catch (SQLException e){
             throw new RuntimeException(e);
         }
     }
@@ -1112,8 +725,7 @@ public class AdminAppController {
         String password =  InsertAdminPassword.getText().trim();
 
 
-        if (firstname.isEmpty() || lastname.isEmpty() || secondname.isEmpty() ||
-               login.isEmpty() || password.isEmpty()) {
+        if (firstname.isEmpty() || lastname.isEmpty() || secondname.isEmpty() || login.isEmpty() || password.isEmpty()) {
             return false;
         }
 
@@ -1254,9 +866,7 @@ public class AdminAppController {
         String pickupdate =  String.valueOf(RentalsInsertDatePickUp.getValue());
         String returndate = String.valueOf(RentalsInsertDateReturn.getValue());
 
-        if (firstname.isEmpty() || lastname.isEmpty() || secondname.isEmpty()
-                || bikeid.isEmpty() || pickupdate.isEmpty() || returndate.isEmpty()) {
-            System.out.println("Данные пустые");
+        if (firstname.isEmpty() || lastname.isEmpty() || secondname.isEmpty() || bikeid.isEmpty() || pickupdate.isEmpty() || returndate.isEmpty()) {
             return false;
         }
 
@@ -1272,7 +882,6 @@ public class AdminAppController {
         if (dbHandler.newRental(rental)) {
             return true;
         } else {
-            //System.out.println("ошибка тут");
             return false;
         }
     }
@@ -1368,5 +977,4 @@ public class AdminAppController {
             return false;
         }
     }
-
 }
