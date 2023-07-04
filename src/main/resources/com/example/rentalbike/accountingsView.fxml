@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="800.0" style="-fx-background-color: #1D354F;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.rentalbike.Controllers.AccountingsController">
+    <children>
+        <AnchorPane layoutY="82.0" prefHeight="530.0" prefWidth="815.0" style="-fx-background-color: #F5F5F5;">
+            <children>
+                <AnchorPane prefHeight="518.0" prefWidth="200.0" style="-fx-background-color: #1D354F;">
+                    <children>
+                        <Line endX="26.492919921875" endY="15.0" layoutX="181.0" layoutY="-14.0" startX="-180.0" startY="15.0" stroke="WHITE" />
+                        <VBox layoutY="20.0" prefHeight="509.0" prefWidth="207.0" spacing="9.0">
+                            <children>
+                                <HBox prefHeight="42.0" prefWidth="191.0">
+                                    <children>
+                                        <ImageView fitHeight="48.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@assets/clients.png" />
+                                            </image>
+                                        </ImageView>
+                                        <Button fx:id="ButtonClients" mnemonicParsing="false" prefHeight="48.0" prefWidth="157.0" style="-fx-background-color: #1D354F;" text="Клиенты" textFill="WHITE">
+                                            <font>
+                                                <Font size="14.0" />
+                                            </font>
+                                        </Button>
+                                    </children>
+                                </HBox>
+                                <HBox prefHeight="42.0" prefWidth="191.0">
+                                    <children>
+                                        <ImageView fitHeight="48.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@assets/managers.png" />
+                                            </image>
+                                        </ImageView>
+                                        <Button fx:id="ButtonManagers" mnemonicParsing="false" prefHeight="50.0" prefWidth="158.0" style="-fx-background-color: #1D354F;" text="Менеджеры" textFill="WHITE">
+                                            <font>
+                                                <Font size="14.0" />
+                                            </font>
+                                        </Button>
+                                    </children>
+                                </HBox>
+                                <HBox prefHeight="42.0" prefWidth="191.0">
+                                    <children>
+                                        <ImageView fitHeight="48.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@assets/bike.png" />
+                                            </image>
+                                        </ImageView>
+                                        <Button fx:id="ButtonBikes" mnemonicParsing="false" prefHeight="49.0" prefWidth="160.0" style="-fx-background-color: #1D354F;" text="Велосипеды" textFill="WHITE">
+                                            <font>
+                                                <Font size="14.0" />
+                                            </font>
+                                        </Button>
+                                    </children>
+                                </HBox>
+                                <HBox layoutX="10.0" layoutY="10.0" prefHeight="42.0" prefWidth="191.0">
+                                    <children>
+                                        <ImageView fitHeight="48.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@assets/models.png" />
+                                            </image>
+                                        </ImageView>
+                                        <Button fx:id="ButtonModels" mnemonicParsing="false" prefHeight="50.0" prefWidth="158.0" style="-fx-background-color: #1D354F;" text="Модели велосипедов" textFill="WHITE">
+                                            <font>
+                                                <Font size="14.0" />
+                                            </font>
+                                        </Button>
+                                    </children>
+                                </HBox>
+                                <HBox layoutX="10.0" layoutY="185.0" prefHeight="42.0" prefWidth="191.0">
+                                    <children>
+                                        <ImageView fitHeight="48.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@assets/booking.png" />
+                                            </image>
+                                        </ImageView>
+                                        <Button fx:id="ButtonBookings" mnemonicParsing="false" prefHeight="51.0" prefWidth="159.0" style="-fx-background-color: #1D354F;" text="Бронирования" textFill="WHITE">
+                                            <font>
+                                                <Font size="14.0" />
+                                            </font>
+                                        </Button>
+                                    </children>
+                                </HBox>
+                                <HBox prefHeight="42.0" prefWidth="191.0">
+                                    <children>
+                                        <ImageView fitHeight="48.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@assets/refund.png" />
+                                            </image>
+                                        </ImageView>
+                                        <Button fx:id="ButtonRentals" mnemonicParsing="false" prefHeight="53.0" prefWidth="158.0" style="-fx-background-color: #1D354F;" text="Возврат" textFill="WHITE">
+                                            <font>
+                                                <Font size="14.0" />
+                                            </font>
+                                        </Button>
+                                    </children>
+                                </HBox>
+                                <HBox prefHeight="42.0" prefWidth="191.0">
+                                    <children>
+                                        <ImageView fitHeight="48.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@assets/rentals.png" />
+                                            </image>
+                                        </ImageView>
+                                        <Button fx:id="ButtonAccountings" mnemonicParsing="false" prefHeight="47.0" prefWidth="159.0" style="-fx-background-color: #1D354F;" text="Аренда" textFill="WHITE">
+                                            <font>
+                                                <Font size="14.0" />
+                                            </font>
+                                        </Button>
+                                    </children>
+                                </HBox>
+                                <HBox prefHeight="42.0" prefWidth="191.0">
+                                    <children>
+                                        <ImageView fitHeight="48.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@assets/stores.png" />
+                                            </image>
+                                        </ImageView>
+                                        <Button fx:id="ButtonStores" mnemonicParsing="false" prefHeight="42.0" prefWidth="163.0" style="-fx-background-color: #1D354F;" text="Магазины" textFill="WHITE">
+                                            <font>
+                                                <Font size="14.0" />
+                                            </font>
+                                        </Button>
+                                    </children>
+                                </HBox>
+                                <HBox prefHeight="42.0" prefWidth="191.0">
+                                    <children>
+                                        <ImageView fitHeight="48.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@assets/admin.png" />
+                                            </image>
+                                        </ImageView>
+                                        <Button fx:id="ButtonAdmins" mnemonicParsing="false" prefHeight="49.0" prefWidth="158.0" style="-fx-background-color: #1D354F;" text="Администраторы" textFill="WHITE">
+                                            <font>
+                                                <Font size="14.0" />
+                                            </font>
+                                        </Button>
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
+                    </children>
+                </AnchorPane>
+                <AnchorPane fx:id="AnchorPaneAccountings" layoutX="209.0" prefHeight="530.0" prefWidth="586.0">
+                    <children>
+                        <TableView fx:id="AccountingsTable" layoutX="5.0" layoutY="75.0" prefHeight="435.0" prefWidth="575.0">
+                            <columns>
+                                <TableColumn fx:id="AccountingsBikeIdColumn" prefWidth="127.19999694824219" text="№ велосипеда" />
+                                <TableColumn fx:id="AccountingsModelNameColumn" prefWidth="283.199951171875" text="Название модели" />
+                                <TableColumn fx:id="AccountingsPickUpDateColumn" prefWidth="162.40008544921875" text="Дата начала аренды" />
+                            </columns>
+                        </TableView>
+                        <Label layoutX="265.0" layoutY="24.0" text="Аренда" textFill="#1b1a1a">
+                            <font>
+                                <Font name="Segoe UI" size="16.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </AnchorPane>
+            </children>
+        </AnchorPane>
+        <Label layoutX="296.0" layoutY="28.0" text="Прокат велосипедов" textFill="WHITE">
+            <font>
+                <Font name="Segoe UI Historic" size="23.0" />
+            </font>
+        </Label>
+        <ImageView fitHeight="66.0" fitWidth="100.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@assets/logo.png" />
+            </image>
+        </ImageView>
+        <Button fx:id="ButtonAdminAppExit" layoutX="711.0" layoutY="31.0" mnemonicParsing="false" style="-fx-background-color: #7AA299;" text="Выход">
+            <font>
+                <Font name="Segoe UI" size="14.0" />
+            </font>
+        </Button>
+    </children>
+</AnchorPane>

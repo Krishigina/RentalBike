@@ -8,4 +8,6 @@ module com.example.rentalbike {
 
     opens com.example.rentalbike to javafx.fxml;
     exports com.example.rentalbike;
+    exports com.example.rentalbike.Controllers;
+    opens com.example.rentalbike.Controllers to javafx.fxml;
 }

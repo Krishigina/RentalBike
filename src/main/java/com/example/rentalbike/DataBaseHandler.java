@@ -541,10 +541,8 @@ public class DataBaseHandler extends Configs {
 
             int rowsAffected = addBookingStatement.executeUpdate();
             if (rowsAffected == 1) {
-                System.out.println("Бронирование добавлено успешно");
                 return true;
             } else {
-                System.out.println("Ошибка при добавлении бронирования");
                 return false;
             }
         } catch (SQLException e) {
@@ -554,7 +552,10 @@ public class DataBaseHandler extends Configs {
             throw new RuntimeException(e);
         }
     }
-    public boolean deleteBooking(int bookingId) {
+    public boolean deleteBooking(String bookingId) {
+        if (!isNumeric(bookingId)) {
+            return false;
+        }
         String deleteRentalQuery = "DELETE FROM " + Const.RENTALS_TABLE + " WHERE " + Const.RENTALS_BOOKINGID + " = ?";
         String deleteBookingQuery = "DELETE FROM " + Const.BOOKINGS_TABLE + " WHERE " + Const.BOOKINGS_ID + " = ?";
 
@@ -562,10 +563,10 @@ public class DataBaseHandler extends Configs {
                 PreparedStatement deleteRentalStatement = getInstance().getDbConnection().prepareStatement(deleteRentalQuery);
                 PreparedStatement deleteBookingStatement = getInstance().getDbConnection().prepareStatement(deleteBookingQuery)) {
 
-            deleteRentalStatement.setInt(1, bookingId);
+            deleteRentalStatement.setInt(1, Integer.parseInt(bookingId));
             int rowsAffected1 = deleteRentalStatement.executeUpdate();
 
-            deleteBookingStatement.setInt(1, bookingId);
+            deleteBookingStatement.setInt(1, Integer.parseInt(bookingId));
             int rowsAffected2 = deleteBookingStatement.executeUpdate();
 
             return rowsAffected1 > 0 || rowsAffected2 > 0;
@@ -638,13 +639,16 @@ public class DataBaseHandler extends Configs {
         }
     }
 
-    public boolean deleteRental(int rentalId) {
+    public boolean deleteRental(String rentalId) {
+        if (!isNumeric(rentalId)) {
+            return false;
+        }
         String deleteBookingQuery = "DELETE FROM " + Const.RENTALS_TABLE + " WHERE " + Const.RENTALS_ID + " = ?";
 
         try (
              PreparedStatement deleteBookingStatement = getInstance().getDbConnection().prepareStatement(deleteBookingQuery)) {
 
-            deleteBookingStatement.setInt(1, rentalId);
+            deleteBookingStatement.setInt(1, Integer.parseInt(rentalId));
             int rowsAffected = deleteBookingStatement.executeUpdate();
 
             return rowsAffected > 0;
@@ -850,14 +854,17 @@ public class DataBaseHandler extends Configs {
         }
     }
 
-    public boolean deleteAdmin(int id) {
+    public boolean deleteAdmin(String id) {
+        if (!isNumeric(id)) {
+            return false;
+        }
         String selectAdmin = "SELECT user_id FROM admins WHERE id=?";
         String deleteAdmin = "DELETE FROM admins WHERE id=?";
         String deleteUser = "DELETE FROM " + Const.USER_TABLE + " WHERE " + Const.USER_ID + "=?";
 
         try {
             PreparedStatement selectAdminSt = getInstance().getDbConnection().prepareStatement(selectAdmin);
-            selectAdminSt.setInt(1, id);
+            selectAdminSt.setInt(1, Integer.parseInt(id));
 
             ResultSet adminRes = selectAdminSt.executeQuery();
             if (!adminRes.next()) {
@@ -868,7 +875,7 @@ public class DataBaseHandler extends Configs {
             int userId = adminRes.getInt("user_id");
 
             PreparedStatement deleteAdminSt = getInstance().getDbConnection().prepareStatement(deleteAdmin);
-            deleteAdminSt.setInt(1, id);
+            deleteAdminSt.setInt(1, Integer.parseInt(id));
             int resultAdmin = deleteAdminSt.executeUpdate();
 
             PreparedStatement deleteUserSt = getInstance().getDbConnection().prepareStatement(deleteUser);
@@ -934,14 +941,18 @@ public class DataBaseHandler extends Configs {
         }
     }
 
-    public boolean deleteManager(int id) {
+    public boolean deleteManager(String id) {
+        if (!isNumeric(id)) {
+            return false;
+        }
+
         String selectManager = "SELECT user_id FROM managers WHERE id=?";
         String deleteManager = "DELETE FROM managers WHERE id=?";
         String deleteUser = "DELETE FROM " + Const.USER_TABLE + " WHERE " + Const.USER_ID + "=?";
 
         try {
             PreparedStatement selectManagerSt = getInstance().getDbConnection().prepareStatement(selectManager);
-            selectManagerSt.setInt(1, id);
+            selectManagerSt.setInt(1, Integer.parseInt(id));
 
             ResultSet managerRes = selectManagerSt.executeQuery();
             if (!managerRes.next()) {
@@ -952,7 +963,7 @@ public class DataBaseHandler extends Configs {
             int userId = managerRes.getInt("user_id");
 
             PreparedStatement deleteManagerSt = getInstance().getDbConnection().prepareStatement(deleteManager);
-            deleteManagerSt.setInt(1, id);
+            deleteManagerSt.setInt(1, Integer.parseInt(id));
             int resultAdmin = deleteManagerSt.executeUpdate();
 
             PreparedStatement deleteUserSt = getInstance().getDbConnection().prepareStatement(deleteUser);
@@ -1058,14 +1069,14 @@ public class DataBaseHandler extends Configs {
     }
 
     public boolean deleteBike(String id) {
+        if (!isNumeric(id)) {
+            return false;
+        }
+
         String deleteBikeQuery = "DELETE FROM " + Const.BIKES_TABLE + " WHERE " + Const.BIKES_ID + " = ?";
-
-        try (
-                PreparedStatement deleteStoresStatement = getInstance().getDbConnection().prepareStatement(deleteBikeQuery)) {
-
+        try (PreparedStatement deleteStoresStatement = getInstance().getDbConnection().prepareStatement(deleteBikeQuery)) {
             deleteStoresStatement.setInt(1, Integer.parseInt(id));
             int rowsAffected = deleteStoresStatement.executeUpdate();
-
             return rowsAffected > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -1073,5 +1084,14 @@ public class DataBaseHandler extends Configs {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private boolean isNumeric(String str) {
+        for (char c : str.toCharArray()) {
+            if (!Character.isDigit(c)) {
+                return false;
+            }
+        }
+        return true;
     }
 }

@@ -1,10 +1,13 @@
-package com.example.rentalbike;
+package com.example.rentalbike.Controllers;
 
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import com.example.rentalbike.DataBaseHandler;
+import com.example.rentalbike.History;
+import com.example.rentalbike.Threads;
 import javafx.animation.FadeTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

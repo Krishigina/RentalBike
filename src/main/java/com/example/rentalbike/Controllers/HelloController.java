@@ -1,10 +1,14 @@
-package com.example.rentalbike;
+package com.example.rentalbike.Controllers;
 
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import com.example.rentalbike.BCrypt;
+import com.example.rentalbike.Client;
+import com.example.rentalbike.DataBaseHandler;
+import com.example.rentalbike.Threads;
 import com.example.rentalbike.animation.Shake;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
@@ -70,10 +74,10 @@ public class HelloController {
                                 Threads.changeWindow(event, "app.fxml", "rentalbike");
                             }
                             else if (roleId == 2){
-                                Threads.changeWindow(event, "managerApp.fxml", "rentalbike");
+                                Threads.changeWindow(event, "bookings.fxml", "rentalbike");
                             }
                             else if (roleId == 3){
-                                Threads.changeWindow(event, "adminApp.fxml", "rentalbike");
+                                Threads.changeWindow(event, "clientView.fxml", "rentalbike");
                             }
                         } else {
                             // Пароль неверный

@@ -1,9 +1,12 @@
-package com.example.rentalbike;
+package com.example.rentalbike.Controllers;
 
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import com.example.rentalbike.Client;
+import com.example.rentalbike.DataBaseHandler;
+import com.example.rentalbike.Threads;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
