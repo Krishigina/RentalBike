@@ -113,3 +113,16 @@ Open the project in your IDE, then build and run the application.
  <br />For example, in IntelliJ IDEA, click on Run > Run 'Application'.
 5. **Access the Application** <br />
 Once the application is running create a new user from the registration screen, then login.
+
+## Screenshots
+![Снимок экрана 2025-01-18 232152](https://github.com/user-attachments/assets/9e3ad6ed-9a4c-47ef-8ff3-79fe03381d9f)
+![Снимок экрана 2025-01-18 232116](https://github.com/user-attachments/assets/4297260d-51ab-4789-86d8-2e6cf0f2046b)
+![Снимок экрана 2025-01-18 232134](https://github.com/user-attachments/assets/a6f3cd5a-4855-400d-8176-ccf67da54ca3)
+![Снимок экрана 2025-01-18 232207](https://github.com/user-attachments/assets/5af109d7-af79-4bc1-80b8-f83d1e4a67a8)
+![Снимок экрана 2025-01-18 232220](https://github.com/user-attachments/assets/f199d388-4a7c-4e1b-8480-e7397c5bf487)
+![Снимок экрана 2025-01-18 232243](https://github.com/user-attachments/assets/e7551260-978e-4832-bb1b-a344dd32001d)
+
+
+## Documentation
+[Пояснительная записка.pdf](https://github.com/user-attachments/files/18465954/221-362.pdf)
+
